@@ -1,12 +1,12 @@
 export interface ICampaignEmailTemplateGetApi {
-  id: string;
+  id?: string;
   template_email_code: string;
   email_subject: string;
   email_body: string;
   email_type: string;
   template_email_keys: string;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
   user_create: string;
 }
 

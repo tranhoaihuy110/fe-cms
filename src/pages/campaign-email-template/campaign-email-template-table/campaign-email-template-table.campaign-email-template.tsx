@@ -16,7 +16,7 @@ import {
 } from "../../../services";
 import { ICampaignEmailTemplateTableProps } from "./index";
 import { ICampaignEmailTemplateGetApi } from "../../../models";
-// import {  CampaignEmailTemplateDetailModal,DeleteCampaignEmailTemplateConfirmationModal } from "../index";
+import { CampaignEmailTemplateFormModal,DeleteCampaignEmailTemplateConfirmationModal } from "../index";
 
 export const CampaignEmailTemplateTable: React.FC<
   ICampaignEmailTemplateTableProps
@@ -72,7 +72,7 @@ export const CampaignEmailTemplateTable: React.FC<
   const mapFromForm = (
     data: ICampaignEmailTemplateGetApi
   ): Partial<ICampaignEmailTemplateGetApi> => ({
-    id: data.id || "",
+    id: data.id,
     template_email_code: data.template_email_code,
     email_subject: data.email_subject,
     email_body: data.email_body,
@@ -83,26 +83,13 @@ export const CampaignEmailTemplateTable: React.FC<
     user_create: data.user_create,
   });
 
-  const mapResponse = (
-    response: any
-  ): { data: ICampaignEmailTemplateGetApi[] } => {
-    if (!response || !response.data) {
-      return { data: [] };
-    }
-    return {
-      data: response.data.map((item: any) => ({
-        id: item.id || "",
-        template_email_code: item.template_email_code,
-        email_subject: item.email_subject,
-        email_body: item.email_body,
-        email_type: item.email_type,
-        template_email_keys: item.template_email_keys,
-        created_at: item.created_at,
-        updated_at: item.updated_at,
-        user_create: item.user_create,
-      })),
+  const mapResponse = (response: any): { data: ICampaignEmailTemplateGetApi[] } => {
+      if (!response || !response.data) {
+        return { data: [] };
+      }
+      return { data: response.data };
     };
-  };
+
   const wrappedDeleteCampaignEmailTemplateApi = async (
     id: string
   ): Promise<any> => {
@@ -114,11 +101,11 @@ export const CampaignEmailTemplateTable: React.FC<
     itemsPerPage,
 
     itemsPerPageOptions,
-    // isModalOpen,
-    // modalMode,
-    // currentItem,
-    // isDeleteModalOpen,
-    // itemToDelete,
+    isModalOpen,
+    modalMode,
+    currentItem,
+    isDeleteModalOpen,
+    itemToDelete,
     filters,
     setFilter,
     startDate,
@@ -136,11 +123,11 @@ export const CampaignEmailTemplateTable: React.FC<
     openEditModal,
     openDetailModal,
     openDeleteModal,
-    // closeModal,
-    // closeDeleteModal,
-    // handleAddItem,
-    // handleEditItem,
-    // handleDeleteItem,
+    closeModal,
+    closeDeleteModal,
+    handleAddItem,
+    handleEditItem,
+    handleDeleteItem,
     paginatedData,
     effectiveTotalItems,
     sortConfig,
@@ -281,7 +268,7 @@ export const CampaignEmailTemplateTable: React.FC<
     { key: "id" as keyof ICampaignEmailTemplateGetApi, header: "ID" },
     {
       key: "template_email_code" as keyof ICampaignEmailTemplateGetApi,
-      header: "Username",
+      header: "Template Email Code",
     },
     {
       key: "email_subject" as keyof ICampaignEmailTemplateGetApi,
@@ -327,7 +314,7 @@ export const CampaignEmailTemplateTable: React.FC<
           openAddModal={openAddModal}
           hideNameSearch={false}
           firstSearchLabel="Search by ID"
-          secondSearchLabel="Search by Username"
+          secondSearchLabel="Search by Template Email Code"
           idSearchType="text"
           hidePhoneEmail={true}
           hideAddButton={false}
@@ -369,19 +356,21 @@ export const CampaignEmailTemplateTable: React.FC<
           onItemsPerPageChange={handleItemsPerPageChange}
         />
       </div>
-      {/* <CampaignEmailTemplateDetailModal
+      <CampaignEmailTemplateFormModal
         isOpen={isModalOpen}
         onClose={closeModal}
         onSubmit={modalMode === "add" ? handleAddItem : handleEditItem}
         mode={modalMode}
+        onReset={handleReset}
         config={currentItem || initialFormData}
       />
       <DeleteCampaignEmailTemplateConfirmationModal
         isOpen={isDeleteModalOpen}
         onClose={closeDeleteModal}
         onConfirm={handleDeleteItem}
+        onReset={handleReset}
         config={itemToDelete || null}
-      /> */}
+      />
       {children}
     </>
   );

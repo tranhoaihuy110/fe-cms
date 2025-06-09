@@ -23,6 +23,8 @@ export const getTotalCampaignEmailTemplateApi = async (
         created_at: params.created_at,
         updated_at: params.updated_at,
         user_create: params.user_create,
+        created_at_from: params.from,
+        created_at_to: params.to,
       },
     }
   );
