@@ -67,7 +67,6 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
         const fetchPartnerDetails = async () => {
           try {
             const results = await searchMetaDataApi({
-              page: 1,
               size: 10,
               data_type: "partner",
               id: String(partner.id),
@@ -209,7 +208,7 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
       const names: string[] = [];
       for (const id of ids) {
         const results = await searchMetaDataApi({
-          page: 1,
+
           size: 10,
           data_type: "service",
           id,
@@ -253,7 +252,6 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
       }
       try {
         const results = await searchMetaDataApi({
-          page: 1,
           size: 15,
           data_type: "service",
           service_name: value,

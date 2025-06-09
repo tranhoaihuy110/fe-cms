@@ -130,7 +130,6 @@ export const PropertiesFormModal: React.FC<IPropertiesFormModalProps> = ({
         const fetchPropertiesDetails = async () => {
           try {
             const results = await searchPropertiesApi({
-              page: 1,
               size: 1,
               property_id: config.property_id,
             });

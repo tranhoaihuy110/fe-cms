@@ -52,7 +52,6 @@ export const LeadAssignmentFormModal: React.FC<LeadAssignmentFormModalProps> = (
         const fetchLeadAssignmentDetails = async () => {
           try {
             const results = await searchLeadAssignmentApi({
-              page: 1,
               size: 1,
               assignment_id: config.assignment_id,
             });

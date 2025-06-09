@@ -47,7 +47,7 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
         const fetchServiceDetails = async () => {
           try {
             const results = await searchMetaDataApi({
-              page: 1,
+
               size: 1,
               data_type: "service",
               id: String(service.id),
@@ -164,7 +164,7 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
       }
       try {
         const results = await searchMetaDataApi({
-          page: 1,
+
           size: 15,
           data_type: "category",
           name: value,

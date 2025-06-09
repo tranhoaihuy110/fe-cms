@@ -341,7 +341,7 @@ export const useDataOperations = <
 
   const handleDeleteItem = async (
     itemToDelete: any,
-    currentPage: number,
+    // currentPage: number,
     itemsPerPage: number
   ) => {
     if (!itemToDelete) return;

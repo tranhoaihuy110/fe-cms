@@ -9,4 +9,5 @@ export interface IConfirmationModalProps {
   cancelButtonText?: string;
   entityId?: string;
   entityName?: string;
+  isLoading?:boolean
 }

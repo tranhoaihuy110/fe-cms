@@ -53,7 +53,6 @@ export const LeadActivityFormModal: React.FC<ILeadActivityFormModalProps> = ({
         const fetchLeadPropertyDetails = async () => {
           try {
             const results = await searchLeadActivityApi({
-              page: 1,
               size: 1,
               activity_id: config.activity_id,
             });

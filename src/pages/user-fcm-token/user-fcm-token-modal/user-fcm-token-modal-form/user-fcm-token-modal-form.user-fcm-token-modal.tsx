@@ -91,7 +91,7 @@ export const UserFcmTokenFormModal: React.FC<UserFcmTokenFormModalProps> = ({
       }
       try {
         const results = await searchAppUserApi({
-          page: 1,
+
           size: 15,
           user_email: value,
         });

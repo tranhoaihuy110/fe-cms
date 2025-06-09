@@ -73,7 +73,7 @@ export const PropertyOwnerShipFormModal: React.FC<
         const fetchLeadPropertyDetails = async () => {
           try {
             const results = await searchPropertyOwnerShipApi({
-              page: 1,
+
               size: 1,
               ownership_id: config.ownership_id,
             });
@@ -202,7 +202,7 @@ export const PropertyOwnerShipFormModal: React.FC<
       }
       try {
         const results = await searchOwnersApi({
-          page: 1,
+
           size: 15,
           email: value,
         });
@@ -232,7 +232,7 @@ export const PropertyOwnerShipFormModal: React.FC<
       }
       try {
         const results = await searchOwnersApi({
-          page: 1,
+
           size: 15,
           owner_id: value,
         });
@@ -262,7 +262,6 @@ export const PropertyOwnerShipFormModal: React.FC<
       }
       try {
         const results = await searchPropertiesApi({
-          page: 1,
           size: 15,
           property_name: value,
         });
@@ -291,7 +290,6 @@ export const PropertyOwnerShipFormModal: React.FC<
       }
       try {
         const results = await searchPropertiesApi({
-          page: 1,
           size: 15,
           property_id: value,
         });

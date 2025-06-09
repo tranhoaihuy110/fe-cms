@@ -67,7 +67,6 @@ export const LeadsPropertyRoomsFormModal: React.FC<
         const fetchLeadPropertyDetails = async () => {
           try {
             const results = await searchLeadsPropertyRoomsApi({
-              page: 1,
               size: 1,
               id: config.id,
             });
@@ -178,7 +177,6 @@ export const LeadsPropertyRoomsFormModal: React.FC<
       }
       try {
         const results = await searchLeadPropertyFloorsApi({
-          page: 1,
           size: 15,
           floor_type: value,
         });

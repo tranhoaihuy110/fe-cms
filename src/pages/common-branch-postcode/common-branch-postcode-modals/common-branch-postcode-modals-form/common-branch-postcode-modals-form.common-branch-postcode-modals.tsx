@@ -23,7 +23,6 @@ export const CommonBranchPostcodeDetailModal: React.FC<ICommonBranchPostcodeDeta
         try {
           setApiData(undefined);
           const results = await searchCommonBranchPostcodeApi({
-            page: 1,
             size: 1,
             id: String(config.id),
           });

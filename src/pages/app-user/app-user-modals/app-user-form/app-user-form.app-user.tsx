@@ -23,7 +23,6 @@ export const AppUserFormModal: React.FC<IAppUserFormModalProps> = ({
         try {
           setApiData(undefined);
           const results = await searchAppUserApi({
-            page: 1,
             size: 1,
             user_id: config.user_id,
           });

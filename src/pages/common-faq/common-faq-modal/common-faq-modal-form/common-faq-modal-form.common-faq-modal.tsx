@@ -23,7 +23,6 @@ export const CommonFaqFormModal: React.FC<ICommonFaqFormModalProps> = ({
         try {
           setApiData(undefined);
           const results = await searchCommonFaqApi({
-            page: 1,
             size: 1,
             id: String(config.id),
           });

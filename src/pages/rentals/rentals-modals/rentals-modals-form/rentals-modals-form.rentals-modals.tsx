@@ -64,7 +64,7 @@ export const RentalsFormModal: React.FC<IRentalsFormModalProps> = ({
         const fetchLeadPropertyDetails = async () => {
           try {
             const results = await searchRentalsApi({
-              page: 1,
+
               size: 1,
               rental_id: config.rental_id,
             });
@@ -190,7 +190,7 @@ export const RentalsFormModal: React.FC<IRentalsFormModalProps> = ({
       }
       try {
         const results = await searchPropertiesApi({
-          page: 1,
+
           size: 15,
           property_name: value,
         });
@@ -220,7 +220,6 @@ export const RentalsFormModal: React.FC<IRentalsFormModalProps> = ({
       }
       try {
         const results = await searchPropertiesApi({
-          page: 1,
           size: 15,
           property_id: value,
         });

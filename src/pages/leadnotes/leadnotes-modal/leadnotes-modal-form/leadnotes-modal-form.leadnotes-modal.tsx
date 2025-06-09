@@ -51,7 +51,7 @@ export const LeadNotesFormModal: React.FC<ILeadNotesFormModalProps> = ({
         const fetchLeadPropertyDetails = async () => {
           try {
             const results = await searchLeadNotesApi({
-              page: 1,
+
               size: 1,
               note_id: config.note_id,
             });
