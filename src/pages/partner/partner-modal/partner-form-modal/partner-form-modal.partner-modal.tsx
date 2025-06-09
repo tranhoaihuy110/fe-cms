@@ -7,8 +7,6 @@ import { toast } from "react-toastify";
 import debounce from "lodash/debounce";
 import { IFormField } from "../../../../components";
 
-
-
 interface ExtendedMetaDataApi extends IMetaDataApi {
   parent_name: string;
   parent_names: string[];
@@ -25,17 +23,13 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
   const [formData, setFormData] = useState<ExtendedMetaDataApi>(
     mode === "add" || !partner
       ? {
-          id: "0",
           data_type: "",
           data_code: "",
           data_title: "",
           name: "",
-          parent_id: "",
+          data_parent_id: "",
           data_image: "",
           data_desc: "",
-          referral_name: "",
-          referral_email: "",
-          referral_phone: "",
           parent_name: "",
           parent_names: [],
         }
@@ -45,12 +39,9 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
           data_code: partner.data_code || "",
           data_title: partner.data_title || "",
           name: partner.name || "",
-          parent_id: partner.parent_id || "",
+          data_parent_id: partner.data_parent_id || "",
           data_image: partner.data_image || "",
           data_desc: partner.data_desc || "",
-          referral_name: partner.referral_name || "",
-          referral_email: partner.referral_email || "",
-          referral_phone: partner.referral_phone || "",
           parent_name: "",
           parent_names: [],
         }
@@ -75,7 +66,8 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
 
             if (results.length > 0) {
               const fetchedPartner = results[0];
-              const parentIdString = fetchedPartner.parent_id || partner.parent_id || "";
+              const parentIdString =
+                fetchedPartner.data_parent_id || partner.data_parent_id || "";
               let initialParentIds: string[] = parentIdString
                 .split(",")
                 .map((id) => id.trim())
@@ -83,26 +75,33 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
 
               const serviceIds = results
                 .map((item: IMetaDataApi) => String(item.service_id))
-                .filter((id: string, index: number, self: string[]) => id && self.indexOf(id) === index);
+                .filter(
+                  (id: string, index: number, self: string[]) =>
+                    id && self.indexOf(id) === index
+                );
 
-              if (partner.service_id && !initialParentIds.includes(String(partner.service_id))) {
+              if (
+                partner.service_id &&
+                !initialParentIds.includes(String(partner.service_id))
+              ) {
                 initialParentIds.push(String(partner.service_id));
               }
 
-              initialParentIds = [...new Set([...initialParentIds, ...serviceIds])];
+              initialParentIds = [
+                ...new Set([...initialParentIds, ...serviceIds]),
+              ];
 
               const newFormData = {
                 id: String(fetchedPartner.id || partner.id),
                 data_type: fetchedPartner.data_type || partner.data_type || "",
                 data_code: fetchedPartner.data_code || partner.data_code || "",
-                data_title: fetchedPartner.data_title || partner.data_title || "",
+                data_title:
+                  fetchedPartner.data_title || partner.data_title || "",
                 name: fetchedPartner.name || partner.name || "",
-                parent_id: initialParentIds.join(",") || "",
-                data_image: fetchedPartner.data_image || partner.data_image || "",
+                data_parent_id: initialParentIds.join(",") || "",
+                data_image:
+                  fetchedPartner.data_image || partner.data_image || "",
                 data_desc: fetchedPartner.data_desc || partner.data_desc || "",
-                referral_name: fetchedPartner.referral_name || partner.referral_name || "",
-                referral_email: fetchedPartner.referral_email || partner.referral_email || "",
-                referral_phone: fetchedPartner.referral_phone || partner.referral_phone || "",
                 parent_name: "",
                 parent_names: [],
               };
@@ -110,13 +109,16 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
               fetchParentNames(initialParentIds);
               console.log("formData updated in edit/detail mode:", newFormData);
             } else {
-              const parentIdString = partner.parent_id || "";
+              const parentIdString = partner.data_parent_id || "";
               let initialParentIds: string[] = parentIdString
                 .split(",")
                 .map((id) => id.trim())
                 .filter((id) => id);
 
-              if (partner.service_id && !initialParentIds.includes(String(partner.service_id))) {
+              if (
+                partner.service_id &&
+                !initialParentIds.includes(String(partner.service_id))
+              ) {
                 initialParentIds.push(String(partner.service_id));
               }
 
@@ -128,30 +130,33 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
                 data_code: partner.data_code || "",
                 data_title: partner.data_title || "",
                 name: partner.name || "",
-                parent_id: initialParentIds.join(",") || "",
+                data_parent_id: initialParentIds.join(",") || "",
                 data_image: partner.data_image || "",
                 data_desc: partner.data_desc || "",
-                referral_name: partner.referral_name || "",
-                referral_email: partner.referral_email || "",
-                referral_phone: partner.referral_phone || "",
                 parent_name: "",
                 parent_names: [],
               };
               setFormData(newFormData);
               fetchParentNames(initialParentIds);
-              console.log("formData set to fallback in edit/detail mode:", newFormData);
+              console.log(
+                "formData set to fallback in edit/detail mode:",
+                newFormData
+              );
               toast.warn("No data returned from API, using provided data.");
             }
           } catch (error) {
             console.error("Error fetching partner details:", error);
             toast.error("Failed to fetch partner details.");
-            const parentIdString = partner.parent_id || "";
+            const parentIdString = partner.data_parent_id || "";
             let initialParentIds: string[] = parentIdString
               .split(",")
               .map((id) => id.trim())
               .filter((id) => id);
 
-            if (partner.service_id && !initialParentIds.includes(String(partner.service_id))) {
+            if (
+              partner.service_id &&
+              !initialParentIds.includes(String(partner.service_id))
+            ) {
               initialParentIds.push(String(partner.service_id));
             }
 
@@ -163,12 +168,9 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
               data_code: partner.data_code || "",
               data_title: partner.data_title || "",
               name: partner.name || "",
-              parent_id: initialParentIds.join(",") || "",
+              data_parent_id: initialParentIds.join(",") || "",
               data_image: partner.data_image || "",
               data_desc: partner.data_desc || "",
-              referral_name: partner.referral_name || "",
-              referral_email: partner.referral_email || "",
-              referral_phone: partner.referral_phone || "",
               parent_name: "",
               parent_names: [],
             };
@@ -185,12 +187,9 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
           data_code: "",
           data_title: "",
           name: "",
-          parent_id: "",
+          data_parent_id: "",
           data_image: "",
           data_desc: "",
-          referral_name: "",
-          referral_email: "",
-          referral_phone: "",
           parent_name: "",
           parent_names: [],
         };
@@ -208,13 +207,16 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
       const names: string[] = [];
       for (const id of ids) {
         const results = await searchMetaDataApi({
-
           size: 10,
           data_type: "service",
           id,
         });
         const service = results[0];
-        names.push(service ? (service.data_title || service.name || `Service ${id}`) : `Service ${id}`);
+        names.push(
+          service
+            ? service.data_title || service.name || `Service ${id}`
+            : `Service ${id}`
+        );
       }
       setFormData((prev) => ({
         ...prev,
@@ -227,14 +229,20 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
         ...prev,
         parent_names: fallbackNames,
       }));
-      console.log("Error fetching parent names, using fallback:", fallbackNames);
+      console.log(
+        "Error fetching parent names, using fallback:",
+        fallbackNames
+      );
       toast.error("Failed to fetch parent names.");
     }
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (parentRef.current && !parentRef.current.contains(event.target as Node)) {
+      if (
+        parentRef.current &&
+        !parentRef.current.contains(event.target as Node)
+      ) {
         setShowSuggestions(false);
       }
     };
@@ -337,13 +345,15 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
         showSuggestions && suggestions.length > 0
           ? suggestions.slice(0, 15).map((service) => ({
               value: service.id,
-              label: service.data_title || service.name || `Service ${service.id}`,
+              label:
+                service.data_title || service.name || `Service ${service.id}`,
               onSelect: () => {
                 const selectedId = String(service.id).trim();
-                const parentIds = formData.parent_id
-                  ?.split(",")
-                  .map((id) => id.trim())
-                  .filter((id) => id) || [];
+                const parentIds =
+                  formData.data_parent_id
+                    ?.split(",")
+                    .map((id) => id.trim())
+                    .filter((id) => id) || [];
                 if (parentIds.includes(selectedId)) {
                   toast.warn(`Parent ID ${selectedId} is already added.`);
                   return {};
@@ -355,33 +365,36 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
                 ];
                 setFormData((prev) => ({
                   ...prev,
-                  parent_id: updatedParentIds.join(","),
-                  parent_name: "", // Reset input sau khi chọn
+                  data_parent_id: updatedParentIds.join(","),
+                  parent_name: "",
                   parent_names: updatedParentNames,
                 }));
                 setShowSuggestions(false);
-                console.log("Selected parent - Before update:", { ...formData });
+                console.log("Selected parent - Before update:", {
+                  ...formData,
+                });
                 console.log("Selected parent - After update:", {
-                  parent_id: updatedParentIds.join(","),
+                  data_parent_id: updatedParentIds.join(","),
                   parent_name: "",
                   parent_names: updatedParentNames,
                 });
-                return { parent_id: updatedParentIds.join(",") };
+                return { data_parent_id: updatedParentIds.join(",") };
               },
             }))
           : [],
       suggestionRef: parentRef,
     } as const,
     {
-      name: "parent_id",
+      name: "data_parent_id",
       label: "Parent ID",
       type: "custom",
       disabled: mode === "detail",
       renderValue: () => {
-        const parentIds = formData.parent_id
-          ?.split(",")
-          .map((id) => id.trim())
-          .filter((id) => id) || [];
+        const parentIds =
+          formData.data_parent_id
+            ?.split(",")
+            .map((id) => id.trim())
+            .filter((id) => id) || [];
         console.log("Rendering parent values:", {
           parentIds,
           parentNames: formData.parent_names,
@@ -395,28 +408,39 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
                   className="relative rounded-md bg-white py-0.5 px-2 shadow-sm ring-1 ring-black ring-opacity-5 dark:bg-gray-800 max-w-[200px] flex items-center"
                 >
                   <span className="text-sm text-gray-700 dark:text-gray-200 truncate">
-                    {(formData.parent_names && formData.parent_names[index]) || `Service ${id}`} ({id})
+                    {(formData.parent_names && formData.parent_names[index]) ||
+                      `Service ${id}`}{" "}
+                    ({id})
                   </span>
                   {mode !== "detail" && (
                     <button
                       type="button"
                       onClick={() => {
-                        const updatedParentIds = parentIds.filter((_, i) => i !== index);
-                        const updatedParentNames = (formData.parent_names || []).filter((_, i) => i !== index);
+                        const updatedParentIds = parentIds.filter(
+                          (_, i) => i !== index
+                        );
+                        const updatedParentNames = (
+                          formData.parent_names || []
+                        ).filter((_, i) => i !== index);
                         setFormData((prev) => ({
                           ...prev,
-                          parent_id: updatedParentIds.join(","),
+                          data_parent_id: updatedParentIds.join(","),
                           parent_names: updatedParentNames,
                         }));
                         console.log("Updated formData after removing parent:", {
-                          parent_id: updatedParentIds.join(","),
+                          data_parent_id: updatedParentIds.join(","),
                           parent_names: updatedParentNames,
                         });
                       }}
                       className="ml-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                       title="Remove Parent ID"
                     >
-                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg
+                        className="h-4 w-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -456,41 +480,7 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
       rows: 4,
       onChange: (e) => handleInputChange(e, "data_desc"),
     } as const,
-    {
-      name: "referral_name",
-      label: "Referral Name",
-      type: "text",
-      placeholder: "Enter referral name (optional)",
-      disabled: mode === "detail",
-      value: formData.referral_name,
-      onChange: (e) => handleInputChange(e, "referral_name"),
-    } as const,
-    {
-      name: "referral_email",
-      label: "Referral Email",
-      type: "text",
-      inputType: "email",
-      placeholder: "Enter referral email (optional)",
-      disabled: mode === "detail",
-      value: formData.referral_email,
-      onChange: (e) => handleInputChange(e, "referral_email"),
-    } as const,
-    {
-      name: "referral_phone",
-      label: "Referral Phone",
-      type: "text",
-      inputType: "tel",
-      placeholder: "Enter referral phone (optional)",
-      disabled: mode === "detail",
-      value: formData.referral_phone,
-      onChange: (e) => handleInputChange(e, "referral_phone"),
-    } as const,
   ];
-
-  console.log("Rendering PartnerFormModal with formData:", formData);
-  console.log("Fields passed to FormModal:", fields);
-  console.log("Current suggestions:", suggestions);
-  console.log("Current showSuggestions:", showSuggestions);
 
   return (
     <FormModal<ExtendedMetaDataApi>
@@ -507,30 +497,19 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
             toast.error("Data Title is required.");
             throw new Error("Data Title is required");
           }
-          if (!data.parent_id?.trim()) {
+          if (!data.data_parent_id?.trim()) {
             toast.error("Parent ID is required.");
             throw new Error("Parent ID is required");
           }
 
-          if (data.referral_email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(data.referral_email)) {
-              toast.error("Referral Email must be a valid email address.");
-              throw new Error("Invalid email");
-            }
-          }
-
           const submitData: IMetaDataApi = {
-            id: data.id || "0",
+            id: data.id || undefined,
             data_type: data.data_type || "",
             data_code: data.data_code || "",
             data_title: data.name || "",
-            parent_id: data.parent_id || "",
+            data_parent_id: data.data_parent_id || "",
             data_image: data.data_image || "",
             data_desc: data.data_desc || "",
-            referral_name: data.referral_name || "",
-            referral_email: data.referral_email || "",
-            referral_phone: data.referral_phone || "",
           };
 
           await onSubmit(submitData);

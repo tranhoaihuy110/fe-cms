@@ -30,16 +30,13 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
     category_id: "",
     category_name: "",
     create_at: "",
-    update_at: "",
     data_type: "category",
     data_code: "",
     data_title: "",
-    parent_id: "",
+    data_parent_id: "",
     data_image: "",
     data_desc: "",
-    referral_name: "",
-    referral_email: "",
-    referral_phone: "",
+    data_parent_id_v2: "",
   };
 
   const filterConfig: FilterConfig[] = [
@@ -59,16 +56,13 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
     category_id: data.category_id || "",
     category_name: data.category_name || "",
     create_at: data.create_at || "",
-    update_at: data.update_at || "",
     data_type: data.data_type || "category",
     data_code: data.data_code || "",
     data_title: data.data_title || "",
-    parent_id: data.parent_id || "",
+    data_parent_id: data.data_parent_id || "",
     data_image: data.data_image || "",
     data_desc: data.data_desc || "",
-    referral_name: data.referral_name || "",
-    referral_email: data.referral_email || "",
-    referral_phone: data.referral_phone || "",
+    data_parent_id_v2: data.data_parent_id_v2 || "",
   });
 
   const mapFromForm = (data: IMetaDataApi): Partial<IMetaDataApi> => ({
@@ -79,12 +73,9 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
     data_type: data.data_type || "category",
     data_code: data.data_code,
     data_title: data.data_title,
-    parent_id: data.parent_id,
+    data_parent_id: data.data_parent_id,
     data_image: data.data_image,
     data_desc: data.data_desc,
-    referral_name: data.referral_name,
-    referral_email: data.referral_email,
-    referral_phone: data.referral_phone,
   });
 
   const mapResponse = (response: any): { data: IMetaDataApi[] } => ({
@@ -95,7 +86,7 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
     currentPage,
     setCurrentPage,
     itemsPerPage,
-    
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -105,9 +96,9 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
     filters,
     setFilter,
     startDate,
-    
+
     endDate,
-    
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -222,7 +213,6 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
         id,
         name,
       });
-      
     },
     sortData: async ({
       page,
@@ -288,15 +278,8 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
       render: (item: IMetaDataApi) =>
         new Date(item.create_at || "").toLocaleString(),
     },
-    {
-      key: "update_at" as keyof IMetaDataApi,
-      header: "Date Update",
-      render: (item: IMetaDataApi) =>
-        new Date(item.update_at || "").toLocaleString(),
-    },
-    { key: "actions" as keyof IMetaDataApi, header: "Actions" 
-      
-    },
+    { key: "data_image" as keyof IMetaDataApi, header: "Data Image" },
+    { key: "actions" as keyof IMetaDataApi, header: "Actions" },
   ];
 
   return (
@@ -320,7 +303,7 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
           openAddModal={openAddModal}
           firstSearchLabel="Search by Category ID"
           idSearchType="number"
-          secondSearchLabel = "Search by Category Name"
+          secondSearchLabel="Search by Category Name"
           hideAddButton={false}
           hidePhoneEmail={true}
           hideNameSearch={false}

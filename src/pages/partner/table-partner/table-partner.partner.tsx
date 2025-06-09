@@ -32,16 +32,13 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
     service_id: "",
     service_name: "",
     create_at: "",
-    update_at: "",
     data_type: "partner",
     data_code: "",
     data_title: "",
-    parent_id: "",
+    data_parent_id: "",
     data_image: "",
     data_desc: "",
-    referral_name: "",
-    referral_email: "",
-    referral_phone: "",
+    data_parent_id_v2: "",
   };
 
   const filterConfig: FilterConfig[] = [
@@ -61,23 +58,19 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
     name: data.name || "",
     category_id: data.category_id || "",
     category_name: data.category_name || "",
-    service_id: data.service_id ||"",
-    service_name: data.service_name||"",
+    service_id: data.service_id || "",
+    service_name: data.service_name || "",
     create_at: data.create_at || "",
-    update_at: data.update_at || "",
     data_type: data.data_type || "partner",
     data_code: data.data_code || "",
     data_title: data.data_title || "",
-    parent_id: data.parent_id || "",
+    data_parent_id: data.data_parent_id || "",
     data_image: data.data_image || "",
     data_desc: data.data_desc || "",
-    referral_name: data.referral_name || "",
-    referral_email: data.referral_email || "",
-    referral_phone: data.referral_phone || "",
+    data_parent_id_v2: data.data_parent_id_v2 || "",
   });
 
   const mapFromForm = (data: IMetaDataApi): Partial<IMetaDataApi> => ({
-    id: data.id,
     name: data.name,
     category_id: data.category_id,
     category_name: data.category_name,
@@ -86,25 +79,20 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
     data_type: data.data_type || "partner",
     data_code: data.data_code,
     data_title: data.data_title,
-    parent_id: data.parent_id,
+    data_parent_id: data.data_parent_id,
     data_image: data.data_image,
     data_desc: data.data_desc,
-    referral_name: data.referral_name,
-    referral_email: data.referral_email,
-    referral_phone: data.referral_phone,
   });
 
-  const mapResponse = (
-    response: any
-  ): { data: IMetaDataApi[] } => ({
-    data: response.data
+  const mapResponse = (response: any): { data: IMetaDataApi[] } => ({
+    data: response.data,
   });
 
   const {
     currentPage,
     setCurrentPage,
     itemsPerPage,
-    
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -114,9 +102,9 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
     filters,
     setFilter,
     startDate,
-    
+
     endDate,
-    
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -149,7 +137,7 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
       id?: string;
       name?: string;
       search_name_category?: string;
-      search_name_service? : string,
+      search_name_service?: string;
       from?: string;
       to?: string;
     },
@@ -160,7 +148,7 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
       id?: string;
       name?: string;
       category_name?: string;
-      service_name? : string;
+      service_name?: string;
       from?: string;
       to?: string;
     },
@@ -191,7 +179,15 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
       });
       return response;
     },
-    fetchTotal: async ({data_type = "partner",id,name,search_name_category,search_name_service,from,to}: {
+    fetchTotal: async ({
+      data_type = "partner",
+      id,
+      name,
+      search_name_category,
+      search_name_service,
+      from,
+      to,
+    }: {
       data_type: string;
       id?: string;
       name?: string;
@@ -207,7 +203,7 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
         search_name_service,
         search_name_category,
         from,
-        to
+        to,
       });
     },
     searchData: async ({
@@ -226,7 +222,7 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
       id?: string;
       name?: string;
       category_name?: string;
-      service_name?: string,
+      service_name?: string;
       from?: string;
       to?: string;
     }) => {
@@ -238,7 +234,7 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
         id,
         name,
         category_name: category_name || "",
-        service_name: service_name || ""
+        service_name: service_name || "",
       });
     },
     sortData: async ({
@@ -290,31 +286,22 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
       ? String(filters.name)
       : "";
 
-
   const setSearchIdTerm = (value: string) => setFilter("id", value || null);
   const setSearchNameTerm = (value: string) => setFilter("name", value || null);
-
 
   const handleClearSearchId = () => handleClearFilter("id");
   const handleClearSearchName = () => handleClearFilter("name");
 
-
   const columns = [
     { key: "id" as keyof IMetaDataApi, header: "Partner ID" },
     { key: "name" as keyof IMetaDataApi, header: "Partner Name" },
-        { key: "service_name" as keyof IMetaDataApi, header: "Service Name" },
+    { key: "service_name" as keyof IMetaDataApi, header: "Service Name" },
     { key: "category_name" as keyof IMetaDataApi, header: "Category Name" },
     {
       key: "create_at" as keyof IMetaDataApi,
       header: "Date Create",
       render: (item: IMetaDataApi) =>
         new Date(item.create_at || "").toLocaleString(),
-    },
-    {
-      key: "update_at" as keyof IMetaDataApi,
-      header: "Date Update",
-      render: (item: IMetaDataApi) =>
-        new Date(item.update_at || "").toLocaleString(),
     },
     { key: "actions" as keyof IMetaDataApi, header: "Actions" },
   ];
@@ -345,7 +332,7 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
           hidePhoneEmail={true}
           hideNameSearch={false}
           firstSearchLabel="Search by Partner ID"
-          secondSearchLabel = "Search by Partner Name"
+          secondSearchLabel="Search by Partner Name"
           searchPhoneTerm=""
           searchUsernameTerm=""
           setSearchPhoneTerm={setSearchNameTerm}

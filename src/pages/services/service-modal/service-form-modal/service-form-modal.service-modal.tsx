@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import debounce from "lodash/debounce";
 import { IFormField } from "../../../../components";
 
-
 export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
   isOpen,
   onClose,
@@ -25,15 +24,13 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
           data_title: "",
           name: "",
           category_id: "",
-          parent_id: "",
+          data_parent_id: "",
           data_image: "",
           data_desc: "",
-          referral_name: "",
-          referral_email: "",
-          referral_phone: "",
-          parent_name: ""
+          parent_name: "",
+          data_parent_id_v2: "",
         }
-      : { ...service , parent_name: service.category_name || ""}
+      : { ...service, parent_name: service.category_name || "" }
   );
   const [suggestions, setSuggestions] = useState<IMetaDataApi[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -47,7 +44,6 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
         const fetchServiceDetails = async () => {
           try {
             const results = await searchMetaDataApi({
-
               size: 1,
               data_type: "service",
               id: String(service.id),
@@ -60,16 +56,22 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
                 id: String(fetchedService.id || service.id),
                 data_type: fetchedService.data_type || service.data_type || "",
                 data_code: fetchedService.data_code || service.data_code || "",
-                data_title: fetchedService.data_title || service.data_title || "",
+                data_title:
+                  fetchedService.data_title || service.data_title || "",
                 name: fetchedService.name || service.name || "",
-                category_id: String(fetchedService.category_id || service.category_id || ""),
-                parent_id: String(fetchedService.parent_id || service.parent_id || ""),
-                data_image: fetchedService.data_image || service.data_image || "",
+                category_id: String(
+                  fetchedService.category_id || service.category_id || ""
+                ),
+                data_parent_id: String(
+                  fetchedService.data_parent_id || service.data_parent_id || ""
+                ),
+                data_image:
+                  fetchedService.data_image || service.data_image || "",
                 data_desc: fetchedService.data_desc || service.data_desc || "",
-                referral_name: fetchedService.referral_name || service.referral_name || "",
-                referral_email: fetchedService.referral_email || service.referral_email || "",
-                referral_phone: fetchedService.referral_phone || service.referral_phone || "",
-                parent_name: fetchedService.category_name || service.category_name || "",
+                parent_name:
+                  fetchedService.category_name || service.category_name || "",
+                data_parent_id_v2:
+                  fetchedService.data_parent_id_v2 || service.data_parent_id_v2,
               };
               setFormData(newFormData);
               console.log("formData updated in edit/detail mode:", newFormData);
@@ -81,17 +83,17 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
                 data_title: service.data_title || "",
                 name: service.name || "",
                 category_id: String(service.category_id || ""),
-                parent_id: String(service.parent_id || ""),
+                data_parent_id: String(service.data_parent_id || ""),
                 data_image: service.data_image || "",
                 data_desc: service.data_desc || "",
-                referral_name: service.referral_name || "",
-                referral_email: service.referral_email || "",
-                referral_phone: service.referral_phone || "",
-                 parent_name: service.category_name || "",
-              
+                parent_name: service.category_name || "",
+                data_parent_id_v2: service.data_parent_id_v2 || "",
               };
               setFormData(newFormData);
-              console.log("formData set to fallback in edit/detail mode:", newFormData);
+              console.log(
+                "formData set to fallback in edit/detail mode:",
+                newFormData
+              );
               toast.warn("No data returned from API, using provided data.");
             }
           } catch (error) {
@@ -104,16 +106,17 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
               data_title: service.data_title || "",
               name: service.name || "",
               category_id: String(service.category_id || ""),
-              parent_id: String(service.parent_id || ""),
+              data_parent_id: String(service.data_parent_id || ""),
               data_image: service.data_image || "",
               data_desc: service.data_desc || "",
-              referral_name: service.referral_name || "",
-              referral_email: service.referral_email || "",
-              referral_phone: service.referral_phone || "",
-               parent_name: service.category_name || "",
+              parent_name: service.category_name || "",
+              data_parent_id_v2: service.data_parent_id_v2 || "",
             };
             setFormData(newFormData);
-            console.log("formData set to fallback after error in edit/detail mode:", newFormData);
+            console.log(
+              "formData set to fallback after error in edit/detail mode:",
+              newFormData
+            );
           }
         };
         fetchServiceDetails();
@@ -125,13 +128,11 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
           data_title: "",
           name: "",
           category_id: "",
-          parent_id: "",
+          data_parent_id: "",
           data_image: "",
           data_desc: "",
-          referral_name: "",
-          referral_email: "",
-          referral_phone: "",
           parent_name: "",
+          data_parent_id_v2: "",
         };
         setFormData(defaultFormData);
         console.log("formData initialized in add mode:", defaultFormData);
@@ -144,7 +145,10 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (parentNameRef.current && !parentNameRef.current.contains(event.target as Node)) {
+      if (
+        parentNameRef.current &&
+        !parentNameRef.current.contains(event.target as Node)
+      ) {
         setShowSuggestions(false);
       }
     };
@@ -158,13 +162,16 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
       if (!value.trim()) {
         setSuggestions([]);
         setShowSuggestions(false);
-        setFormData((prev) => ({ ...prev, category_id: "", parent_id: "" }));
+        setFormData((prev) => ({
+          ...prev,
+          category_id: "",
+          data_parent_id: "",
+        }));
         console.log("No value or empty, clearing suggestions");
         return;
       }
       try {
         const results = await searchMetaDataApi({
-
           size: 15,
           data_type: "category",
           name: value,
@@ -174,7 +181,7 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
           ...category,
           id: String(category.id),
           category_id: String(category.category_id || ""),
-          parent_id: String(category.parent_id || ""),
+          data_parent_id: String(category.data_parent_id || ""),
         }));
         setSuggestions(formattedResults);
         setShowSuggestions(formattedResults.length > 0);
@@ -254,11 +261,16 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
                 const selectedName =
                   category.data_title || category.name || "Unnamed Category";
                 const selectedId = String(category.id);
-                console.log("Suggestion selected:", selectedName, "ID:", selectedId);
+                console.log(
+                  "Suggestion selected:",
+                  selectedName,
+                  "ID:",
+                  selectedId
+                );
                 setFormData((prev) => ({
                   ...prev,
                   category_id: selectedId,
-                  parent_id: selectedId,
+                  data_parent_id: selectedId,
                   parent_name: selectedName,
                 }));
                 setShowSuggestions(false);
@@ -273,14 +285,17 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
           const updatedFormData = {
             ...prev,
             category_id: "",
-            parent_id: "",
+            data_parent_id: "",
             parent_name: "",
           };
-          console.log("formData updated after clearing parent_name:", updatedFormData);
+          console.log(
+            "formData updated after clearing parent_name:",
+            updatedFormData
+          );
           return updatedFormData;
         });
         setShowSuggestions(false);
-        return { parent_name: "", category_id: "", parent_id: "" };
+        return { parent_name: "", category_id: "", data_parent_id: "" };
       },
     } as const,
     {
@@ -316,10 +331,13 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
                   const updatedFormData = {
                     ...prev,
                     category_id: "",
-                    parent_id: "",
+                    data_parent_id: "",
                     parent_name: "",
                   };
-                  console.log("formData updated after clearing category_id:", updatedFormData);
+                  console.log(
+                    "formData updated after clearing category_id:",
+                    updatedFormData
+                  );
                   return updatedFormData;
                 });
                 setShowSuggestions(false);
@@ -362,32 +380,6 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
       rows: 4,
       onChange: (e) => handleInputChange(e, "data_desc"),
     } as const,
-    {
-      name: "referral_name",
-      label: "Referral Name",
-      type: "text",
-      placeholder: "Enter referral name (optional)",
-      disabled: mode === "detail",
-      onChange: (e) => handleInputChange(e, "referral_name"),
-    } as const,
-    {
-      name: "referral_email",
-      label: "Referral Email",
-      type: "text",
-      inputType: "email",
-      placeholder: "Enter referral email (optional)",
-      disabled: mode === "detail",
-      onChange: (e) => handleInputChange(e, "referral_email"),
-    } as const,
-    {
-      name: "referral_phone",
-      label: "Referral Phone",
-      type: "text",
-      inputType: "tel",
-      placeholder: "Enter referral phone (optional)",
-      disabled: mode === "detail",
-      onChange: (e) => handleInputChange(e, "referral_phone"),
-    } as const,
   ];
 
   console.log("Rendering FormModal with config:", formData);
@@ -412,25 +404,15 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
             throw new Error("Parent ID is required");
           }
 
-          if (data.referral_email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(data.referral_email)) {
-              toast.error("Referral Email must be a valid email address.");
-              throw new Error("Invalid email");
-            }
-          }
-
           const submitData: IMetaDataApi = {
             id: data.id || "0",
             data_type: data.data_type || "",
             data_code: data.data_code || "",
             data_title: data.name || "",
-            parent_id: data.category_id || "",
+            data_parent_id: data.category_id || "",
             data_image: data.data_image || "",
             data_desc: data.data_desc || "",
-            referral_name: data.referral_name || "",
-            referral_email: data.referral_email || "",
-            referral_phone: data.referral_phone || "",
+            data_parent_id_v2: data.data_parent_id_v2 || "",
           };
 
           await onSubmit(submitData);
