@@ -1,0 +1,1 @@
+export * from './delete-campaign-email-template.api'

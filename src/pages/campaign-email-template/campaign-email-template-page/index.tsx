@@ -1,0 +1,1 @@
+export * from './campaign-email-template-page.campaign-email-template'
