@@ -3,8 +3,10 @@ import { Input, Label, Button, Checkbox } from '../../../components';
 import { EyeIcon, EyeCloseIcon } from '../../../icons'; 
 import { useState } from 'react';
 import { useAuth } from './index';
+import { useNavigate } from 'react-router-dom';
 
 export const SignIns = () => {
+  const navigate = useNavigate();
   const { signin,profile } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -25,7 +27,7 @@ export const SignIns = () => {
     setSuccessMessage('Login successful!');
     setErrorMessage(null);
     setTimeout(() => {
-      window.location.href = '/category-tables';
+      navigate('/category-tables');
     }, 2000);
   } catch (error) {
 
