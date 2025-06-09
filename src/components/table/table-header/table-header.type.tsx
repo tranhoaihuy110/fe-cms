@@ -1,4 +1,4 @@
-export interface IColumn<T> {
+ interface IColumn<T> {
   key: keyof T;
   header: string;
   render?: (item: T) => React.ReactNode;

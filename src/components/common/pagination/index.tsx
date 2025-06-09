@@ -1,2 +1,2 @@
-export * from "./pagination.common";
-export * from "./pagination.type";
+export * from "./Pagination.common";
+export * from "./Pagination.type";

@@ -292,7 +292,7 @@ export const useDataOperations = <
   const handleAddItem = async (item: FormT, itemsPerPage: number) => {
     try {
       const formattedItem = mapFromForm(item);
-      await addData(formattedItem);
+      await addData!(formattedItem);
       const response = await fetchData({
         page: 1,
         size: itemsPerPage,
@@ -320,7 +320,7 @@ export const useDataOperations = <
   ) => {
     try {
       const formattedItem = mapFromForm(item);
-      await updateData(formattedItem);
+      await updateData!(formattedItem);
       const response = await fetchData({
         page: currentPage,
         size: itemsPerPage,
@@ -347,7 +347,7 @@ export const useDataOperations = <
     if (!itemToDelete) return;
     try {
       setLoading(true);
-      await deleteData(String(itemToDelete.id));
+      await deleteData!(String(itemToDelete.id));
       const response = await fetchData({
         page: 1,
         size: itemsPerPage,

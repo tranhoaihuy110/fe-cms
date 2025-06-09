@@ -25,7 +25,6 @@ export const AppConfigFormModal: React.FC<IAppConfigFormModalProps> = ({
         try {
           setApiData(undefined);
           const results = await searchAppConfigApi({
-            page: 1,
             size: 1,
             key: config.key,
           });

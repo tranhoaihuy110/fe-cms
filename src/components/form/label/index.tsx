@@ -1,2 +1,2 @@
-export * from "./label.form";
-export * from "./label.type";
+export * from "./Label.form";
+export * from "./Label.type";
