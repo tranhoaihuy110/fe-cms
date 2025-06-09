@@ -3,6 +3,10 @@
     {
       "source": "/api/(.*)",
       "destination": "https://all-oz-copied-ethics.trycloudflare.com/api/$1"
+    },
+    {
+      "source": "/category-tables",
+      "destination": "/index.html"
     }
   ]
 }
