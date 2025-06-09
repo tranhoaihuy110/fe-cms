@@ -251,7 +251,7 @@ export const useTableData = <
     handleEditItem: (item: FormT) =>
       handleEditItem(item, currentPage, itemsPerPage),
     handleDeleteItem: () =>
-      handleDeleteItem(itemToDelete, currentPage, itemsPerPage),
+      handleDeleteItem(itemToDelete, currentPage),
     handleSearch: wrappedHandleSearch,
     handleReset: wrappedHandleReset,
     handleSort: wrappedHandleSort,

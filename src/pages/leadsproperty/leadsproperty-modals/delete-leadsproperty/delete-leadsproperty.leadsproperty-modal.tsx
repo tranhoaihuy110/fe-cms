@@ -27,6 +27,7 @@ export const DeleteLeadPropertyConfirmationModal: React.FC<
       onClose={onClose}
       onConfirm={handleConfirm}
       title="Delete Lead Property"
+      isLoading={isLoading}
       message={
         <>
           Are you sure you want to delete the Lead Property with ID{" "}
