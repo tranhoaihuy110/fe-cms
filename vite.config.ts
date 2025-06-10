@@ -4,7 +4,7 @@ import svgr from "vite-plugin-svgr";
 
 
 export default defineConfig(() => {
-  const url = "https://all-oz-copied-ethics.trycloudflare.com"
+  const url = "https://crud-partner-be.vercel.app"
   const API_PREFIX = "/api/v1";
 
   const apiV1Routes = [
