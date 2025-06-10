@@ -24,7 +24,7 @@ export interface IUseTableDataProps<
   FetchByIdParams = string
 > {
   fetchData: (params: FetchParams) => Promise<any>;
-  fetchTotal: (params: TotalParams) => Promise<number>;
+  fetchTotal: (params: TotalParams) => Promise<any>;
   searchData: (params: SearchParams) => Promise<T[]>;
   sortData: (params: SortParams) => Promise<T[]>;
   fetchById: (params: FetchByIdParams) => Promise<any>;

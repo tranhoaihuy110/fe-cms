@@ -92,12 +92,15 @@ export const CampaignMasterTable: React.FC<ICampaignMasterTableProps> = (
     };
   };
 
-  const mapResponse = (response: any): { data: ICampaignMasterGetApi[] } => {
-    if (!response || !response.data) {
-      return { data: [] };
-    }
-    return { data: response.data };
+  const mapResponse = (response: any): { data: ICampaignMasterGetApi[]; total?: number } => {
+  if (!response || !response.data) {
+    return { data: [], total: 0 };
+  }
+  return {
+    data: response.data,
+    total: response.pagination?.total || 0,
   };
+};
 
   const {
     currentPage,

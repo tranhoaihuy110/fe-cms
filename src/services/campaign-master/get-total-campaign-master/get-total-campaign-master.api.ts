@@ -1,18 +1,28 @@
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MS_API } from "../../api";
 import { IGetTotalCampaignMasterParams } from "./index";
 interface getTotalCampaignMasterApi {
-  data: { total: number }[];
+  statusCode: number;
+  message: string;
+  data: any[];
+  pagination: {
+    total: number;
+    page: number;
+    size: number;
+  };
 }
-export const getTotalCampaignMasterApi = async (params: IGetTotalCampaignMasterParams) => {
+export const getTotalCampaignMasterApi = async (
+  params: IGetTotalCampaignMasterParams
+) => {
   const token = localStorage.getItem("access_token");
-  const res = await MS_API.get<getTotalCampaignMasterApi>("/api/v1/campaign-master/total", {
-    headers: { Authorization: `Bearer ${token}` },    
-    params: {
+  const res = await MS_API.get<getTotalCampaignMasterApi>(
+    "/api/v1/campaign-master/list",
+    {
+      headers: { Authorization: `Bearer ${token}` },
+      params: {
         created_at_from: params.from,
         created_at_to: params.to,
-        id : params.id,
+        id: params.id,
         campaign_name: params.campaign_name,
         campaign_type: params.campaign_type,
         campaign_desc: params.campaign_desc,
@@ -26,7 +36,7 @@ export const getTotalCampaignMasterApi = async (params: IGetTotalCampaignMasterP
         email_template_final: params.email_template_final,
         send_by_email: params.send_by_email,
       },
-  });
-  return res.data.data[0].total || 0;
+    }
+  );
+  return res.data.pagination.total || 0;
 };
-
