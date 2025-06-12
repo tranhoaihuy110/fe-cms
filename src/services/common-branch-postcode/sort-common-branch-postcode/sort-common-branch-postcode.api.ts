@@ -2,8 +2,6 @@ import { ICommonBranchPostcodeGetApi } from "../../../models";
 import { MS_API } from "../../api";
 import { ISortCommonBranchPostcodeParams } from "./index";
 
-
-
 export const sortCommonBranchPostcodeApi = async (
   params: ISortCommonBranchPostcodeParams
 ): Promise<{ data: ICommonBranchPostcodeGetApi[] }> => {
@@ -16,9 +14,12 @@ export const sortCommonBranchPostcodeApi = async (
     sort: `${params.option},${params.ascDesc}`,
   };
 
-  const res = await MS_API.get<{ data: ICommonBranchPostcodeGetApi[] }>("/api/v1/common-branch-postcode/list", {
-    params: queryParams,
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return res.data.data;
+  const res = await MS_API.get<{ data: ICommonBranchPostcodeGetApi[] }>(
+    "/api/v1/common-branch-postcode/list",
+    {
+      params: queryParams,
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+  return res.data;
 };
