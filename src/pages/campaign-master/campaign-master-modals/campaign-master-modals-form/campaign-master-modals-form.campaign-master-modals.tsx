@@ -27,7 +27,7 @@ const processJson = (data: any): Record<string, any> => {
 
 export const CampaignMasterFormModal: React.FC<
   ICampaignMasterFormModalProps
-> = ({ isOpen, onClose, onSubmit,onReset, mode, config, children = "" }) => {
+> = ({ isOpen, onClose, onSubmit, onReset, mode, config, children = "" }) => {
   const [formData, setFormData] = useState<ICampaignMasterGetApi>(
     typeof config === "object" && config !== null
       ? {
@@ -82,8 +82,8 @@ export const CampaignMasterFormModal: React.FC<
             });
             console.log("API results for Campaign Master details:", results);
 
-            if (results && results.length > 0) {
-              const fetchedConfig = results[0];
+            if (results && results.data.length > 0) {
+              const fetchedConfig = results.data[0];
               const newFormData = {
                 id: fetchedConfig.id || config.id || "",
                 campaign_desc:
@@ -214,13 +214,12 @@ export const CampaignMasterFormModal: React.FC<
       }
       try {
         const results = await searchCampaignEmailTemplateApi({
-
           size: 15,
           email_subject: value,
         });
-        setEmailSuggestions(results);
-        setShowEmailSuggestions(results.length > 0);
-        if (results.length === 0) {
+        setEmailSuggestions(results.data);
+        setShowEmailSuggestions(results.data.length > 0);
+        if (results.data.length === 0) {
           toast.warn(
             "No Campaign Email Tempalte found for the given email code."
           );
@@ -417,11 +416,9 @@ export const CampaignMasterFormModal: React.FC<
             try {
               jsonMetadata = JSON.parse(data.json_metadata);
               if (typeof jsonMetadata !== "object" || jsonMetadata === null) {
-
                 throw new Error("Invalid JSON Metadata");
               }
             } catch (error) {
-
               throw new Error("Invalid JSON Metadata");
             }
           }
@@ -444,7 +441,7 @@ export const CampaignMasterFormModal: React.FC<
           };
 
           await onSubmit(submitData);
-          onReset && onReset()
+          onReset && onReset();
         }
         onClose();
       }}

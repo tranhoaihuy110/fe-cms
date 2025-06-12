@@ -30,8 +30,8 @@ export const AppConfigFormModal: React.FC<IAppConfigFormModalProps> = ({
           });
           console.log("API results for app config details:", results);
 
-          if (results.length > 0) {
-            const fetchedConfig = results[0];
+          if (results.data.length > 0) {
+            const fetchedConfig = results.data[0];
             setApiData({
               key: fetchedConfig.key || config.key || "",
               value: fetchedConfig.value || config.value || "",
