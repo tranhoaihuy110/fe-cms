@@ -79,8 +79,8 @@ export const PropertyOwnerShipFormModal: React.FC<
             });
             console.log("API results for lead property details:", results);
 
-            if (results && results.length > 0) {
-              const fetchedConfig = results[0];
+            if (results && results.data.length > 0) {
+              const fetchedConfig = results.data[0];
               const newFormData = {
                 ownership_id:
                   fetchedConfig.ownership_id || config.ownership_id || "",
@@ -206,10 +206,10 @@ export const PropertyOwnerShipFormModal: React.FC<
           size: 15,
           email: value,
         });
-        setOwnerSuggestions(results);
-        setShowOwnerSuggestions(results.length > 0);
+        setOwnerSuggestions(results.data);
+        setShowOwnerSuggestions(results.data.length > 0);
         console.log("Search results for email:", results);
-        if (results.length === 0) {
+        if (results.data.length === 0) {
           toast.warn("No Owner found for the given email.");
         }
       } catch (error) {
@@ -236,10 +236,10 @@ export const PropertyOwnerShipFormModal: React.FC<
           size: 15,
           owner_id: value,
         });
-        setOwnerIdSuggestions(results);
-        setShowOwnerIdSuggestions(results.length > 0);
+        setOwnerIdSuggestions(results.data);
+        setShowOwnerIdSuggestions(results.data.length > 0);
         console.log("Search results for owner ID:", results);
-        if (results.length === 0) {
+        if (results.data.length === 0) {
           toast.warn("No Owner found for the given owner ID.");
         }
       } catch (error) {
@@ -265,10 +265,10 @@ export const PropertyOwnerShipFormModal: React.FC<
           size: 15,
           property_name: value,
         });
-        setPropertySuggestions(results);
-        setShowPropertySuggestions(results.length > 0);
+        setPropertySuggestions(results.data);
+        setShowPropertySuggestions(results.data.length > 0);
         console.log("Search results for property name:", results);
-        if (results.length === 0) {
+        if (results.data.length === 0) {
           toast.warn("No properties found for the given name.");
         }
       } catch (error) {
@@ -293,10 +293,10 @@ export const PropertyOwnerShipFormModal: React.FC<
           size: 15,
           property_id: value,
         });
-        setPropertyIdSuggestions(results);
-        setShowPropertyIdSuggestions(results.length > 0);
+        setPropertyIdSuggestions(results.data);
+        setShowPropertyIdSuggestions(results.data.length > 0);
         console.log("Search results for property ID:", results);
-        if (results.length === 0) {
+        if (results.data.length === 0) {
           toast.warn("No leads found for the given property ID.");
         }
       } catch (error) {

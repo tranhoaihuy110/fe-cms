@@ -70,8 +70,8 @@ export const RentalsFormModal: React.FC<IRentalsFormModalProps> = ({
             });
             console.log("API results for rental details:", results);
 
-            if (results && results.length > 0) {
-              const fetchedConfig = results[0];
+            if (results && results.data.length > 0) {
+              const fetchedConfig = results.data[0];
               const newFormData = {
                 rental_id: fetchedConfig.rental_id || config.rental_id || "",
                 property_id:
@@ -194,10 +194,10 @@ export const RentalsFormModal: React.FC<IRentalsFormModalProps> = ({
           size: 15,
           property_name: value,
         });
-        setNameSuggestions(results);
-        setShowNameSuggestions(results.length > 0);
+        setNameSuggestions(results.data);
+        setShowNameSuggestions(results.data.length > 0);
         console.log("Search results for name:", results);
-        if (results.length === 0) {
+        if (results.data.length === 0) {
           toast.warn("No property found for the given name.");
         }
       } catch (error) {
@@ -223,10 +223,10 @@ export const RentalsFormModal: React.FC<IRentalsFormModalProps> = ({
           size: 15,
           property_id: value,
         });
-        setPropertyIdSuggestions(results);
-        setShowPropertyIdSuggestions(results.length > 0);
+        setPropertyIdSuggestions(results.data);
+        setShowPropertyIdSuggestions(results.data.length > 0);
         console.log("Search results for Property ID:", results);
-        if (results.length === 0) {
+        if (results.data.length === 0) {
           toast.warn("No property found for the given Property ID.");
         }
       } catch (error) {

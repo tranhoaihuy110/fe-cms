@@ -57,8 +57,8 @@ export const LeadNotesFormModal: React.FC<ILeadNotesFormModalProps> = ({
             });
             console.log("API results for lead property details:", results);
 
-            if (results && results.length > 0) {
-              const fetchedConfig = results[0];
+            if (results && results.data.length > 0) {
+              const fetchedConfig = results.data[0];
               const newFormData = {
                 note_id:
                   fetchedConfig.note_id ||
@@ -156,10 +156,10 @@ export const LeadNotesFormModal: React.FC<ILeadNotesFormModalProps> = ({
           size: 15,
           email: value,
         });
-        setEmailSuggestions(results);
-        setShowEmailSuggestions(results.length > 0);
+        setEmailSuggestions(results.data);
+        setShowEmailSuggestions(results.data.length > 0);
         console.log("Search results for email:", results);
-        if (results.length === 0) {
+        if (results.data.length === 0) {
           toast.warn("No leads found for the given email.");
         }
       } catch (error) {
@@ -184,10 +184,10 @@ export const LeadNotesFormModal: React.FC<ILeadNotesFormModalProps> = ({
           size: 15,
           lead_id: value,
         });
-        setLeadIdSuggestions(results);
-        setShowLeadIdSuggestions(results.length > 0);
+        setLeadIdSuggestions(results.data);
+        setShowLeadIdSuggestions(results.data.length > 0);
         console.log("Search results for lead ID:", results);
-        if (results.length === 0) {
+        if (results.data.length === 0) {
           toast.warn("No leads found for the given lead ID.");
         }
       } catch (error) {

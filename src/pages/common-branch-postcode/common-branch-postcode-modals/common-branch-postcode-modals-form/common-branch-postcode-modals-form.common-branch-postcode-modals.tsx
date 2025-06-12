@@ -28,8 +28,8 @@ export const CommonBranchPostcodeDetailModal: React.FC<ICommonBranchPostcodeDeta
           });
           console.log("API results for CommonBranchPostcode details:", results);
 
-          if (results && results.length > 0) {
-            const fetchedPostcode = results[0];
+          if (results && results.data.length > 0) {
+            const fetchedPostcode = results.data[0];
             setApiData({
               id: fetchedPostcode.id || config.id || "",
               user_name: fetchedPostcode.user_name || config.user_name || "",

@@ -95,10 +95,10 @@ export const UserFcmTokenFormModal: React.FC<UserFcmTokenFormModalProps> = ({
           size: 15,
           user_email: value,
         });
-        setEmailSuggestions(results);
-        setShowEmailSuggestions(results.length > 0);
+        setEmailSuggestions(results.data);
+        setShowEmailSuggestions(results.data.length > 0);
         console.log("Search results for email:", results);
-        if (results.length === 0) {
+        if (results.data.length === 0) {
           toast.warn("No users found for the given email.");
         }
       } catch (error) {

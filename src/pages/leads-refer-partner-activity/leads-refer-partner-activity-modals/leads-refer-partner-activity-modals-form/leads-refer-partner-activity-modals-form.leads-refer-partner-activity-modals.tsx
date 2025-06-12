@@ -82,8 +82,8 @@ export const LeadsReferPartnerActivityFormModal: React.FC<
               results
             );
 
-            if (results && results.length > 0) {
-              const fetchedConfig = results[0];
+            if (results && results.data.length > 0) {
+              const fetchedConfig = results.data[0];
               const newFormData = {
                 refer_partner_id:
                   fetchedConfig.refer_partner_id ||
@@ -195,10 +195,10 @@ export const LeadsReferPartnerActivityFormModal: React.FC<
           size: 15,
           email: value,
         });
-        setReferpartneridSuggestions(results);
-        setShowReferPartnerIdSuggestions(results.length > 0);
+        setReferpartneridSuggestions(results.data);
+        setShowReferPartnerIdSuggestions(results.data.length > 0);
         console.log("Search results for refer_partner_id by email:", results);
-        if (results.length === 0) {
+        if (results.data.length === 0) {
           toast.warn("No refer partners found for the given email.");
         }
       } catch (error) {

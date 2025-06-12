@@ -135,8 +135,8 @@ export const PropertiesFormModal: React.FC<IPropertiesFormModalProps> = ({
             });
             console.log("API results for Properties details:", results);
 
-            if (results && results.length > 0) {
-              const fetchedConfig = results[0];
+            if (results && results.data.length > 0) {
+              const fetchedConfig = results.data[0];
               const newFormData = {
                 property_id: fetchedConfig.property_id || config.property_id || "",
                 property_name: String(fetchedConfig.property_name || config.property_name || ""),

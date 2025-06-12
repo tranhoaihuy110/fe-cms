@@ -32,8 +32,8 @@ export const CategoryFormModal: React.FC<ICategoryFormModalProps> = ({
           const results = await searchMetaDataApi(params);
           console.log("Category details from API:", results);
 
-          if (results.length > 0) {
-            const fetchedCategory = results[0];
+          if (results.data.length > 0) {
+            const fetchedCategory = results.data[0];
             setApiData({
               id: fetchedCategory.id || category.id || "",
               data_type: fetchedCategory.data_type || category.data_type || "",

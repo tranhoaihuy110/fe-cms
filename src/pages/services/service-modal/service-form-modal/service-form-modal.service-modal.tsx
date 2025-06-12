@@ -50,8 +50,8 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
             });
             console.log("API results for service details:", results);
 
-            if (results.length > 0) {
-              const fetchedService = results[0];
+            if (results.data.length > 0) {
+              const fetchedService = results.data[0];
               const newFormData = {
                 id: String(fetchedService.id || service.id),
                 data_type: fetchedService.data_type || service.data_type || "",
@@ -177,7 +177,7 @@ export const ServiceFormModal: React.FC<IServiceFormModalProps> = ({
           name: value,
         });
         console.log("API response from searchParentCategory:", results);
-        const formattedResults = results.map((category: IMetaDataApi) => ({
+        const formattedResults = results.data.map((category: IMetaDataApi) => ({
           ...category,
           id: String(category.id),
           category_id: String(category.category_id || ""),

@@ -72,8 +72,8 @@ export const LeadsPropertyRoomsFormModal: React.FC<
             });
             console.log("API results for lead property rooms details:", results);
 
-            if (results && results.length > 0) {
-              const fetchedConfig = results[0];
+            if (results && results.data.length > 0) {
+              const fetchedConfig = results.data[0];
               const newFormData = {
                 id:
                   fetchedConfig.id || config.id || "",
@@ -180,10 +180,10 @@ export const LeadsPropertyRoomsFormModal: React.FC<
           size: 15,
           floor_type: value,
         });
-        setTypeSuggestions(results);
-        setShowTypeSuggestions(results.length > 0);
+        setTypeSuggestions(results.data);
+        setShowTypeSuggestions(results.data.length > 0);
         console.log("Search results for floor type:", results);
-        if (results.length === 0) {
+        if (results.data.length === 0) {
           toast.warn("No Floor Id found for the given type.");
         }
       } catch (error) {
@@ -209,9 +209,9 @@ export const LeadsPropertyRoomsFormModal: React.FC<
           size: 15,
           email: value,
         });
-        setPropertyEmailSuggestions(results);
-        setShowPropertyEmailSuggestions(results.length > 0);
-        if (results.length === 0) {
+        setPropertyEmailSuggestions(results.data);
+        setShowPropertyEmailSuggestions(results.data.length > 0);
+        if (results.data.length === 0) {
           toast.warn("No lead properties id found for the given email.");
         }
       } catch (error) {

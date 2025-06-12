@@ -29,8 +29,8 @@ export const LeadFormModal: React.FC<ILeadFormModalProps> = ({
           });
           console.log("API results for lead details:", results);
 
-          if (results.length > 0) {
-            const fetchedConfig = results[0];
+          if (results.data.length > 0) {
+            const fetchedConfig = results.data[0];
             const jsonMoreData = fetchedConfig.json_moredata
               ? typeof fetchedConfig.json_moredata === "string"
                 ? JSON.parse(fetchedConfig.json_moredata)

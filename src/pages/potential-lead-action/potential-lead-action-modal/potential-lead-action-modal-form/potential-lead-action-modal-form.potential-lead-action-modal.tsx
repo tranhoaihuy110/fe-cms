@@ -78,8 +78,8 @@ export const MartPotentialLeadActionFormModal: React.FC<
               results
             );
 
-            if (results && results.length > 0) {
-              const fetchedConfig = results[0];
+            if (results && results.data.length > 0) {
+              const fetchedConfig = results.data[0];
               const newFormData = {
                 potential_lead_id:
                   fetchedConfig.potential_lead_id ||
@@ -191,10 +191,10 @@ export const MartPotentialLeadActionFormModal: React.FC<
           size: 15,
           email: value,
         });
-        setpotential_lead_idSuggestions(results);
-        setShowpotential_lead_idSuggestions(results.length > 0);
+        setpotential_lead_idSuggestions(results.data);
+        setShowpotential_lead_idSuggestions(results.data.length > 0);
 
-        if (results.length === 0) {
+        if (results.data.length === 0) {
           toast.warn("No Pontential Lead Id found for the given email.");
         }
       } catch (error) {

@@ -54,8 +54,8 @@ export const CampaignEmailTemplateFormModal: React.FC<
             });
             console.log("API results for Campaign Email Template details:", results);
 
-            if (results && results.length > 0) {
-              const fetchedConfig = results[0];
+            if (results && results.data.length > 0) {
+              const fetchedConfig = results.data[0];
               const newFormData = {
                 id: fetchedConfig.id || config.id || "",
                 template_email_code: fetchedConfig.template_email_code || config.template_email_code || "",

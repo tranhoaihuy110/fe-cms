@@ -64,8 +64,8 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
             });
             console.log("API results for partner details:", results);
 
-            if (results.length > 0) {
-              const fetchedPartner = results[0];
+            if (results.data.length > 0) {
+              const fetchedPartner = results.data[0];
               const parentIdString =
                 fetchedPartner.data_parent_id || partner.data_parent_id || "";
               let initialParentIds: string[] = parentIdString
@@ -73,7 +73,7 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
                 .map((id) => id.trim())
                 .filter((id) => id);
 
-              const serviceIds = results
+              const serviceIds = results.data
                 .map((item: IMetaDataApi) => String(item.service_id))
                 .filter(
                   (id: string, index: number, self: string[]) =>
@@ -211,7 +211,7 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
           data_type: "service",
           id,
         });
-        const service = results[0];
+        const service = results.data[0];
         names.push(
           service
             ? service.data_title || service.name || `Service ${id}`
@@ -264,7 +264,7 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
           data_type: "service",
           service_name: value,
         });
-        const formattedResults = results.map((service: IMetaDataApi) => ({
+        const formattedResults = results.data.map((service: IMetaDataApi) => ({
           ...service,
           id: String(service.id),
         }));

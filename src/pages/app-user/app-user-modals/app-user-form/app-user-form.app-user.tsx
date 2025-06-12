@@ -28,8 +28,8 @@ export const AppUserFormModal: React.FC<IAppUserFormModalProps> = ({
           });
           console.log("API results for app user details:", results);
 
-          if (results.length > 0) {
-            const fetchedConfig = results[0];
+          if (results.data.length > 0) {
+            const fetchedConfig = results.data[0];
             setApiData({
               user_id: fetchedConfig.user_id || config.user_id || "",
               user_email: fetchedConfig.user_email || config.user_email || "",

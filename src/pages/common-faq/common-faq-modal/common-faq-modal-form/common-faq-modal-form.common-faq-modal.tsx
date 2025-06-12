@@ -28,8 +28,8 @@ export const CommonFaqFormModal: React.FC<ICommonFaqFormModalProps> = ({
           });
           console.log("API results for FAQ details:", results);
 
-          if (results && results.length > 0) {
-            const fetchedFaq = results[0];
+          if (results && results.data.length > 0) {
+            const fetchedFaq = results.data[0];
             setApiData({
               id: fetchedFaq.id || config.id || 0,
               faq_q: fetchedFaq.faq_q || config.faq_q || "",
