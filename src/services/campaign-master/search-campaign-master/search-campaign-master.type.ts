@@ -1,7 +1,14 @@
 import { ICampaignMasterGetApi } from "../../../models";
 
+export interface IPagination {
+  total: number;
+  page: number;
+  size: number;
+}
+
 export interface ISearchCampaignMasterResponse {
   data: ICampaignMasterGetApi[];
+  pagination: IPagination;
 }
 
 export interface ISearchCampaignMasterError {
@@ -26,4 +33,6 @@ export interface ISearchCampaignMasterParams {
   segment?: string;
   email_template_final?: string;
   send_by_email?: string;
+  page?:number,
+  size?:number
 }   

@@ -1,7 +1,16 @@
 import { ICampaignEmailTemplateGetApi } from "../../../models";
 
+interface IPagination {
+  total: number;
+  page: number;
+  size: number;
+}
+
 export interface ICampaignEmailTemplateResponse {
+  statusCode: number;
+  message: string;
   data: ICampaignEmailTemplateGetApi[];
+  pagination?: IPagination;
 }
 
 export interface ICampaignEmailTemplateError {

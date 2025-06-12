@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchCampaignMasterParams } from "./index";
 
 export const searchCampaignMasterApi = (params: ISearchCampaignMasterParams) => {
-  return new Promise<ICampaignMasterGetApi[]>((resolve, reject) => {
+  return new Promise<{data:ICampaignMasterGetApi[]}>((resolve, reject) => {
     MS_API.get<{ data: ICampaignMasterGetApi[] }>("/api/v1/campaign-master/list", {  
       params: {
         created_at_from: params.from,
@@ -23,7 +23,7 @@ export const searchCampaignMasterApi = (params: ISearchCampaignMasterParams) => 
         send_by_email: params.send_by_email,
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

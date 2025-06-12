@@ -9,7 +9,6 @@ import {
   getApiLogsApi,
   searchApiLogs,
   sortApiLogs,
-  getTotalApiLogsApi,
 } from "../../../services";
 import { IApiLogsTableProps } from "./index";
 import { IApiLogsGetApi } from "../../../models";
@@ -107,7 +106,6 @@ export const ApiLogsTable: React.FC<IApiLogsTableProps> = (props) => {
     IApiLogsGetApi,
     IApiLogsGetApi,
     { page: number; size: number; id?: string; name_log?: string },
-    { id?: string; name_log?: string; from?: string; to?: string },
     {
       page: number;
       size: number;
@@ -138,26 +136,6 @@ export const ApiLogsTable: React.FC<IApiLogsTableProps> = (props) => {
         id: id || "",
       });
       console.log("getApiLogsApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      id,
-      name_log,
-      from,
-      to,
-    }: {
-      id?: string;
-      name_log?: string;
-      from?: string;
-      to?: string;
-    }) => {
-      const response = await getTotalApiLogsApi({
-        id,
-        name_log,
-        from,
-        to,
-      });
-      console.log("getTotalApiLogsApi response:", response);
       return response;
     },
     searchData: async ({

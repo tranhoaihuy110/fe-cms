@@ -18,15 +18,13 @@ export interface IUseTableDataProps<
   T,
   FormT,
   FetchParams = { page: number; size: number },
-  TotalParams = any,
   SearchParams = any,
   SortParams = any,
   FetchByIdParams = string
 > {
   fetchData: (params: FetchParams) => Promise<any>;
-  fetchTotal: (params: TotalParams) => Promise<any>;
-  searchData: (params: SearchParams) => Promise<T[]>;
-  sortData: (params: SortParams) => Promise<T[]>;
+  searchData: (params: SearchParams) => Promise<{ data: T[]; total?: number }>;
+  sortData: (params: SortParams) => Promise<{ data: T[]; total?: number }>;
   fetchById: (params: FetchByIdParams) => Promise<any>;
   addData?: (data: Partial<FormT>) => Promise<any>;
   updateData?: (data: Partial<FormT>) => Promise<any>;
@@ -34,7 +32,7 @@ export interface IUseTableDataProps<
   mapToForm: (data: T) => FormT;
   mapFromForm: (data: FormT) => Partial<FormT>;
   initialFormData: FormT;
-  mapResponse: (response: any) => { data: T[]};
+  mapResponse: (response: any) => { data: T[]; total?: number };
   filterConfig?: FilterConfig[];
   fieldMapping: FieldMapping<T>;
 }

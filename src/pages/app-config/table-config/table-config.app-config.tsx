@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getAppConFigApi,
-  getTotalAppConfigApi,
   searchAppConfigApi,
   sortAppConfigApi,
   postAppConfigApi,
@@ -103,7 +102,7 @@ export const AppConfigTable: React.FC<IAppConfigTableProps> = (props) => {
     IAppConfigGetApi,
     IAppConfigGetApi,
     { page: number; size: number; key?: string },
-    { key?: string; from?: string; to?: string },
+  
     { page: number; size: number; key?: string; from?: string; to?: string },
     {
       page: number;
@@ -127,23 +126,6 @@ export const AppConfigTable: React.FC<IAppConfigTableProps> = (props) => {
         key: key || "",
       });
       console.log("getAppConFigApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      key,
-      from,
-      to,
-    }: {
-      key?: string;
-      from?: string;
-      to?: string;
-    }) => {
-      const response = await getTotalAppConfigApi({
-        key,
-        from,
-        to,
-      });
-      console.log("getTotalAppConfigApi response:", response);
       return response;
     },
     searchData: async ({

@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getCampaignEmailTemplateApi,
-  getTotalCampaignEmailTemplateApi,
   searchCampaignEmailTemplateApi,
   sortCampaignEmailTemplateApi,
   postCampaignEmailTemplateApi,
@@ -16,7 +15,10 @@ import {
 } from "../../../services";
 import { ICampaignEmailTemplateTableProps } from "./index";
 import { ICampaignEmailTemplateGetApi } from "../../../models";
-import { CampaignEmailTemplateFormModal,DeleteCampaignEmailTemplateConfirmationModal } from "../index";
+import {
+  CampaignEmailTemplateFormModal,
+  DeleteCampaignEmailTemplateConfirmationModal,
+} from "../index";
 
 export const CampaignEmailTemplateTable: React.FC<
   ICampaignEmailTemplateTableProps
@@ -83,12 +85,17 @@ export const CampaignEmailTemplateTable: React.FC<
     user_create: data.user_create,
   });
 
-  const mapResponse = (response: any): { data: ICampaignEmailTemplateGetApi[] } => {
-      if (!response || !response.data) {
-        return { data: [] };
-      }
-      return { data: response.data };
+  const mapResponse = (
+    response: any
+  ): { data: ICampaignEmailTemplateGetApi[]; total?: number } => {
+    if (!response || !response.data) {
+      return { data: [], total: 0 };
+    }
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
     };
+  };
 
   const wrappedDeleteCampaignEmailTemplateApi = async (
     id: string
@@ -137,7 +144,6 @@ export const CampaignEmailTemplateTable: React.FC<
     ICampaignEmailTemplateGetApi,
     ICampaignEmailTemplateGetApi,
     { page: number; size: number; id: string },
-    { id: string; from?: string; to?: string },
     { page: number; size: number; id: string; from?: string; to?: string },
     {
       page: number;
@@ -161,23 +167,6 @@ export const CampaignEmailTemplateTable: React.FC<
         id: id,
       });
       console.log("getCampaignEmailTemplateApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      id,
-      from,
-      to,
-    }: {
-      id?: string;
-      from?: string;
-      to?: string;
-    }) => {
-      const response = await getTotalCampaignEmailTemplateApi({
-        id,
-        from,
-        to,
-      });
-      console.log("getTotalCampaignEmailTemplateApi response:", response);
       return response;
     },
     searchData: async ({

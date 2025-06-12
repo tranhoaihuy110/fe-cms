@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getCampaignMasterApi,
-  getTotalCampaignMasterApi,
   searchCampaignMasterApi,
   sortCampaignMasterApi,
   postCampaignMasterApi,
@@ -92,15 +91,17 @@ export const CampaignMasterTable: React.FC<ICampaignMasterTableProps> = (
     };
   };
 
-  const mapResponse = (response: any): { data: ICampaignMasterGetApi[]; total?: number } => {
-  if (!response || !response.data) {
-    return { data: [], total: 0 };
-  }
-  return {
-    data: response.data,
-    total: response.pagination?.total || 0,
+  const mapResponse = (
+    response: any
+  ): { data: ICampaignMasterGetApi[]; total?: number } => {
+    if (!response || !response.data) {
+      return { data: [], total: 0 };
+    }
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
-};
 
   const {
     currentPage,
@@ -144,13 +145,6 @@ export const CampaignMasterTable: React.FC<ICampaignMasterTableProps> = (
     ICampaignMasterGetApi,
     { page: number; size: number; id?: string },
     {
-      id?: string;
-      from?: string;
-      campaign_name?: string;
-      campaign_type?: string;
-      to?: string;
-    },
-    {
       page: number;
       size: number;
       id?: string;
@@ -184,29 +178,6 @@ export const CampaignMasterTable: React.FC<ICampaignMasterTableProps> = (
       console.log("getCampaignMasterApi response:", response);
       return response;
     },
-    fetchTotal: async ({
-      id,
-      from,
-      to,
-      campaign_name,
-      campaign_type,
-    }: {
-      id?: string;
-      from?: string;
-      to?: string;
-      campaign_name?: string;
-      campaign_type?: string;
-    }) => {
-      const response = await getTotalCampaignMasterApi({
-        id,
-        from,
-        to,
-        campaign_name,
-        campaign_type,
-      });
-      console.log("getTotalCampaignMasterApi response:", response);
-      return response;
-    },
     searchData: async ({
       id,
       from,
@@ -214,8 +185,6 @@ export const CampaignMasterTable: React.FC<ICampaignMasterTableProps> = (
       campaign_name,
       campaign_type,
     }: {
-      page: number;
-      size: number;
       id?: string;
       from?: string;
       to?: string;
@@ -376,7 +345,7 @@ export const CampaignMasterTable: React.FC<ICampaignMasterTableProps> = (
             </div>
           ) : !paginatedData || paginatedData.length === 0 ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
-              No campain master found for the selected filters.
+              No campaign master found for the selected filters.
             </div>
           ) : (
             <TableComponent

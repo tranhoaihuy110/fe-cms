@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { IUseTableDataProps, IUseTableDataReturn } from "./index";
 import { usePagination } from "./usePagination";
 import { useFilters } from "./useFilters";
@@ -11,13 +10,11 @@ export const useTableData = <
   T,
   FormT,
   FetchParams = { page: number; size: number },
-  TotalParams = any,
   SearchParams = any,
   SortParams = any,
   FetchByIdParams = string
 >({
   fetchData,
-  fetchTotal,
   searchData,
   sortData,
   fetchById,
@@ -34,7 +31,6 @@ export const useTableData = <
   T,
   FormT,
   FetchParams,
-  TotalParams,
   SearchParams,
   SortParams,
   FetchByIdParams
@@ -66,7 +62,7 @@ export const useTableData = <
     handleReset,
   } = useFilters(filterConfig);
 
-  const { sortConfig, setSortConfig, handleSort } = useSorting<T>();
+  const { sortConfig, setSortConfig} = useSorting<T>();
 
   const {
     isModalOpen,
@@ -103,13 +99,11 @@ export const useTableData = <
     T,
     FormT,
     FetchParams,
-    TotalParams,
     SearchParams,
     SortParams,
     FetchByIdParams
   >({
     fetchData,
-    fetchTotal,
     searchData,
     sortData,
     fetchById,
@@ -123,7 +117,6 @@ export const useTableData = <
     fieldMapping,
   });
 
-  
   const [appliedFilters, setAppliedFilters] = useState<
     Record<string, string | number | null>
   >({});
@@ -136,9 +129,9 @@ export const useTableData = <
       startDate,
       endDate,
       sortConfig,
-      appliedFilters 
+      appliedFilters
     );
-  }, [currentPage, itemsPerPage, timeFilter, startDate, endDate, sortConfig]); 
+  }, [currentPage, itemsPerPage, timeFilter, startDate, endDate, sortConfig]);
 
   useEffect(() => {
     const hasFilter =
@@ -153,42 +146,47 @@ export const useTableData = <
       (value) => value !== null
     );
 
-    if (hasFilters || timeFilter) {
-      const {  from,  to } = timeFilter
-        ? getDateRange(timeFilter, startDate, endDate)
-        : {  from: "",  to: "" };
+    try {
+      let response: { data: T[]; total?: number };
+      if (hasFilters || timeFilter) {
+        const { from, to } = timeFilter
+          ? getDateRange(timeFilter, startDate, endDate)
+          : { from: "", to: "" };
 
-      const searchParams = {
-        page: 1,
-        size: itemsPerPage,
-        ...appliedFilters, 
-        ...( from &&  to ? {  from,  to } : {}),
-      } as SearchParams;
-
-      const data = await searchData(searchParams);
-      setTableData(data);
-      setFilteredData(data);
-      setTotalItems(
-        await fetchTotal({
+        const searchParams = {
+          page: 1,
+          size: itemsPerPage,
           ...appliedFilters,
-          ...( from &&  to ? {  from,  to } : {}),
-        } as TotalParams)
-      );
-    } else {
-      const data = await handleSort(key, sortData, 1, itemsPerPage);
-      setTableData(data);
-      setFilteredData(data);
-      setTotalItems(await fetchTotal({} as TotalParams));
+          ...(from && to ? { from, to } : {}),
+        } as SearchParams;
+
+        response = mapResponse(await searchData(searchParams));
+      } else {
+        response = mapResponse(
+          await sortData({
+            page: 1,
+            size: itemsPerPage,
+            sort: { field: String(key), direction: sortConfig.direction },
+          } as SortParams)
+        );
+      }
+      setTableData(response.data);
+      setFilteredData(response.data);
+      setTotalItems(response.total || 0);
+      setSortConfig({ key, direction: sortConfig.direction === "asc" ? "desc" : "asc" });
+      setError(null);
+    } catch (err) {
+      const error = err as { message: string };
+      setError(error.message);
     }
-    setError(null);
   };
 
   const wrappedHandleSearch = async () => {
     setTimeFilter(null);
     setStartDate(null);
     setEndDate(null);
-    setAppliedFilters(filters); 
-    await handleSearch(currentPage, itemsPerPage, filters); 
+    setAppliedFilters(filters);
+    await handleSearch(currentPage, itemsPerPage, filters);
     setIsFilterActive(Object.values(filters).some((value) => value !== null));
   };
 
@@ -196,7 +194,7 @@ export const useTableData = <
     handleReset();
     setSortConfig({ key: null, direction: "asc" });
     setCurrentPage(1);
-    setAppliedFilters({}); 
+    setAppliedFilters({});
   };
 
   const paginatedData = filteredData;
@@ -251,7 +249,7 @@ export const useTableData = <
     handleEditItem: (item: FormT) =>
       handleEditItem(item, currentPage, itemsPerPage),
     handleDeleteItem: () =>
-      handleDeleteItem(itemToDelete, currentPage),
+      handleDeleteItem(itemToDelete, itemsPerPage),
     handleSearch: wrappedHandleSearch,
     handleReset: wrappedHandleReset,
     handleSort: wrappedHandleSort,

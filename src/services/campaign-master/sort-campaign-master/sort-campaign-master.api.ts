@@ -10,7 +10,7 @@ export interface ISortCampaignMasterParams {
 
 export const sortCampaignMasterApi = async (
   params: ISortCampaignMasterParams
-): Promise<ICampaignMasterGetApi[]> => {
+): Promise<{data: ICampaignMasterGetApi[]}> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -20,9 +20,9 @@ export const sortCampaignMasterApi = async (
     sort: `${params.option},${params.ascDesc}`,
   };
 
-  const res = await MS_API.get<{ data: ICampaignMasterGetApi[] }>("/api/v1/campaign-master/list", {
+  const res = await MS_API.get<{ data: ICampaignMasterGetApi[]}>("/api/v1/campaign-master/list", {
     params: queryParams,
     headers: { Authorization: `Bearer ${token}` },
   });
-  return res.data.data;
+  return res.data;
 };
