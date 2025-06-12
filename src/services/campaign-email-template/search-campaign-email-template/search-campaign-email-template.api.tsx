@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ICampaignEmailTemplateParams } from "./index";
 
 export const searchCampaignEmailTemplateApi = (params: ICampaignEmailTemplateParams) => {
-  return new Promise<ICampaignEmailTemplateGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: ICampaignEmailTemplateGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: ICampaignEmailTemplateGetApi[] }>("/api/v1/campaign-email-template/list", {
       params: {
         created_at_from: params.from,
@@ -20,7 +20,7 @@ export const searchCampaignEmailTemplateApi = (params: ICampaignEmailTemplatePar
         user_create: params.user_create,
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

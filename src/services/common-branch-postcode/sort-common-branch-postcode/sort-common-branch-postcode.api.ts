@@ -6,7 +6,7 @@ import { ISortCommonBranchPostcodeParams } from "./index";
 
 export const sortCommonBranchPostcodeApi = async (
   params: ISortCommonBranchPostcodeParams
-): Promise<ICommonBranchPostcodeGetApi[]> => {
+): Promise<{ data: ICommonBranchPostcodeGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 

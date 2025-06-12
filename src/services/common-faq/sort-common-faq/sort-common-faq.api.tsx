@@ -10,7 +10,7 @@ export interface ISortfaqParams {
 
 export const sortCommonFaqApi = async (
   params: ISortfaqParams
-): Promise<ICommonFaqGetApi[]> => {
+): Promise<{ data: ICommonFaqGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -27,5 +27,5 @@ export const sortCommonFaqApi = async (
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return res.data.data;
+  return res.data;
 };

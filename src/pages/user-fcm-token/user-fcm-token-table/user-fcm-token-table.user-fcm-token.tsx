@@ -10,7 +10,6 @@ import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   deleteUserFcmTokenApi,
   getUserFcmTokenApi,
-  getTotalUserFcmTokenApi,
   patchUserFcmTokenApi,
   postUserFcmTokenApi,
   searchUserFcmTokenApi,
@@ -68,20 +67,15 @@ export const UserFcmTokenTable: React.FC<IUserFcmTokenTableProps> = (props) => {
     updated_at: data.updated_at,
   });
 
-  const mapResponse = (response: any): { data: IUserFcmTokenGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: IUserFcmTokenGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
     return {
-      data: response.data.map((item: any) => ({
-        id: item.id || "",
-        user_id: item.user_id || "",
-        user_email: item.user_email || "",
-        token: item.token || "",
-        device_id: item.device_id || "",
-        created_at: item.created_at || "",
-        updated_at: item.updated_at || "",
-      })),
+      data: response.data,
+      total: response.pagination?.total || 0,
     };
   };
 
@@ -133,7 +127,6 @@ export const UserFcmTokenTable: React.FC<IUserFcmTokenTableProps> = (props) => {
     IUserFcmTokenGetApi,
     IUserFcmTokenGetApi,
     { page: number; size: number; id?: string; user_id?: string },
-    { id?: string; user_id?: string; from?: string; to?: string },
     {
       page: number;
       size: number;
@@ -174,14 +167,6 @@ export const UserFcmTokenTable: React.FC<IUserFcmTokenTableProps> = (props) => {
         user_id: user_id || "",
       });
       console.log("getUserFcmTokenApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({ id, user_id }: { id?: string; user_id?: string }) => {
-      const response = await getTotalUserFcmTokenApi({
-        id,
-        user_id,
-      });
-      console.log("get TotalUserFcmTokenApi response:", response);
       return response;
     },
     searchData: async ({

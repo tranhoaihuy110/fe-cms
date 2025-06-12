@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchOwnersParams } from "./index";
 
 export const searchOwnersApi = (params: ISearchOwnersParams) => {
-  return new Promise<IOwnersGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: IOwnersGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: IOwnersGetApi[] }>("/api/v1/owners/list", {
       params: {
         owner_id: params.owner_id,
@@ -17,7 +17,7 @@ export const searchOwnersApi = (params: ISearchOwnersParams) => {
         size: params.size,
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

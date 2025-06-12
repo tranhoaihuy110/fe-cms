@@ -5,7 +5,7 @@ import { ISearchLeadAssignmentParams } from "./index";
 export const searchLeadAssignmentApi = (
   params: ISearchLeadAssignmentParams
 ) => {
-  return new Promise<ILeadAssignmentGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: ILeadAssignmentGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: ILeadAssignmentGetApi[] }>(
       "/api/v1/leadassignments/list",
       {
@@ -21,7 +21,7 @@ export const searchLeadAssignmentApi = (
         },
       }
     )
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

@@ -10,7 +10,7 @@ export interface ISortProfileUrlMapParams {
 
 export const sortUserProfileUrlMapApi = async (
   params: ISortProfileUrlMapParams
-): Promise<IUserProfileUrlMapGetApi[]> => {
+): Promise<{ data: IUserProfileUrlMapGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -27,5 +27,5 @@ export const sortUserProfileUrlMapApi = async (
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return res.data.data;
+  return res.data;
 };

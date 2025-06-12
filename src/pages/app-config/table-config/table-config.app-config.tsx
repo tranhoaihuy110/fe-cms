@@ -53,11 +53,16 @@ export const AppConfigTable: React.FC<IAppConfigTableProps> = (props) => {
     description: data.description || null,
   });
 
-  const mapResponse = (response: any): { data: IAppConfigGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: IAppConfigGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
 
   const {

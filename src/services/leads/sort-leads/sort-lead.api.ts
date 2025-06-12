@@ -10,7 +10,7 @@ export interface ISortLeadsParams {
 
 export const sortLeadsApi = async (
   params: ISortLeadsParams
-): Promise<ILeadsGetApi[]> => {
+): Promise<{ data: ILeadsGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -24,5 +24,5 @@ export const sortLeadsApi = async (
     params: queryParams,
     headers: { Authorization: `Bearer ${token}` },
   });
-  return res.data.data;
+  return res.data;
 };

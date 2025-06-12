@@ -5,7 +5,7 @@ import { ISearchLeadsPropertyRoomsParams } from "./index";
 export const searchLeadsPropertyRoomsApi = (
   params: ISearchLeadsPropertyRoomsParams
 ) => {
-  return new Promise<ILeadsPropertyRoomsGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: ILeadsPropertyRoomsGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: ILeadsPropertyRoomsGetApi[] }>(
       "/api/v1/leadsproperty-rooms/list",
       {
@@ -23,7 +23,7 @@ export const searchLeadsPropertyRoomsApi = (
         },
       }
     )
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

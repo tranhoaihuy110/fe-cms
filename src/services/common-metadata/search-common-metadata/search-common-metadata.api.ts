@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchCommonMetadataParams } from "./index";
 
 export const searchCommonMetadataApi = (params: ISearchCommonMetadataParams) => {
-  return new Promise<ICommonMetadataGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: ICommonMetadataGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: ICommonMetadataGetApi[] }>(
       "/api/v1/common-metadata/list",
       {
@@ -17,7 +17,7 @@ export const searchCommonMetadataApi = (params: ISearchCommonMetadataParams) => 
         },
       }
     )
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

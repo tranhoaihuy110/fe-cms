@@ -5,7 +5,7 @@ import { ISearchPotentialLeadHistorySearchParams } from "./index";
 export const searchPotentialLeadHistorySearchApi = (
   params: ISearchPotentialLeadHistorySearchParams
 ) => {
-  return new Promise<IPotentialLeadHistorySearchGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: IPotentialLeadHistorySearchGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: IPotentialLeadHistorySearchGetApi[] }>(
       "/api/v1/potential-lead-history-search/list",
       {
@@ -20,7 +20,7 @@ export const searchPotentialLeadHistorySearchApi = (
         },
       }
     )
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

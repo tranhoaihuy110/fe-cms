@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getCommonFaqApi,
-  getTotalCommonFaqApi,
   searchCommonFaqApi,
   sortCommonFaqApi,
   postCommonFaqApi,
@@ -61,20 +60,15 @@ export const CommonFaqTable: React.FC<ICommonFaqTableProps> = (props) => {
     faq_status: data.faq_status || 0,
   });
 
-  const mapResponse = (response: any): { data: ICommonFaqGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: ICommonFaqGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
     return {
-      data: response.data.map((item: any) => ({
-        id: item.id || 0,
-        faq_q: item.faq_q || "",
-        faq_a: item.faq_a || "",
-        faq_type: item.faq_type || "",
-        create_date: item.create_date || "",
-        tenacy_id: item.tenacy_id || "",
-        faq_status: item.faq_status || 0,
-      })),
+      data: response.data,
+      total: response.pagination?.total || 0,
     };
   };
 
@@ -130,7 +124,6 @@ export const CommonFaqTable: React.FC<ICommonFaqTableProps> = (props) => {
     ICommonFaqGetApi,
     ICommonFaqGetApi,
     { page: number; size: number; id?: string; faq_q?: string },
-    { id?: string; faq_q?: string; from?: string; to?: string },
     { page: number; size: number; id?: string; faq_q?: string; from?: string; to?: string },
     {
       page: number;
@@ -155,26 +148,6 @@ export const CommonFaqTable: React.FC<ICommonFaqTableProps> = (props) => {
         id: id || "",
       });
       console.log("getCommonFaqApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      id,
-      faq_q,
-      from,
-      to,
-    }: {
-      id?: string;
-      faq_q?:string
-      from?: string;
-      to?: string;
-    }) => {
-      const response = await getTotalCommonFaqApi({
-        id,
-        from,
-        faq_q,
-        to,
-      });
-      console.log("getTotalCommonFaqApi response:", response);
       return response;
     },
     searchData: async ({

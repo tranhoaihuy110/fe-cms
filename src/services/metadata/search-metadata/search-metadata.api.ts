@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchMetaDataParams } from "./index";
 
 export const searchMetaDataApi = (params: ISearchMetaDataParams) => {
-  return new Promise<IMetaDataApi[]>((resolve, reject) => {
+  return new Promise<{ data: IMetaDataApi[] }>((resolve, reject) => {
     MS_API.get<{ data: IMetaDataApi[] }>(
       "/api/v1/common_metadata_partner/get-list",
       {
@@ -19,7 +19,7 @@ export const searchMetaDataApi = (params: ISearchMetaDataParams) => {
         },
       }
     )
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

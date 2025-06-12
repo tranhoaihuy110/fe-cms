@@ -9,7 +9,6 @@ import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   deleteLeadPopertyFloorsApi,
   getLeadPropertyFloorsApi,
-  getTotalLeadPropertyFloorsApi,
   patchLeadPropertyFloorsApi,
   postLeadPropertyFloorsApi,
   searchLeadPropertyFloorsApi,
@@ -64,18 +63,15 @@ export const LeadPropertyFloorsTable: React.FC<ILeadPropertyFloorsTableProps> = 
     floor_name: data.floor_name,
   });
 
-  const mapResponse = (response: any): { data: ILeadPropertyFloorsGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: ILeadPropertyFloorsGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
     return {
-      data: response.data.map((item: any) => ({
-        id: item.id || "",
-        lead_property_id: item.lead_property_id || "", 
-        floor_type: item.floor_type || "",
-        floor_name: item.floor_name || "",
-        created_at: item.created_at || "",
-      })),
+      data: response.data,
+      total: response.pagination?.total || 0,
     };
   };
 
@@ -130,7 +126,6 @@ export const LeadPropertyFloorsTable: React.FC<ILeadPropertyFloorsTableProps> = 
     ILeadPropertyFloorsGetApi,
     ILeadPropertyFloorsGetApi,
     { page: number; size: number; id?: string; lead_property_id?: string },
-    { id?: string; lead_property_id?: string; from?: string; to?: string },
     {
       page: number;
       size: number;
@@ -173,26 +168,6 @@ export const LeadPropertyFloorsTable: React.FC<ILeadPropertyFloorsTableProps> = 
 
       });
       console.log("getLeadPropertyFloorsApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      id,
-      lead_property_id,
-      from,
-      to,
-    }: {
-      id?: string;
-      lead_property_id?: string;
-      from?: string;
-      to?: string;
-    }) => {
-      const response = await getTotalLeadPropertyFloorsApi({
-        id,
-        lead_property_id,
-        from,
-        to,
-      });
-      console.log("get TotalLeadPropertyFloorsApi response:", response);
       return response;
     },
     searchData: async ({

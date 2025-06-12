@@ -5,7 +5,7 @@ import { ISearchCommonMetadataFinalParams } from "./index";
 export const searchCommonMetadataFinalApi = (
   params: ISearchCommonMetadataFinalParams
 ) => {
-  return new Promise<ICommonMetadataFinalGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: ICommonMetadataFinalGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: ICommonMetadataFinalGetApi[] }>(
       "/api/v1/common-metadata-final/list",
       {
@@ -19,7 +19,7 @@ export const searchCommonMetadataFinalApi = (
         },
       }
     )
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

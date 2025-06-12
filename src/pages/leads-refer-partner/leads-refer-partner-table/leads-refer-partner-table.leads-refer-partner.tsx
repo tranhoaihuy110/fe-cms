@@ -8,7 +8,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
     getLeadsReferPartnerApi,
-    getTotalLeadsReferPartnerApi,
     searchLeadsReferPartnerApi,
     sortLeadsReferPartnerApi,
     postLeadsReferPartnerApi,
@@ -73,12 +72,17 @@ export const LeadsReferPartnerTable: React.FC<ILeadsReferPartnerTableProps> = (p
     };
     };
 
-    const mapResponse = (response: any ): { data: ILeadsReferPartnerGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: ILeadsReferPartnerGetApi[]; total?: number } => {
     if (!response || !response.data) {
-        return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
     };
+  };
 
   const {
     currentPage,
@@ -121,7 +125,6 @@ export const LeadsReferPartnerTable: React.FC<ILeadsReferPartnerTableProps> = (p
     ILeadsReferPartnerGetApi,
     ILeadsReferPartnerGetApi,
     { page: number; size: number; refer_partner_id?: string },
-    { refer_partner_id?: string; from?: string; to?: string },
     { page: number; size: number; refer_partner_id?: string; lead_id?: string; email?: string; from?: string; to?: string },
     { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
     string
@@ -141,26 +144,6 @@ export const LeadsReferPartnerTable: React.FC<ILeadsReferPartnerTableProps> = (p
         refer_partner_id: refer_partner_id || "",
       });
       console.log("get Leads Refer Partner Api response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      refer_partner_id,
-      from,
-      to,
-      lead_id,
-    }: {
-      refer_partner_id?: string;
-      from?: string;
-      to?: string;
-      lead_id?:string;
-    }) => {
-      const response = await getTotalLeadsReferPartnerApi({
-        refer_partner_id,
-        from,
-        to,
-        lead_id,
-      });
-      console.log("get Total Leads Refer Partner Api response:", response);
       return response;
     },
     searchData: async ({

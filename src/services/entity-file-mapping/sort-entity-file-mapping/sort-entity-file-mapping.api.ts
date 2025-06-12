@@ -8,7 +8,7 @@ import { IEntityFileMappingGetApi } from "../../../models";
 
 export const sortEntityFileMappingApi = async (
   params: ISortEntityFileMappingParams
-): Promise<IEntityFileMappingGetApi[]> => {
+): Promise<{ data: IEntityFileMappingGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -27,7 +27,7 @@ export const sortEntityFileMappingApi = async (
       }
     );
     console.log("sort entity file mapping response data:", response.data);
-    return response.data.data;
+    return response.data;
   } catch (error) {
     const err = error as AxiosError<ISortEntityFileMappingError>;
     if (err.response?.data) {

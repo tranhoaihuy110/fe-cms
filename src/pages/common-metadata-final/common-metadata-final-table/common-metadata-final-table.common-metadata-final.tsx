@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getCommonMetadataFinalApi,
-  getTotalCommonMetadataFinalApi,
   searchCommonMetadataFinalApi,
   sortCommonMetadataFinalApi,
   postCommonMetadataFinalApi,
@@ -71,20 +70,15 @@ export const CommonMetadataFinalTable: React.FC<
     meta_values_display: data.meta_values_display,
   });
 
-  const mapResponse = (
+const mapResponse = (
     response: any
-  ): { data: ICommonMetadataFinalGetApi[] } => {
+  ): { data: ICommonMetadataFinalGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
     return {
-      data: response.data.map((item: any) => ({
-        id: item.id || "",
-        meta_key: item.meta_key || "",
-        meta_values: item.meta_values || "",
-        created_at: item.created_at || "",
-        meta_values_display: item.meta_values_display || "",
-      })),
+      data: response.data,
+      total: response.pagination?.total || 0,
     };
   };
 
@@ -138,7 +132,6 @@ export const CommonMetadataFinalTable: React.FC<
     ICommonMetadataFinalGetApi,
     ICommonMetadataFinalPostApi,
     { page: number; size: number; id?: string; key?: string },
-    { id?: string; key?: string; from?: string; to?: string },
     {
       page: number;
       size: number;
@@ -172,26 +165,6 @@ export const CommonMetadataFinalTable: React.FC<
         meta_key : key ||"",
       });
       console.log("getCommonMetadataFinalApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      id,
-      meta_key,
-      from,
-      to,
-    }: {
-      id?: string;
-      meta_key?: string;
-      from?: string;
-      to?: string;
-    }) => {
-      const response = await getTotalCommonMetadataFinalApi({
-        id,
-        meta_key,
-        from,
-        to,
-      });
-      console.log("getTotalCommonMetadataFinalApi response:", response);
       return response;
     },
     searchData: async ({

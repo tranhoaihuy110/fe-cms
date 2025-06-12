@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchMartPotentialLeadParams } from "./index";
 
 export const searchMartPotentialLeadsApi = (params: ISearchMartPotentialLeadParams) => {
-  return new Promise<IMartPotentialLeadGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: IMartPotentialLeadGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: IMartPotentialLeadGetApi[] }>("/api/v1/mart-potential-lead/list", {  
       params: {
         potential_lead_id: params.potential_lead_id,
@@ -14,7 +14,7 @@ export const searchMartPotentialLeadsApi = (params: ISearchMartPotentialLeadPara
         size: params.size
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

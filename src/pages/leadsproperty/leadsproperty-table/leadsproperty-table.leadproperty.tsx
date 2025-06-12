@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getLeadsPropertyApi,
-  getTotalLeadsPropertyApi,
   searchLeadsPropertyApi,
   sortLeadsPropertyApi,
   postLeadsPropertyApi,
@@ -123,11 +122,16 @@ export const LeadPropertyTable: React.FC<ILeadPropertyTableProps> = (props) => {
     };
   };
 
-  const mapResponse = (response: any): { data: ILeadsPropertyGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: ILeadsPropertyGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
 
   const transformToPostData = (data: Partial<ILeadsPropertyGetApi>): Partial<ILeadsPropertyPostApi> => {
@@ -232,7 +236,6 @@ export const LeadPropertyTable: React.FC<ILeadPropertyTableProps> = (props) => {
     ILeadsPropertyGetApi,
     ILeadsPropertyGetApi,
     { page: number; size: number; lead_property_id?: string },
-    { lead_property_id?: string; from?: string; to?: string },
     { page: number; size: number; lead_property_id?: string; email?: string; address?: string; from?: string; to?: string },
     { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
     string
@@ -252,26 +255,6 @@ export const LeadPropertyTable: React.FC<ILeadPropertyTableProps> = (props) => {
         lead_property_id: lead_property_id || "",
       });
       console.log("getLeadPropertyApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      lead_property_id,
-      from,
-      to,
-      email,
-    }: {
-      lead_property_id?: string;
-      from?: string;
-      to?: string;
-      email?: string;
-    }) => {
-      const response = await getTotalLeadsPropertyApi({
-        lead_property_id,
-        from,
-        to,
-        email,
-      });
-      console.log("getTotalLeadPropertyApi response:", response);
       return response;
     },
     searchData: async ({

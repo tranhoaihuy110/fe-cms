@@ -10,7 +10,7 @@ export interface ISortMetaFinalParams {
 
 export const sortCommonMetadataFinalApi = async (
   params: ISortMetaFinalParams
-): Promise<ICommonMetadataFinalGetApi[]> => {
+): Promise<{ data: ICommonMetadataFinalGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -27,5 +27,5 @@ export const sortCommonMetadataFinalApi = async (
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return res.data.data;
+  return res.data;
 };

@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getLeadActivityApi,
-  getTotalLeadActivityApi,
   searchLeadActivityApi,
   sortLeadActivityApi,
   postLeadActivityApi,
@@ -69,15 +68,17 @@ export const LeadActivityTable: React.FC<ILeadActivitiesTableProps> = (
     status: data.status,
   });
 
-  const mapResponse = (response: any): { data: ILeadActivityGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: ILeadActivityGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
     return {
       data: response.data,
+      total: response.pagination?.total || 0,
     };
   };
-
   const wrappedDeleteLeadActivityApi = async (id: string): Promise<any> => {
     return await deleteLeadActivityApi(id);
   };
@@ -126,7 +127,6 @@ export const LeadActivityTable: React.FC<ILeadActivitiesTableProps> = (
     ILeadActivityGetApi,
     ILeadActivityGetApi,
     { page: number; size: number; activity_id?: string; key?: string },
-    { activity_id?: string; email?: string; from?: string; to?: string },
     {
       page: number;
       size: number;
@@ -160,26 +160,6 @@ export const LeadActivityTable: React.FC<ILeadActivitiesTableProps> = (
         email: email || "",
       });
       console.log("getLeadActivityApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      activity_id,
-      email,
-      from,
-      to,
-    }: {
-      activity_id?: string;
-      email?: string;
-      from?: string;
-      to?: string;
-    }) => {
-      const response = await getTotalLeadActivityApi({
-        activity_id,
-        email,
-        from,
-        to,
-      });
-      console.log("getTotalLeadActivityApi response:", response);
       return response;
     },
     searchData: async ({

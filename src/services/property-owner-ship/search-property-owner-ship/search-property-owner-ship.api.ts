@@ -5,7 +5,7 @@ import { ISearchPropertyOwnerShipParams } from "./index";
 export const searchPropertyOwnerShipApi = (
   params: ISearchPropertyOwnerShipParams
 ) => {
-  return new Promise<IPropertyOwnerShipGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: IPropertyOwnerShipGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: IPropertyOwnerShipGetApi[] }>(
       "/api/v1/property-owner-ship/list",
       {
@@ -19,7 +19,7 @@ export const searchPropertyOwnerShipApi = (
         },
       }
     )
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

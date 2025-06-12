@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchCommonFaqParams } from "./index";
 
 export const searchCommonFaqApi = (params: ISearchCommonFaqParams) => {
-  return new Promise<ICommonFaqGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: ICommonFaqGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: ICommonFaqGetApi[] }>("/api/v1/common-faq/list", {
       params: {
         created_at_from: params.from,
@@ -16,7 +16,7 @@ export const searchCommonFaqApi = (params: ISearchCommonFaqParams) => {
         size: params.size,
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

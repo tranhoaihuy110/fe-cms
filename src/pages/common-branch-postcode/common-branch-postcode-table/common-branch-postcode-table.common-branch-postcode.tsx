@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getCommonBranchPostcodeApi,
-  getTotalCommonBranchPostcodeApi,
   searchCommonBranchPostcodeApi,
   sortCommonBranchPostcodeApi,
   postCommonBranchPostcodeApi,
@@ -57,20 +56,18 @@ export const CommonBranchPostcodeTable: React.FC<ICommonBranchPostcodeTableProps
     created_at: data.created_at ,
   });
 
-  const mapResponse = (response: any): { data: ICommonBranchPostcodeGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: ICommonBranchPostcodeGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-   return {
-      data: response.data.map((item: any) => ({
-        id: item.id || "",
-        user_name: item.user_name || "",
-        branch: item.branch || "",
-        postcodes: item.postcodes || "",
-        created_at: item.created_at || "",
-      })),
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
     };
   };
+
   const wrappedDeleteCommonBranchPostcodeApi = async (
     id: string
   ): Promise<any> => {
@@ -120,7 +117,6 @@ export const CommonBranchPostcodeTable: React.FC<ICommonBranchPostcodeTableProps
     ICommonBranchPostcodeGetApi,
     ICommonBranchPostcodeGetApi,
     { page: number; size: number; id: string },
-    { id: string; from?: string; to?: string },
     { page: number; size: number; id: string; from?: string; to?: string },
     {
       page: number;
@@ -144,23 +140,6 @@ export const CommonBranchPostcodeTable: React.FC<ICommonBranchPostcodeTableProps
         id: id ,
       });
       console.log("getCommonBranchPostcodeApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      id,
-      from,
-      to,
-    }: {
-      id?: string;
-      from?: string;
-      to?: string;
-    }) => {
-      const response = await getTotalCommonBranchPostcodeApi({
-        id,
-        from,
-        to,
-      });
-      console.log("getTotalCommonBranchPostcodeApi response:", response);
       return response;
     },
     searchData: async ({

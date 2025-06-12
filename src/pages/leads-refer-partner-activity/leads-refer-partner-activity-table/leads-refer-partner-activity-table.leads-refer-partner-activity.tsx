@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getLeadsReferPartnerActivityApi,
-  getTotalLeadsReferPartnerActivityApi,
   searchLeadsReferPartnerActivityApi,
   sortLeadsReferPartnerActivityApi,
   postLeadsReferPartnerActivityApi,
@@ -90,13 +89,16 @@ export const LeadsReferPartnerActivityTable: React.FC<
     };
   };
 
-  const mapResponse = (
+const mapResponse = (
     response: any
-  ): { data: ILeadsReferPartnerActivityGetApi[] } => {
+  ): { data: ILeadsReferPartnerActivityGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
 
   const transformToPostData = (
@@ -165,7 +167,6 @@ export const LeadsReferPartnerActivityTable: React.FC<
     ILeadsReferPartnerActivityGetApi,
     ILeadsReferPartnerActivityGetApi,
     { page: number; size: number; id?: string },
-    { id?: string; from?: string; to?: string },
     {
       page: number;
       size: number;
@@ -197,32 +198,6 @@ export const LeadsReferPartnerActivityTable: React.FC<
         id: id || "",
       });
       console.log("getLeadsReferPartnerActivityApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      id,
-      from,
-      to,
-      refer_partner_id,
-      user_action,
-    }: {
-      id?: string;
-      from?: string;
-      to?: string;
-      refer_partner_id?: string;
-      user_action?: string;
-    }) => {
-      const response = await getTotalLeadsReferPartnerActivityApi({
-        id,
-        from,
-        to,
-        refer_partner_id,
-        user_action,
-      });
-      console.log(
-        "get Total Leads refer partner activity Api response:",
-        response
-      );
       return response;
     },
     searchData: async ({

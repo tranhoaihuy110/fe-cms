@@ -8,7 +8,6 @@ import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   deleteCommonMetadataApi,
   getCommonMetadataApi,
-  getTotalCommonMetadataApi,
   patchCommonMetadataApi,
   postCommonMetadataApi,
   searchCommonMetadataApi,
@@ -60,17 +59,15 @@ export const CommonMetadataTable: React.FC<ICommonMetaDataTableProps> = (
     meta_values: data.meta_values,
   });
 
-  const mapResponse = (response: any): { data: ICommonMetadataGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: ICommonMetadataGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
     return {
-      data: response.data.map((item: any) => ({
-        id: item.id || "",
-        meta_key: item.meta_key || "", 
-        meta_values: item.meta_values || "",
-        created_at: item.created_at || "",
-      })),
+      data: response.data,
+      total: response.pagination?.total || 0,
     };
   };
 
@@ -125,7 +122,6 @@ export const CommonMetadataTable: React.FC<ICommonMetaDataTableProps> = (
     ICommonMetadataGetApi,
     ICommonMetadataGetApi,
     { page: number; size: number; id?: string; meta_key?: string },
-    { id?: string; meta_key?: string; from?: string; to?: string },
     {
       page: number;
       size: number;
@@ -159,26 +155,6 @@ export const CommonMetadataTable: React.FC<ICommonMetaDataTableProps> = (
         meta_key: meta_key || "",
       });
       console.log("getCommonMetadataApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      id,
-      meta_key,
-      from,
-      to,
-    }: {
-      id?: string;
-      meta_key?: string;
-      from?: string;
-      to?: string;
-    }) => {
-      const response = await getTotalCommonMetadataApi({
-        id,
-        meta_key,
-        from,
-        to,
-      });
-      console.log("getTotalCommonMetadataApi response:", response);
       return response;
     },
     searchData: async ({

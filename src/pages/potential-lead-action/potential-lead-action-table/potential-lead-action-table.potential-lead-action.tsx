@@ -2,31 +2,35 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import {
-    FilterSection,
-    PaginationSection,
-    TableComponent,
+  FilterSection,
+  PaginationSection,
+  TableComponent,
 } from "../../../components/table";
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
-    getPotentialLeadActionApi,
-    getTotalPotentialLeadActionApi,
-    searchPotentialLeadActionApi,
-    sortPotentialLeadActionApi,
-    postPotentialLeadActionApi,
-    patchPotentialLeadActionApi,
-    deletePotentialLeadActionApi,
+  getPotentialLeadActionApi,
+  searchPotentialLeadActionApi,
+  sortPotentialLeadActionApi,
+  postPotentialLeadActionApi,
+  patchPotentialLeadActionApi,
+  deletePotentialLeadActionApi,
 } from "../../../services";
 import { IPotentialLeadActionTableProps } from "./index";
-import { IPotentialLeadActionGetApi,IPotentialLeadActionPatchApi } from "../../../models";
+import {
+  IPotentialLeadActionGetApi,
+  IPotentialLeadActionPatchApi,
+} from "../../../models";
 import {
   MartPotentialLeadActionFormModal,
   DeletePotentialLeadActionConfirmationModal,
 } from "../index";
 
-export const PotentialLeadActionTable: React.FC<IPotentialLeadActionTableProps> = (props) => {
-    const { children = "" } = props;
+export const PotentialLeadActionTable: React.FC<
+  IPotentialLeadActionTableProps
+> = (props) => {
+  const { children = "" } = props;
 
-    const initialFormData: IPotentialLeadActionGetApi = {
+  const initialFormData: IPotentialLeadActionGetApi = {
     id: "",
     potential_lead_id: "",
     last_name: "",
@@ -36,52 +40,59 @@ export const PotentialLeadActionTable: React.FC<IPotentialLeadActionTableProps> 
     json_data: {},
     action_type: "",
     create_at: "",
-    };
+  };
 
-    const filterConfig: FilterConfig[] = [
+  const filterConfig: FilterConfig[] = [
     { key: "id", label: " ID", type: "text" },
     { key: "potential_lead_id", label: "Potential Lead ID", type: "text" },
     { key: "last_name", label: "Last Name", type: "text" },
-    ];
+  ];
 
-    const fieldMapping = {
+  const fieldMapping = {
     id: "id" as keyof IPotentialLeadActionGetApi,
     potential_lead_id: "potential_lead_id" as keyof IPotentialLeadActionGetApi,
     last_name: "last_name" as keyof IPotentialLeadActionGetApi,
     createdAt: "create_at" as keyof IPotentialLeadActionGetApi,
-    };
+  };
 
-    const mapToForm = (data: IPotentialLeadActionGetApi): IPotentialLeadActionGetApi => ({
-        id: data.id || "",
-        potential_lead_id: data.potential_lead_id || "",
-        last_name: data.last_name|| "",
-        list_potential_lead_id: data.list_potential_lead_id || "",
-        action_username: data.action_username|| "",
-        action_username_id: data.action_username_id || "",
-        json_data: data.json_data|| {},
-        action_type: data.action_type|| "",
-        create_at: data.create_at|| "",
-    });
+  const mapToForm = (
+    data: IPotentialLeadActionGetApi
+  ): IPotentialLeadActionGetApi => ({
+    id: data.id || "",
+    potential_lead_id: data.potential_lead_id || "",
+    last_name: data.last_name || "",
+    list_potential_lead_id: data.list_potential_lead_id || "",
+    action_username: data.action_username || "",
+    action_username_id: data.action_username_id || "",
+    json_data: data.json_data || {},
+    action_type: data.action_type || "",
+    create_at: data.create_at || "",
+  });
 
-    const mapFromForm = (data: IPotentialLeadActionGetApi): Partial<IPotentialLeadActionPatchApi> => {
+  const mapFromForm = (
+    data: IPotentialLeadActionGetApi
+  ): Partial<IPotentialLeadActionPatchApi> => {
     return {
-        id: data.id,
-        potential_lead_id: data.potential_lead_id,
-        list_potential_lead_id: data.list_potential_lead_id,
-        action_username: data.action_username,
-        action_username_id: data.action_username_id,
-        json_data: data.json_data,
-        action_type: data.action_type,
+      id: data.id,
+      potential_lead_id: data.potential_lead_id,
+      list_potential_lead_id: data.list_potential_lead_id,
+      action_username: data.action_username,
+      action_username_id: data.action_username_id,
+      json_data: data.json_data,
+      action_type: data.action_type,
     };
-    };
-
-    const mapResponse = (response: any ): { data: IPotentialLeadActionGetApi[] } => {
+  };
+  const mapResponse = (
+    response: any
+  ): { data: IPotentialLeadActionGetApi[]; total?: number } => {
     if (!response || !response.data) {
-        return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
     };
-
+  };
   const {
     currentPage,
     setCurrentPage,
@@ -119,13 +130,24 @@ export const PotentialLeadActionTable: React.FC<IPotentialLeadActionTableProps> 
     sortConfig,
     loading,
     error,
-    } = useTableData<
+  } = useTableData<
     IPotentialLeadActionGetApi,
     IPotentialLeadActionGetApi,
     { page: number; size: number; id?: string },
-    { id?: string; from?: string; to?: string },
-    { page: number; size: number; id?: string; potential_lead_id?: string; last_name?: string; from?: string; to?: string },
-    { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
+    {
+      page: number;
+      size: number;
+      id?: string;
+      potential_lead_id?: string;
+      last_name?: string;
+      from?: string;
+      to?: string;
+    },
+    {
+      page: number;
+      size: number;
+      sort: { field: string; direction: "asc" | "desc" };
+    },
     string
   >({
     fetchData: async ({
@@ -143,26 +165,6 @@ export const PotentialLeadActionTable: React.FC<IPotentialLeadActionTableProps> 
         id: id || "",
       });
       console.log("get Potential Lead Action Api response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      id,
-      from,
-      to,
-      potential_lead_id,
-    }: {
-      id?: string;
-      from?: string;
-      to?: string;
-      potential_lead_id?:string;
-    }) => {
-      const response = await getTotalPotentialLeadActionApi({
-        id,
-        from,
-        to,
-        potential_lead_id,
-      });
-      console.log("get Total Potential Lead Action Api response:", response);
       return response;
     },
     searchData: async ({
@@ -215,7 +217,10 @@ export const PotentialLeadActionTable: React.FC<IPotentialLeadActionTableProps> 
         size: 1,
         id,
       });
-      console.log("get Potential Lead Action Api (fetchById) response:", response);
+      console.log(
+        "get Potential Lead Action Api (fetchById) response:",
+        response
+      );
       if (!response.data || !response.data[0]) {
         throw new Error(" Potential Lead Action not found");
       }
@@ -233,11 +238,10 @@ export const PotentialLeadActionTable: React.FC<IPotentialLeadActionTableProps> 
   });
 
   const searchIdTerm =
-    filters.id !== undefined && filters.id !== null
-      ? String(filters.id)
-      : "";
+    filters.id !== undefined && filters.id !== null ? String(filters.id) : "";
   const searchEmailTerm =
-    filters.potential_lead_id !== undefined && filters.potential_lead_id !== null
+    filters.potential_lead_id !== undefined &&
+    filters.potential_lead_id !== null
       ? String(filters.potential_lead_id)
       : "";
   const searchAddressTerm =
@@ -245,9 +249,9 @@ export const PotentialLeadActionTable: React.FC<IPotentialLeadActionTableProps> 
       ? String(filters.last_name)
       : "";
 
-  const setSearchIdTerm = (value: string) =>
-    setFilter("id", value || null);
-  const setSearchNameTerm = (value: string) => setFilter("potential_lead_id", value || null);
+  const setSearchIdTerm = (value: string) => setFilter("id", value || null);
+  const setSearchNameTerm = (value: string) =>
+    setFilter("potential_lead_id", value || null);
   const setSearchTypeTerm = (value: string) =>
     setFilter("last_name", value || null);
 
@@ -256,18 +260,27 @@ export const PotentialLeadActionTable: React.FC<IPotentialLeadActionTableProps> 
   const handleClearSearchAddress = () => handleClearFilter("last_name");
 
   const columns = [
-  { key: "id" as keyof IPotentialLeadActionGetApi, header: "ID" },
-  { key: "potential_lead_id" as keyof IPotentialLeadActionGetApi, header: "Potential lead ID" },
-  { key: "last_name" as keyof IPotentialLeadActionGetApi, header: "Last Name " },
-  { key: "action_username" as keyof IPotentialLeadActionGetApi, header: "Action UserName " },
-  {
-    key: "create_at" as keyof IPotentialLeadActionGetApi,
-    header: "Date Created",
-    render: (item: IPotentialLeadActionGetApi) =>
-      new Date(item.create_at || "").toLocaleString(),
-  },
-  { key: "actions" as keyof IPotentialLeadActionGetApi, header: "Actions" },
-];
+    { key: "id" as keyof IPotentialLeadActionGetApi, header: "ID" },
+    {
+      key: "potential_lead_id" as keyof IPotentialLeadActionGetApi,
+      header: "Potential lead ID",
+    },
+    {
+      key: "last_name" as keyof IPotentialLeadActionGetApi,
+      header: "Last Name ",
+    },
+    {
+      key: "action_username" as keyof IPotentialLeadActionGetApi,
+      header: "Action UserName ",
+    },
+    {
+      key: "create_at" as keyof IPotentialLeadActionGetApi,
+      header: "Date Created",
+      render: (item: IPotentialLeadActionGetApi) =>
+        new Date(item.create_at || "").toLocaleString(),
+    },
+    { key: "actions" as keyof IPotentialLeadActionGetApi, header: "Actions" },
+  ];
 
   return (
     <>

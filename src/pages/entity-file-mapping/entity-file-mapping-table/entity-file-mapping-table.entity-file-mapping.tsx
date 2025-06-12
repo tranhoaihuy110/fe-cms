@@ -8,7 +8,6 @@ import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   deleteEntityFileMappingApi,
   getEntityFileMappingApi,
-  getTotalEntityFileMappingApi,
   patchEntityFileMappingApi,
   postEntityFileMappingApi,
   searchEntityFileMappingApi,
@@ -85,23 +84,15 @@ export const EntityFileMappingTable: React.FC<IEntityFileMappingTableProps> = (
     metadata: data.metadata,
   });
 
-  const mapResponse = (response: any): { data: IEntityFileMappingGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: IEntityFileMappingGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
     return {
-      data: response.data.map((item: any) => ({
-        id: item.id || "",
-        entity_type: item.entity_type || "",
-        mapping_key: item.mapping_key || "",
-        entity_id: item.entity_id || "",
-        file_key: item.file_key || null,
-        file_name: item.file_name || "",
-        file_url: item.file_url || "",
-        created_at: item.created_at || "",
-        updated_at: item.updated_at || "",
-        metadata: item.metadata || "",
-      })),
+      data: response.data,
+      total: response.pagination?.total || 0,
     };
   };
 
@@ -166,14 +157,6 @@ export const EntityFileMappingTable: React.FC<IEntityFileMappingTableProps> = (
       entity_id?: string;
     },
     {
-      id?: string;
-      entity_type?: string;
-      mapping_key?: string;
-      entity_id?: string;
-      from?: string;
-      to?: string;
-    },
-    {
       page: number;
       size: number;
       id?: string;
@@ -205,24 +188,6 @@ export const EntityFileMappingTable: React.FC<IEntityFileMappingTableProps> = (
         entity_type,
         mapping_key,
         entity_id,
-      });
-      return response;
-    },
-    fetchTotal: async ({
-      id,
-      entity_type,
-      mapping_key,
-      entity_id,
-      from,
-      to,
-    }) => {
-      const response = await getTotalEntityFileMappingApi({
-        id,
-        entity_type,
-        mapping_key,
-        entity_id,
-        from,
-        to,
       });
       return response;
     },

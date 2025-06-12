@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchMartPotentialLeadOrderParams } from "./index";
 
 export const searchMartPotentialLeadOrderApi = (params: ISearchMartPotentialLeadOrderParams) => {
-  return new Promise<IMartPotentialLeadOrderGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: IMartPotentialLeadOrderGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: IMartPotentialLeadOrderGetApi[] }>(
       "/api/v1/mart-potential-lead-order/list",
       {
@@ -21,7 +21,7 @@ export const searchMartPotentialLeadOrderApi = (params: ISearchMartPotentialLead
         },
       }
     )
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

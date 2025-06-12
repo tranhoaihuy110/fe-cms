@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getMartPotentialLeadOrderApi,
-  getTotalMartPotentialLeadOrderApi,
   searchMartPotentialLeadOrderApi,
   sortMartPotentialLeadOrdersApi,
   postMartPotentialLeadOrderApi,
@@ -65,11 +64,16 @@ export const MartPotentialLeadOrderTable: React.FC<IMartPotentialLeadOrderTableP
     };
   };
 
-  const mapResponse = (response: any): { data: IMartPotentialLeadOrderGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: IMartPotentialLeadOrderGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
 
   const {
@@ -116,7 +120,6 @@ export const MartPotentialLeadOrderTable: React.FC<IMartPotentialLeadOrderTableP
     IMartPotentialLeadOrderGetApi,
     IMartPotentialLeadOrderGetApi,
     { page: number; size: number; potential_lead_order_id?: string },
-    { potential_lead_order_id?: string; from?: string; to?: string },
     { page: number; size: number; potential_lead_order_id?: string; full_address?: string;from?: string; to?: string },
     { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
     string
@@ -136,26 +139,6 @@ export const MartPotentialLeadOrderTable: React.FC<IMartPotentialLeadOrderTableP
         potential_lead_order_id: potential_lead_order_id || "",
       });
       console.log("getMartPotentialLeadOrderApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      potential_lead_order_id,
-      from,
-      to,
-      full_address,
-    }: {
-      potential_lead_order_id?: string;
-      from?: string;
-      to?: string;
-      full_address?:string;
-    }) => {
-      const response = await getTotalMartPotentialLeadOrderApi({
-        potential_lead_order_id,
-        from,
-        to,
-        full_address,
-      });
-      console.log("getTotalMartPotentialLeadOrderApi response:", response);
       return response;
     },
     searchData: async ({

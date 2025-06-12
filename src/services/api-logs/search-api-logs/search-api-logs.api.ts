@@ -4,7 +4,7 @@ import { MS_API } from "../../api";
 import { ISearchApiLogsParams } from "./index";
 
 export const searchApiLogs = (params: ISearchApiLogsParams) => {
-  return new Promise<IApiLogsGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: IApiLogsGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: IApiLogsGetApi[] }>("/api/v1/api-log/list", {  
       params: {
         id: params.id,
@@ -15,7 +15,7 @@ export const searchApiLogs = (params: ISearchApiLogsParams) => {
         size: params.size
       },  
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

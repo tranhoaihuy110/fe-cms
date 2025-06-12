@@ -11,7 +11,6 @@ import { IPropertyOwnerShipGetApi, IPropertyOwnerShipPatchApi, IPropertyOwnerShi
 import {
   deletePropertyOwnerShipApi,
   getPropertyOwnerShipApi,
-  getTotalPropertyOwnerShipApi,
   patchPropertyOwnerShipApi,
   postPropertyOwnerShipApi,
   searchPropertyOwnerShipApi,
@@ -77,11 +76,16 @@ export const PropertyOwnerShipTable: React.FC<IPropertyOwnerShipTableProps> = (p
     };
   };
 
-  const mapResponse = (response: any): { data: IPropertyOwnerShipGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: IPropertyOwnerShipGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
 
   const transformToPostData = (data: IPropertyOwnerShipGetApi): IPropertyOwnerShipPostApi => {
@@ -150,7 +154,6 @@ export const PropertyOwnerShipTable: React.FC<IPropertyOwnerShipTableProps> = (p
     IPropertyOwnerShipGetApi,
     IPropertyOwnerShipPostApi, 
     { page: number; size: number; ownership_id?: string },
-    { ownership_id?: string; from?: string; to?: string },
     { page: number; size: number; ownership_id?: string; property_id?: string; owner_id?: string; from?: string; to?: string },
     { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
     string
@@ -170,26 +173,6 @@ export const PropertyOwnerShipTable: React.FC<IPropertyOwnerShipTableProps> = (p
         ownership_id: ownership_id || "",
       });
       console.log("getPropertyOwnerShipApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      ownership_id,
-      from,
-      to,
-      property_id,
-    }: {
-      ownership_id?: string;
-      from?: string;
-      to?: string;
-      property_id?: string;
-    }) => {
-      const response = await getTotalPropertyOwnerShipApi({
-        ownership_id,
-        from,
-        to,
-        property_id,
-      });
-      console.log("getTotalPropertyOwnerShipApi response:", response);
       return response;
     },
     searchData: async ({

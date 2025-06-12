@@ -4,7 +4,7 @@ import { MS_API } from "../../api";
 import { ISearchAppConfigParams } from "./index";
 
 export const searchAppConfigApi = (params: ISearchAppConfigParams) => {
-  return new Promise<IAppConfigGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: IAppConfigGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: IAppConfigGetApi[] }>("/api/v1/app-config/list", {  
       params: {
         key: params.key,
@@ -14,7 +14,7 @@ export const searchAppConfigApi = (params: ISearchAppConfigParams) => {
         size: params.size
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };  

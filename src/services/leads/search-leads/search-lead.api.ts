@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchLeadsParams } from "./search-lead.type";
 
 export const searchLeadsApi = (params: ISearchLeadsParams) => {
-  return new Promise<ILeadsGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: ILeadsGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: ILeadsGetApi[] }>("/api/v1/leads/list", {
       params: {
         lead_id: params.lead_id,
@@ -15,7 +15,7 @@ export const searchLeadsApi = (params: ISearchLeadsParams) => {
         size: params.size,
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

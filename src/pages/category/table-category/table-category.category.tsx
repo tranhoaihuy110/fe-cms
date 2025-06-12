@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getMetaDataApi,
-  getTotalMetaDataApi,
   searchMetaDataApi,
   sortMetaDataApi,
   postMetaDataApi,
@@ -78,9 +77,17 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
     data_desc: data.data_desc,
   });
 
-  const mapResponse = (response: any): { data: IMetaDataApi[] } => ({
-    data: response.data,
-  });
+ const mapResponse = (
+     response: any
+   ): { data: IMetaDataApi[]; total?: number } => {
+     if (!response || !response.data) {
+       return { data: [], total: 0 };
+     }
+     return {
+       data: response.data,
+       total: response.pagination?.total || 0,
+     };
+   };
 
   const {
     currentPage,
@@ -127,13 +134,6 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
     IMetaDataApi,
     { page: number; size: number; data_type: string; id?: string },
     {
-      data_type: string;
-      id?: string;
-      name?: string;
-      from?: string;
-      to?: string;
-    },
-    {
       page: number;
       size: number;
       data_type: string;
@@ -168,27 +168,6 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
         id: id || "",
       });
       return response;
-    },
-    fetchTotal: async ({
-      data_type = "category",
-      id,
-      name,
-      from,
-      to,
-    }: {
-      data_type: string;
-      id?: string;
-      name?: string;
-      from?: string;
-      to?: string;
-    }) => {
-      return getTotalMetaDataApi({
-        data_type,
-        id,
-        name,
-        from,
-        to,
-      });
     },
     searchData: async ({
       size,

@@ -85,7 +85,7 @@ export const CampaignEmailTemplateTable: React.FC<
     user_create: data.user_create,
   });
 
-  const mapResponse = (
+const mapResponse = (
     response: any
   ): { data: ICampaignEmailTemplateGetApi[]; total?: number } => {
     if (!response || !response.data) {

@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchCommonBranchPostcodeParams } from "./index";
 
 export const searchCommonBranchPostcodeApi = (params: ISearchCommonBranchPostcodeParams) => {
-  return new Promise<ICommonBranchPostcodeGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: ICommonBranchPostcodeGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: ICommonBranchPostcodeGetApi[] }>("/api/v1/common-branch-postcode/list", {  
       params: {
         id: params.id,
@@ -14,7 +14,7 @@ export const searchCommonBranchPostcodeApi = (params: ISearchCommonBranchPostcod
         size: params.size
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

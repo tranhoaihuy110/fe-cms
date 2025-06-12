@@ -330,10 +330,7 @@ export const useDataOperations = <
     }
   };
 
-  const handleDeleteItem = async (
-    itemToDelete: any,
-    itemsPerPage: number
-  ) => {
+  const handleDeleteItem = async (itemToDelete: any, itemsPerPage: number) => {
     if (!itemToDelete) return;
     try {
       setLoading(true);
@@ -349,59 +346,59 @@ export const useDataOperations = <
       setTotalItems(response.total || 0);
     } catch (err) {
       const error = err as { message: string; error?: string };
-        toast.error(
-          `Failed to delete item: ${
-            error.message || error.error || "Unknown error"
-          }`
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-  
-    const handleSearch = async (
-      currentPage: number,
-      itemsPerPage: number,
-      filters: Record<string, string | number | null>
-    ) => {
-      setLoading(true);
-      try {
-        const response = mapResponse(
-          await searchData({
-            page: currentPage,
-            size: itemsPerPage,
-            ...filters,
-          } as SearchParams)
-        );
-        setTableData(response.data);
-        setFilteredData(response.data);
-        setTotalItems(response.total || 0);
-        setError(null);
-      } catch (err) {
-        const error = err as { message: string };
-        setError(error.message);
-        toast.error(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-  
-    return {
-      tableData,
-      filteredData,
-      totalItems,
-      loading,
-      error,
-      setTableData,
-      setFilteredData,
-      setTotalItems,
-      setError,
-      loadData,
-      fetchItemById,
-      handleAddItem,
-      handleEditItem,
-      handleDeleteItem,
-      handleSearch,
-      getDateRange,
-    };
+      toast.error(
+        `Failed to delete item: ${
+          error.message || error.error || "Unknown error"
+        }`
+      );
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const handleSearch = async (
+    currentPage: number,
+    itemsPerPage: number,
+    filters: Record<string, string | number | null>
+  ) => {
+    setLoading(true);
+    try {
+      const response = mapResponse(
+        await searchData({
+          page: currentPage,
+          size: itemsPerPage,
+          ...filters,
+        } as SearchParams)
+      );
+      setTableData(response.data);
+      setFilteredData(response.data);
+      setTotalItems(response.total || 0);
+      setError(null);
+    } catch (err) {
+      const error = err as { message: string };
+      setError(error.message);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    tableData,
+    filteredData,
+    totalItems,
+    loading,
+    error,
+    setTableData,
+    setFilteredData,
+    setTotalItems,
+    setError,
+    loadData,
+    fetchItemById,
+    handleAddItem,
+    handleEditItem,
+    handleDeleteItem,
+    handleSearch,
+    getDateRange,
+  };
+};

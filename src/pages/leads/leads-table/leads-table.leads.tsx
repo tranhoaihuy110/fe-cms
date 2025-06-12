@@ -8,7 +8,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getLeadsApi,
-  getTotalLeadsApi,
   searchLeadsApi,
   sortLeadsApi,
   postLeadsApi,
@@ -85,11 +84,16 @@ export const LeadTable: React.FC<ILeadTableProps> = (props) => {
     salesforce_lead_id: data.salesforce_lead_id,
   });
 
-  const mapResponse = (response: any): { data: ILeadsGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: ILeadsGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
 
   const {
@@ -137,14 +141,6 @@ export const LeadTable: React.FC<ILeadTableProps> = (props) => {
     ILeadsGetApi,
     { page: number; size: number; lead_id?: string },
     {
-      lead_id?: string;
-      from?: string;
-      to?: string;
-      email?: string;
-      phone_number?: string;
-      last_name?: string;
-    },
-    {
       page: number;
       size: number;
       lead_id?: string;
@@ -176,32 +172,6 @@ export const LeadTable: React.FC<ILeadTableProps> = (props) => {
         lead_id: lead_id,
       });
       console.log("getLeadsApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      lead_id,
-      from,
-      to,
-      email,
-      phone_number,
-      last_name,
-    }: {
-      lead_id?: string;
-      from?: string;
-      to?: string;
-      email?: string;
-      phone_number?: string;
-      last_name?: string;
-    }) => {
-      const response = await getTotalLeadsApi({
-        lead_id,
-        from,
-        to,
-        email,
-        phone_number,
-        last_name,
-      });
-      console.log("getTotalLeadsApi response:", response);
       return response;
     },
     searchData: async ({

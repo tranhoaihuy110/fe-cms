@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchPropertiesParams } from "./index";
 
 export const searchPropertiesApi = (params: ISearchPropertiesParams) => {
-  return new Promise<IPropertiesGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: IPropertiesGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: IPropertiesGetApi[] }>("/api/v1/properties/list", {
       params: {
         created_at_from: params.from,
@@ -23,7 +23,7 @@ export const searchPropertiesApi = (params: ISearchPropertiesParams) => {
         size: params.size,
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

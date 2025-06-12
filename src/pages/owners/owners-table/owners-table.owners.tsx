@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getOwnersApi,
-  getTotalOwnersApi,
   searchOwnersApi,
   sortOwnersApi,
   postOwnersApi,
@@ -68,13 +67,17 @@ export const OwnersTable: React.FC<IOwnersTableProps> = (props) => {
     };
   };
 
-  const mapResponse = (response: any): { data: IOwnersGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: IOwnersGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
-
   const {
     currentPage,
     setCurrentPage,
@@ -119,7 +122,6 @@ export const OwnersTable: React.FC<IOwnersTableProps> = (props) => {
     IOwnersGetApi,
     IOwnersGetApi,
     { page: number; size: number; owner_id?: string },
-    { owner_id?: string; from?: string; to?: string },
     { page: number; size: number; owner_id?: string; email?: string; address?: string; from?: string; to?: string },
     { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
     string
@@ -139,26 +141,6 @@ export const OwnersTable: React.FC<IOwnersTableProps> = (props) => {
         owner_id: owner_id || "",
       });
       console.log("getOwnersApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      owner_id,
-      from,
-      to,
-      email,
-    }: {
-      owner_id?: string;
-      from?: string;
-      to?: string;
-      email?:string;
-    }) => {
-      const response = await getTotalOwnersApi({
-        owner_id,
-        from,
-        to,
-        email,
-      });
-      console.log("getTotalOwnersApi response:", response);
       return response;
     },
     searchData: async ({

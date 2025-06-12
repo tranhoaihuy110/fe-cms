@@ -10,7 +10,6 @@ import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   deleteUserNotificationsApi,
   getUserNotificationsApi,
-  getTotalUserNotificationsApi,
   patchUserNotificationsApi,
   postUserNotificationsApi,
   searchUserNotificationsApi,
@@ -78,23 +77,15 @@ export const UserNotificationsTable: React.FC<IUserNotificationsTableProps> = (
     read_at: data.read_at,
   });
 
-  const mapResponse = (response: any): { data: IUserNotificationsGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: IUserNotificationsGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
     return {
-      data: response.data.map((item: any) => ({
-        id: item.id || "",
-        title: item.title || "",
-        message: item.message || "",
-        user_id: item.user_id || "",
-        user_email: item.user_email || "",
-        type: item.type || "",
-        is_read: item.is_read || "",
-        data: item.data || "",
-        read_at: item.read_at || "",
-        created_at: item.created_at || "",
-      })),
+      data: response.data,
+      total: response.pagination?.total || 0,
     };
   };
 
@@ -151,7 +142,6 @@ export const UserNotificationsTable: React.FC<IUserNotificationsTableProps> = (
     IUserNotificationsGetApi,
     IUserNotificationsGetApi,
     { page: number; size: number; id?: string; title?: string },
-    { id?: string; title?: string; from?: string; to?: string },
     {
       page: number;
       size: number;
@@ -196,26 +186,6 @@ export const UserNotificationsTable: React.FC<IUserNotificationsTableProps> = (
         id: id || "",
       });
       console.log("getUserNotificationsApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      id,
-      title,
-      from,
-      to,
-    }: {
-      id?: string;
-      title?: string;
-      from?: string;
-      to?: string;
-    }) => {
-      const response = await getTotalUserNotificationsApi({
-        id,
-        title,
-        from,
-        to,
-      });
-      console.log("get TotalUserNotificationsApi response:", response);
       return response;
     },
     searchData: async ({

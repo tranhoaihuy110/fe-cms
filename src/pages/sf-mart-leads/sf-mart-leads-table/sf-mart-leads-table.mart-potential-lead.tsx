@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getSfMartLeadsApi,
-  getTotalSfMartLeadsApi,
   searchSfMartLeadsApi,
   sortSfMartLeadsApi,
   postSfMartLeadsApi,
@@ -72,11 +71,16 @@ export const SfMartLeadsTable: React.FC<ISfMartLeadsTableProps> = (props) => {
   } ; };
 
  
-  const mapResponse = (response: any): { data: ISfMartLeadsGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: ISfMartLeadsGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
 
   const {
@@ -123,7 +127,6 @@ export const SfMartLeadsTable: React.FC<ISfMartLeadsTableProps> = (props) => {
     ISfMartLeadsGetApi,
     ISfMartLeadsGetApi,
     { page: number; size: number; id?: string },
-    { id?: string; from?: string; to?: string },
     { page: number; size: number; id?: string; username?: string; data_type?: string; from?: string; to?: string },
     { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
     string
@@ -143,26 +146,6 @@ export const SfMartLeadsTable: React.FC<ISfMartLeadsTableProps> = (props) => {
         id: id || "",
       });
       console.log("getSfMartLeadsApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      id,
-      from,
-      to,
-      username,
-    }: {
-      id?: string;
-      from?: string;
-      to?: string;
-      username?: string;
-    }) => {
-      const response = await getTotalSfMartLeadsApi({
-        id,
-        from,
-        to,
-        username: username || "",
-      });
-      console.log("getTotalSfMartLeadsApi response:", response);
       return response;
     },
     searchData: async ({

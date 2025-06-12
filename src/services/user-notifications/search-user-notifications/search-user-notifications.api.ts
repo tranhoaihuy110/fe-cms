@@ -5,7 +5,7 @@ import { ISearchUserNotificationsParams } from "./index";
 export const searchUserNotificationsApi = (
   params: ISearchUserNotificationsParams
 ) => {
-  return new Promise<IUserNotificationsGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: IUserNotificationsGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: IUserNotificationsGetApi[] }>(
       "/api/v1/user-notifications/list",
       {
@@ -23,7 +23,7 @@ export const searchUserNotificationsApi = (
         },
       }
     )
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

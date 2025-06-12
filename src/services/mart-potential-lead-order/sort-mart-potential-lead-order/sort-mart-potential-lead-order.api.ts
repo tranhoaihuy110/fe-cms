@@ -10,7 +10,7 @@ export interface ISortMartPotentialLeadOrdeParams {
 
 export const sortMartPotentialLeadOrdersApi = async (
   params: ISortMartPotentialLeadOrdeParams
-): Promise<IMartPotentialLeadOrderGetApi[]> => {
+): Promise<{ data: IMartPotentialLeadOrderGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -27,5 +27,5 @@ export const sortMartPotentialLeadOrdersApi = async (
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return res.data.data;
+  return res.data;
 };

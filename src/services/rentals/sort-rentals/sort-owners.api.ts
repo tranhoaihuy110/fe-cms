@@ -10,7 +10,7 @@ export interface ISortOwnerParams {
 
 export const sortRentalsApi = async (
   params: ISortOwnerParams
-): Promise<IRentalsGetApi[]> => {
+): Promise<{ data: IRentalsGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -27,5 +27,5 @@ export const sortRentalsApi = async (
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return res.data.data;
+  return res.data;
 };

@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchLeadsourcesParams } from "./index";
 
 export const searchLeadsourcesApi = (params: ISearchLeadsourcesParams) => {
-  return new Promise<ILeadsourcesGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: ILeadsourcesGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: ILeadsourcesGetApi[] }>("/api/v1/leadsources/list", {
       params: {
         source_id: params.source_id,
@@ -13,7 +13,7 @@ export const searchLeadsourcesApi = (params: ISearchLeadsourcesParams) => {
         size: params.size,
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

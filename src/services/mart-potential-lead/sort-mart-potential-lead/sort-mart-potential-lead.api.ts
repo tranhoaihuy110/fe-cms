@@ -4,7 +4,7 @@ import { ISortMartPotentialLeadsParams } from "./index";
 
 export const sortMartPotentialLeadsApi = async (
   params: ISortMartPotentialLeadsParams
-): Promise<IMartPotentialLeadGetApi[]> => {
+): Promise<{ data: IMartPotentialLeadGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -18,5 +18,5 @@ export const sortMartPotentialLeadsApi = async (
     params: queryParams,
     headers: { Authorization: `Bearer ${token}` },
   });
-  return res.data.data;
+  return res.data;
 };

@@ -9,7 +9,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getLeadsourcesApi,
-  getTotalLeadsourcesApi,
   searchLeadsourcesApi,
   sortLeadsourcesApi,
   postLeadsourcesApi,
@@ -58,11 +57,16 @@ export const LeadsourcesTable: React.FC<ILeadsourcesTableProps> = (props) => {
     };
   };
 
-  const mapResponse = (response: any ): { data: ILeadsourcesGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: ILeadsourcesGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
 
   const {
@@ -109,7 +113,6 @@ export const LeadsourcesTable: React.FC<ILeadsourcesTableProps> = (props) => {
     ILeadsourcesGetApi,
     ILeadsourcesGetApi,
     { page: number; size: number; source_id?: string },
-    { source_id?: string; source_name?: string; description?: string },
     { page: number; size: number; source_id?: string; username?: string; keysearch?: string; from?: string; to?: string },
     { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
     string
@@ -129,20 +132,6 @@ export const LeadsourcesTable: React.FC<ILeadsourcesTableProps> = (props) => {
         source_id: source_id || "",
       });
       console.log("get Lead sources Api response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      source_id,
-      source_name,
-    }: {
-      source_id?: string;
-      source_name?:string;
-    }) => {
-      const response = await getTotalLeadsourcesApi({
-        source_id,
-        source_name,
-      });
-      console.log("get Total Lead sources Api response:", response);
       return response;
     },
     searchData: async ({

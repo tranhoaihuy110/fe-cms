@@ -10,7 +10,7 @@ export interface ISortLeadsReferPartnerActivityParams {
 
 export const sortLeadsReferPartnerActivityApi = async (
   params: ISortLeadsReferPartnerActivityParams
-): Promise<ILeadsReferPartnerActivityGetApi[]> => {
+): Promise<{ data: ILeadsReferPartnerActivityGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -27,5 +27,5 @@ export const sortLeadsReferPartnerActivityApi = async (
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return res.data.data;
+  return res.data;
 };

@@ -10,7 +10,7 @@ export interface ISortPotentialLeadActionParams {
 
 export const sortPotentialLeadActionApi = async (
   params: ISortPotentialLeadActionParams
-): Promise<IPotentialLeadActionGetApi[]> => {
+): Promise<{ data: IPotentialLeadActionGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -27,5 +27,5 @@ export const sortPotentialLeadActionApi = async (
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return res.data.data;
+  return res.data;
 };

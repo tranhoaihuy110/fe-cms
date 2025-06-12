@@ -5,7 +5,7 @@ import { ISearchUserProfileUrlMapParams } from "./index";
 export const searchUserProfileUrlMapApi = (
   params: ISearchUserProfileUrlMapParams
 ) => {
-  return new Promise<IUserProfileUrlMapGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: IUserProfileUrlMapGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: IUserProfileUrlMapGetApi[] }>(
       "/api/v1/user-profile-url-map/list",
       {
@@ -16,7 +16,7 @@ export const searchUserProfileUrlMapApi = (
         },
       }
     )
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

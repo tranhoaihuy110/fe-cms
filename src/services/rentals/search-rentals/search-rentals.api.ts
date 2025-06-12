@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchRentalsParams } from "./index";
 
 export const searchRentalsApi = (params: ISearchRentalsParams) => {
-  return new Promise<IRentalsGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: IRentalsGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: IRentalsGetApi[] }>("/api/v1/rentals/list", {
       params: {
         rental_id: params.rental_id,
@@ -14,7 +14,7 @@ export const searchRentalsApi = (params: ISearchRentalsParams) => {
         size: params.size,
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

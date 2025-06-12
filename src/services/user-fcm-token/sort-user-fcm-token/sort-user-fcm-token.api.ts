@@ -10,7 +10,7 @@ export interface ISortUserFcmTokenParams {
 
 export const sortUserFcmTokenApi = async (
   params: ISortUserFcmTokenParams
-): Promise<IUserFcmTokenGetApi[]> => {
+): Promise<{ data: IUserFcmTokenGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -27,5 +27,5 @@ export const sortUserFcmTokenApi = async (
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return res.data.data;
+  return res.data;
 };

@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchLeadNotesParams } from "./index";
 
 export const searchLeadNotesApi = (params: ISearchLeadNotesParams) => {
-  return new Promise<ILeadNotesGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: ILeadNotesGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: ILeadNotesGetApi[] }>("/api/v1/leadnotes/list", {
       params: {
         lead_id: params.lead_id,
@@ -13,7 +13,7 @@ export const searchLeadNotesApi = (params: ISearchLeadNotesParams) => {
         size: params.size,
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

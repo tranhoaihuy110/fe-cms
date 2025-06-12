@@ -5,7 +5,7 @@ import { ISearchLeadsPropertyFloorsParams } from "./index";
 export const searchLeadPropertyFloorsApi = (
   params: ISearchLeadsPropertyFloorsParams
 ) => {
-  return new Promise<ILeadPropertyFloorsGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: ILeadPropertyFloorsGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: ILeadPropertyFloorsGetApi[] }>(
       "/api/v1/leadsproperty-floors/list",
       {
@@ -21,7 +21,7 @@ export const searchLeadPropertyFloorsApi = (
         },
       }
     )
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

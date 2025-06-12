@@ -10,7 +10,6 @@ import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   deleteLeadsPropertyRoomsApi,
   getLeadsPropertyRoomsApi,
-  getTotalLeadsPropertyRoomsApi,
   patchLeadsPropertyRoomsApi,
   postLeadsPropertyRoomsApi,
   searchLeadsPropertyRoomsApi,
@@ -72,20 +71,15 @@ export const LeadsPropertyRoomsTable: React.FC<ILeadsPropertyRoomsTableProps> = 
     created_at: data.created_at,
   });
 
-  const mapResponse = (response: any): { data: ILeadsPropertyRoomsGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: ILeadsPropertyRoomsGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
     return {
-      data: response.data.map((item: any) => ({
-        id: item.id || "",
-        lead_property_id: item.lead_property_id || "",
-        floor_id: item.floor_id || "",
-        floor_type: item.floor_type || "",
-        floor_name: item.floor_name || "",
-        room_name: item.room_name || "",
-        created_at: item.created_at || "",
-      })),
+      data: response.data,
+      total: response.pagination?.total || 0,
     };
   };
 
@@ -140,7 +134,6 @@ export const LeadsPropertyRoomsTable: React.FC<ILeadsPropertyRoomsTableProps> = 
     ILeadsPropertyRoomsGetApi,
     ILeadsPropertyRoomsGetApi,
     { page: number; size: number; id?: string; lead_property_id?: string },
-    { id?: string; lead_property_id?: string; from?: string; to?: string },
     {
         page: number;
         size: number;
@@ -185,29 +178,6 @@ export const LeadsPropertyRoomsTable: React.FC<ILeadsPropertyRoomsTableProps> = 
 
       });
       console.log("get Leads Property Rooms Api response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      id,
-      lead_property_id,
-      from,
-      to,
-      floor_name,
-    }: {
-      id?: string;
-      lead_property_id?: string;
-      floor_name?: string;
-      from?: string;
-      to?: string;
-    }) => {
-      const response = await getTotalLeadsPropertyRoomsApi({
-        id,
-        lead_property_id,
-        from,
-        to,
-        floor_name,
-      });
-      console.log("get Total Leads Property Rooms Api response:", response);
       return response;
     },
     searchData: async ({

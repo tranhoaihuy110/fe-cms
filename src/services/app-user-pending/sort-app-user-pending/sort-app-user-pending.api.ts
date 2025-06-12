@@ -10,7 +10,7 @@ export interface ISortAppUserPendingParams {
 
 export const sortAppUserPendingApi = async (
   params: ISortAppUserPendingParams
-): Promise<IAppUserPendingGetApi[]> => {
+): Promise<{data:IAppUserPendingGetApi[]}> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -24,5 +24,5 @@ export const sortAppUserPendingApi = async (
     params: queryParams,
     headers: { Authorization: `Bearer ${token}` },
   });
-  return res.data.data;
+  return res.data;
 };

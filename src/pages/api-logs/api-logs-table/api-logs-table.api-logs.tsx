@@ -5,11 +5,7 @@ import {
   TableComponent,
 } from "../../../components/table";
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
-import {
-  getApiLogsApi,
-  searchApiLogs,
-  sortApiLogs,
-} from "../../../services";
+import { getApiLogsApi, searchApiLogs, sortApiLogs } from "../../../services";
 import { IApiLogsTableProps } from "./index";
 import { IApiLogsGetApi } from "../../../models";
 import { ApiLogsDetailModal } from "../index";
@@ -51,18 +47,15 @@ export const ApiLogsTable: React.FC<IApiLogsTableProps> = (props) => {
     output: data.output,
   });
 
-  const mapResponse = (response: any): { data: IApiLogsGetApi[] } => {
+  const mapResponse = (
+    response: any
+  ): { data: IApiLogsGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
     return {
-      data: response.data.map((item: any) => ({
-        id: item.id || 0,
-        name_log: item.name_log || "",
-        input: item.input || null,
-        output: item.output || "",
-        created_at: item.created_at || "",
-      })),
+      data: response.data,
+      total: response.pagination?.total || 0,
     };
   };
 
@@ -70,19 +63,18 @@ export const ApiLogsTable: React.FC<IApiLogsTableProps> = (props) => {
     currentPage,
     setCurrentPage,
     itemsPerPage,
- 
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
     currentItem,
-
 
     filters,
     setFilter,
     startDate,
 
     endDate,
- 
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -139,7 +131,6 @@ export const ApiLogsTable: React.FC<IApiLogsTableProps> = (props) => {
       return response;
     },
     searchData: async ({
-
       size,
       id,
       name_log,
@@ -318,10 +309,9 @@ export const ApiLogsTable: React.FC<IApiLogsTableProps> = (props) => {
               onDelete={openDeleteModal}
               onDetail={openDetailModal}
               sortConfig={sortConfig}
-              handleSort={handleSort}              
+              handleSort={handleSort}
               hideEdit={true}
               hideDelete={true}
-
             />
           )}
         </div>

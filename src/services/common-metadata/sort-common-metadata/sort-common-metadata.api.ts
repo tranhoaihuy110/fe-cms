@@ -10,7 +10,7 @@ export interface ISortMetaParams {
 
 export const sortCommonMetadataApi = async (
   params: ISortMetaParams
-): Promise<ICommonMetadataGetApi[]> => {
+): Promise<{ data: ICommonMetadataGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -27,5 +27,5 @@ export const sortCommonMetadataApi = async (
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return res.data.data;
+  return res.data;
 };

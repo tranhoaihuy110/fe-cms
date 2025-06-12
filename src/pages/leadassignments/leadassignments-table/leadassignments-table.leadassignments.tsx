@@ -8,7 +8,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getLeadAssignmentApi,
-  getTotalLeadAssignmentApi,
   searchLeadAssignmentApi,
   sortLeadAssignmentApi,
   postLeadAssignmentApi,
@@ -72,11 +71,16 @@ export const LeadAssignmentTable: React.FC<ILeadAssignmentTableProps> = (props) 
     };
   };
 
-  const mapResponse = (response: any ): { data: ILeadAssignmentGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: ILeadAssignmentGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
 
   const {
@@ -120,7 +124,6 @@ export const LeadAssignmentTable: React.FC<ILeadAssignmentTableProps> = (props) 
     ILeadAssignmentGetApi,
     ILeadAssignmentGetApi,
     { page: number; size: number; assignment_id?: string },
-    { assignment_id?: string; from?: string; to?: string },
     { page: number; size: number; assignment_id?: string; lead_id?: string; keysearch?: string; from?: string; to?: string },
     { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
     string
@@ -140,26 +143,6 @@ export const LeadAssignmentTable: React.FC<ILeadAssignmentTableProps> = (props) 
         assignment_id: assignment_id || "",
       });
       console.log("get Lead assignments Api response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      assignment_id,
-      from,
-      to,
-      lead_id,
-    }: {
-      assignment_id?: string;
-      from?: string;
-      to?: string;
-      lead_id?:string;
-    }) => {
-      const response = await getTotalLeadAssignmentApi({
-        assignment_id,
-        from,
-        to,
-        lead_id,
-      });
-      console.log("get Total Lead assginments Api response:", response);
       return response;
     },
     searchData: async ({

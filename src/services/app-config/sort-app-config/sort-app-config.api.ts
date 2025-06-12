@@ -11,7 +11,7 @@ export interface ISortAppConfigParams {
 
 export const sortAppConfigApi = async (
   params: ISortAppConfigParams
-): Promise<IAppConfigGetApi[]> => {
+): Promise<{data:IAppConfigGetApi[]}> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -25,5 +25,5 @@ export const sortAppConfigApi = async (
     params: queryParams,
     headers: { Authorization: `Bearer ${token}` },
   });
-  return res.data.data;
+  return res.data;
 };

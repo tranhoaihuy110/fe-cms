@@ -5,7 +5,7 @@ import { ISearchPotentialLeadActionParams } from "./index";
 export const searchPotentialLeadActionApi = (
   params: ISearchPotentialLeadActionParams
 ) => {
-  return new Promise<IPotentialLeadActionGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: IPotentialLeadActionGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: IPotentialLeadActionGetApi[] }>(
       "/api/v1/potential-lead-action/list",
       {
@@ -24,7 +24,7 @@ export const searchPotentialLeadActionApi = (
         },
       }
     )
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

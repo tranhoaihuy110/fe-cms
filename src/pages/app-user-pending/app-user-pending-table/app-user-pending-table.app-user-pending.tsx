@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getAppUserPendingApi,
-  getTotalAppUserPendingApi,
   searchAppUserPendingApi,
   sortAppUserPendingApi,
   postAppUserPendingApi,
@@ -106,11 +105,16 @@ export const AppUserPendingTable: React.FC<IAppUserPendingTableProps> = (props) 
     };
   };
 
-  const mapResponse = (response: any): { data: IAppUserPendingGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: IAppUserPendingGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
 
   const {
@@ -157,7 +161,6 @@ export const AppUserPendingTable: React.FC<IAppUserPendingTableProps> = (props) 
     IAppUserPendingGetApi,
     IAppUserPendingGetApi,
     { page: number; size: number; user_id?: string },
-    { user_id?: string; from?: string; phone_number?: string; verify_status?: string; to?: string },
     { page: number; size: number; user_id?: string; username?: string; phone_number?: string; verify_status?: string; from?: string; to?: string },
     { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
     string
@@ -177,32 +180,6 @@ export const AppUserPendingTable: React.FC<IAppUserPendingTableProps> = (props) 
         user_id: user_id || "",
       });
       console.log("getAppUserPendingApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      user_id,
-      from,
-      to,
-      username,
-      phone_number,
-        verify_status
-    }: {
-      user_id?: string;
-      from?: string;
-      to?: string;
-      username?: string;
-      phone_number?: string;
-        verify_status?: string
-    }) => {
-      const response = await getTotalAppUserPendingApi({
-        user_id,
-        from,
-        to,
-        username: username || "",
-        phone_number,
-        verify_status
-      });
-      console.log("getTotalAppUserPendingApi response:", response);
       return response;
     },
     searchData: async ({

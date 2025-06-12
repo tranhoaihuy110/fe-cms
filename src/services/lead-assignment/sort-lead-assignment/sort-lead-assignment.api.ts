@@ -10,7 +10,7 @@ export interface ISortLeadAssignmentParams {
 
 export const sortLeadAssignmentApi = async (
   params: ISortLeadAssignmentParams
-): Promise<ILeadAssignmentGetApi[]> => {
+): Promise<{ data: ILeadAssignmentGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -27,5 +27,5 @@ export const sortLeadAssignmentApi = async (
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return res.data.data;
+  return res.data;
 };

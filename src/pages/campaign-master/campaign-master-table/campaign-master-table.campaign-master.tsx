@@ -91,7 +91,7 @@ export const CampaignMasterTable: React.FC<ICampaignMasterTableProps> = (
     };
   };
 
-  const mapResponse = (
+const mapResponse = (
     response: any
   ): { data: ICampaignMasterGetApi[]; total?: number } => {
     if (!response || !response.data) {

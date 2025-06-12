@@ -11,7 +11,6 @@ import { IPotentialLeadHistorySearchGetApi, IPotentialLeadHistorySearchPatchApi 
 import {
   deletePotentialLeadHistorySeachApi,
   getPotentialLeadHistorySearchApi,
-  getTotalPotentialLeadHistorySearchApi,
   patchPotentialLeadHistorySearchApi,
   postPotentialLeadHistorySearchApi,
   searchPotentialLeadHistorySearchApi,
@@ -68,11 +67,16 @@ export const PotentialLeadHistorySearchTable: React.FC<IPotentialLeadHistorySear
     };
   };
 
-  const mapResponse = (response: any ): { data: IPotentialLeadHistorySearchGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: IPotentialLeadHistorySearchGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
 
   const {
@@ -119,7 +123,6 @@ export const PotentialLeadHistorySearchTable: React.FC<IPotentialLeadHistorySear
     IPotentialLeadHistorySearchGetApi,
     IPotentialLeadHistorySearchGetApi,
     { page: number; size: number; id?: string },
-    { id?: string; from?: string; to?: string },
     { page: number; size: number; id?: string; username?: string; keysearch?: string; from?: string; to?: string },
     { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
     string
@@ -139,26 +142,6 @@ export const PotentialLeadHistorySearchTable: React.FC<IPotentialLeadHistorySear
         id: id || "",
       });
       console.log("get potential lead history search Api response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      id,
-      from,
-      to,
-      username,
-    }: {
-      id?: string;
-      from?: string;
-      to?: string;
-      username?:string;
-    }) => {
-      const response = await getTotalPotentialLeadHistorySearchApi({
-        id,
-        from,
-        to,
-        username,
-      });
-      console.log("get Total potential lead history search Api response:", response);
       return response;
     },
     searchData: async ({

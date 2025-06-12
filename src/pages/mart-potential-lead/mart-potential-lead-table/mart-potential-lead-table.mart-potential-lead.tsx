@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getMartPotentialLeadApi,
-  getTotalMartPotentialLeadApi,
   searchMartPotentialLeadsApi,
   sortMartPotentialLeadsApi,
   postMartPotentialLeadApi,
@@ -123,11 +122,16 @@ export const MartPotentialLeadTable: React.FC<IMartPotentialLeadTableProps> = (p
     };
   };
 
-  const mapResponse = (response: any): { data: IMartPotentialLeadGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: IMartPotentialLeadGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
 
   const {
@@ -174,7 +178,6 @@ export const MartPotentialLeadTable: React.FC<IMartPotentialLeadTableProps> = (p
     IMartPotentialLeadGetApi,
     IMartPotentialLeadGetApi,
     { page: number; size: number; potential_lead_id?: string },
-    { potential_lead_id?: string; from?: string; to?: string },
     { page: number; size: number; potential_lead_id?: string; email?: string; address?: string; from?: string; to?: string },
     { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
     string
@@ -194,26 +197,6 @@ export const MartPotentialLeadTable: React.FC<IMartPotentialLeadTableProps> = (p
         potential_lead_id: potential_lead_id || "",
       });
       console.log("getMartPotentialLeadApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      potential_lead_id,
-      from,
-      to,
-      email,
-    }: {
-      potential_lead_id?: string;
-      from?: string;
-      to?: string;
-      email?:string;
-    }) => {
-      const response = await getTotalMartPotentialLeadApi({
-        potential_lead_id,
-        from,
-        to,
-        email,
-      });
-      console.log("getTotalMartPotentialLeadApi response:", response);
       return response;
     },
     searchData: async ({

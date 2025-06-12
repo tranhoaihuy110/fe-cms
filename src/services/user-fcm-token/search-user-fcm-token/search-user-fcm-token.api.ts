@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchUserFcmTokenParams } from "./index";
 
 export const searchUserFcmTokenApi = (params: ISearchUserFcmTokenParams) => {
-  return new Promise<IUserFcmTokenGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: IUserFcmTokenGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: IUserFcmTokenGetApi[] }>("/api/v1/user-fcm-token/list", {
       params: {
         id: params.id,
@@ -16,7 +16,7 @@ export const searchUserFcmTokenApi = (params: ISearchUserFcmTokenParams) => {
         created_at_to: params.to,
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getRentalsApi,
-  getTotalRentalsApi,
   searchRentalsApi,
   sortRentalsApi,
   postRentalsApi,
@@ -78,11 +77,16 @@ export const RentalsTable: React.FC<IRentalsTableProps> = (props) => {
     };
   };
 
-  const mapResponse = (response: any): { data: IRentalsGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: IRentalsGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
 
   const {
@@ -129,7 +133,6 @@ export const RentalsTable: React.FC<IRentalsTableProps> = (props) => {
     IRentalsGetApi,
     IRentalsGetApi,
     { page: number; size: number; rental_id?: string },
-    { rental_id?: string; from?: string; to?: string },
     { page: number; size: number; rental_id?: string; tenant_name?: string; from?: string; to?: string },
     { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
     string
@@ -149,26 +152,6 @@ export const RentalsTable: React.FC<IRentalsTableProps> = (props) => {
         rental_id: rental_id || "",
       });
       console.log("getRentalsApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      rental_id,
-      from,
-      to,
-      tenant_name,
-    }: {
-      rental_id?: string;
-      from?: string;
-      to?: string;
-      tenant_name?:string;
-    }) => {
-      const response = await getTotalRentalsApi({
-        rental_id,
-        from,
-        to,
-        tenant_name,
-      });
-      console.log("getTotalRentalsApi response:", response);
       return response;
     },
     searchData: async ({

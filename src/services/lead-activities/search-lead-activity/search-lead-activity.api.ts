@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchLeadActivityParams } from "./index";
 
 export const searchLeadActivityApi = (params: ISearchLeadActivityParams) => {
-  return new Promise<ILeadActivityGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: ILeadActivityGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: ILeadActivityGetApi[] }>("/api/v1/leadactivities/list", {
       params: {
         activity_id: params.activity_id,
@@ -16,7 +16,7 @@ export const searchLeadActivityApi = (params: ISearchLeadActivityParams) => {
         size: params.size,
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

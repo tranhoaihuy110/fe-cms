@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchAppUserParams } from "./index";
 
 export const searchAppUserApi = (params: ISearchAppUserParams) => {
-  return new Promise<IAppUserGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: IAppUserGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: IAppUserGetApi[] }>("/api/v1/app-user/list", {
       params: {
         created_at_from: params.from,
@@ -18,7 +18,7 @@ export const searchAppUserApi = (params: ISearchAppUserParams) => {
         phone_number: params.phone_number,
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

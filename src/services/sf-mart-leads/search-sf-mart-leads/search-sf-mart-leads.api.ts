@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchSfMartLeadsParams } from "./index";
 
 export const searchSfMartLeadsApi = (params: ISearchSfMartLeadsParams) => {
-  return new Promise<ISfMartLeadsGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: ISfMartLeadsGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: ISfMartLeadsGetApi[] }>("/api/v1/sf-mart-leads/list", {
       params: {
         id: params.id,
@@ -13,7 +13,7 @@ export const searchSfMartLeadsApi = (params: ISearchSfMartLeadsParams) => {
         size: params.size,
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

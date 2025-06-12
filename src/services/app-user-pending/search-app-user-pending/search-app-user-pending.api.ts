@@ -3,7 +3,7 @@ import { MS_API } from "../../api";
 import { ISearchAppUserPendingParams } from "./index";
 
 export const searchAppUserPendingApi = (params: ISearchAppUserPendingParams) => {
-  return new Promise<IAppUserPendingGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: IAppUserPendingGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: IAppUserPendingGetApi[] }>("/api/v1/app-user-pending/list", {  
       params: {
         user_id: params.user_id,
@@ -16,7 +16,7 @@ export const searchAppUserPendingApi = (params: ISearchAppUserPendingParams) => 
         size: params.size
       },
     })
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

@@ -10,7 +10,7 @@ export interface ISortLeadPropertyFloorsParams {
 
 export const sortLeadPropertyFloorsApi = async (
   params: ISortLeadPropertyFloorsParams
-): Promise<ILeadPropertyFloorsGetApi[]> => {
+): Promise<{ data: ILeadPropertyFloorsGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -27,5 +27,5 @@ export const sortLeadPropertyFloorsApi = async (
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return res.data.data;
+  return res.data;
 };

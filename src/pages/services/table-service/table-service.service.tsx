@@ -9,7 +9,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getMetaDataApi,
-  getTotalMetaDataApi,
   searchMetaDataApi,
   sortMetaDataApi,
   postMetaDataApi,
@@ -79,9 +78,17 @@ export const ServiceTable: React.FC<IServiceTableProps> = (props) => {
     data_parent_id_v2 :data.data_parent_id_v2
   });
 
-  const mapResponse = (response: any): { data: IMetaDataApi[] } => ({
-    data: response.data,
-  });
+const mapResponse = (
+    response: any
+  ): { data: IMetaDataApi[]; total?: number } => {
+    if (!response || !response.data) {
+      return { data: [], total: 0 };
+    }
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
+  };
 
   const {
     currentPage,
@@ -128,14 +135,6 @@ export const ServiceTable: React.FC<IServiceTableProps> = (props) => {
     IMetaDataApi,
     { page: number; size: number; data_type: string; id?: string },
     {
-      data_type: string;
-      id?: string;
-      name?: string;
-      search_name_category?: string;
-      from?: string;
-      to?: string;
-    },
-    {
       page: number;
       size: number;
       data_type: string;
@@ -171,30 +170,6 @@ export const ServiceTable: React.FC<IServiceTableProps> = (props) => {
         id: id || "",
       });
       return response;
-    },
-    fetchTotal: async ({
-      data_type = "service",
-      id,
-      name,
-      search_name_category,
-      from,
-      to,
-    }: {
-      data_type: string;
-      id?: string;
-      name?: string;
-      search_name_category?: string;
-      from?: string;
-      to?: string;
-    }) => {
-      return getTotalMetaDataApi({
-        data_type,
-        id,
-        name,
-        search_name_category,
-        from,
-        to,
-      });
     },
     searchData: async ({
 

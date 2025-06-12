@@ -10,7 +10,7 @@ export interface ISortSFParams {
 
 export const sortSfMartLeadsApi = async (
   params: ISortSFParams
-): Promise<ISfMartLeadsGetApi[]> => {
+): Promise<{ data: ISfMartLeadsGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -27,5 +27,5 @@ export const sortSfMartLeadsApi = async (
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return res.data.data;
+  return res.data;
 };

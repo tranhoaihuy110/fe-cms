@@ -10,7 +10,6 @@ import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   deleteUserProfileUrlMapApi,
   getUserProfileUrlMapApi,
-  getTotalUserProfileUrlMapApi,
   patchUserProfileUrlMapApi,
   postUserProfileUrlMapApi,
   searchUserProfileUrlMapApi,
@@ -62,17 +61,15 @@ export const UserProfileUrlMapTable: React.FC<IUserProfileUrlMapTableProps> = (
     profile_image: data.profile_image,
   });
 
-  const mapResponse = (response: any): { data: IUserProfileUrlMapGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: IUserProfileUrlMapGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
     return {
-      data: response.data.map((item: any) => ({
-        id: item.id || "",
-        email: item.email || "", 
-        profile_url: item.profile_url || "",
-        profile_image: item.profile_image || "",
-      })),
+      data: response.data,
+      total: response.pagination?.total || 0,
     };
   };
 
@@ -127,7 +124,6 @@ export const UserProfileUrlMapTable: React.FC<IUserProfileUrlMapTableProps> = (
     IUserProfileUrlMapGetApi,
     IUserProfileUrlMapGetApi,
     { page: number; size: number; id?: string; email?: string },
-    { id?: string; email?: string; from?: string; to?: string },
     {
       page: number;
       size: number;
@@ -166,20 +162,6 @@ export const UserProfileUrlMapTable: React.FC<IUserProfileUrlMapTableProps> = (
 
       });
       console.log("getUserProfileUrlMapApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      id,
-      email,
-    }: {
-      id?: string;
-      email?: string;
-    }) => {
-      const response = await getTotalUserProfileUrlMapApi({
-        id,
-        email,
-      });
-      console.log("get TotalUserProfileUrlMapApi response:", response);
       return response;
     },
     searchData: async ({

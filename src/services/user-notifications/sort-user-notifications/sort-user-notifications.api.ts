@@ -10,7 +10,7 @@ export interface ISortUserNotificationsParams {
 
 export const sortUserNotificationsApi = async (
   params: ISortUserNotificationsParams
-): Promise<IUserNotificationsGetApi[]> => {
+): Promise<{ data: IUserNotificationsGetApi[] }> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -27,5 +27,5 @@ export const sortUserNotificationsApi = async (
       headers: { Authorization: `Bearer ${token}` },
     }
   );
-  return res.data.data;
+  return res.data;
 };

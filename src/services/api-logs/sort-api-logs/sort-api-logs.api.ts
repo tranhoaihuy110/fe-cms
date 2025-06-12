@@ -10,7 +10,7 @@ export interface ISortApiLogsParams {
 
 export const sortApiLogs = async (
   params: ISortApiLogsParams
-): Promise<IApiLogsGetApi[]> => {
+): Promise<{data:IApiLogsGetApi[]}> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -24,5 +24,5 @@ export const sortApiLogs = async (
     params: queryParams,
     headers: { Authorization: `Bearer ${token}` },
   });
-  return res.data.data;
+  return res.data;
 };

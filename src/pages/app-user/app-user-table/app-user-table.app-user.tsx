@@ -7,7 +7,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getAppUserApi,
-  getTotalAppUserApi,
   searchAppUserApi,
   sortAppUserApi,
   patchAppUserApi,
@@ -145,11 +144,16 @@ export const AppUserTable: React.FC<IAppUserTableProps> = (props) => {
     user_status: data.user_status,
   });
 
-  const mapResponse = (response: any): { data: IAppUserGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: IAppUserGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
 
   const {
@@ -193,7 +197,6 @@ export const AppUserTable: React.FC<IAppUserTableProps> = (props) => {
     IAppUserGetApi,
     IAppUserGetApi,
     { page: number; size: number; user_id?: string },
-    { user_id?: string; from?: string; to?: string },
     {
       page: number;
       size: number;
@@ -226,32 +229,6 @@ export const AppUserTable: React.FC<IAppUserTableProps> = (props) => {
         user_id: user_id || "",
       });
       console.log("getAppUserApi response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      user_id,
-      from,
-      to,
-      user_email,
-      username,
-      phone_number,
-    }: {
-      user_id?: string;
-      from?: string;
-      to?: string;
-      user_email?: string;
-      username?:string
-      phone_number?:string
-    }) => {
-      const response = await getTotalAppUserApi({
-        user_id,
-        from,
-        to,
-        user_email,
-        username,
-        phone_number,
-      });
-      console.log("getTotalAppUserApi response:", response);
       return response;
     },
     searchData: async ({

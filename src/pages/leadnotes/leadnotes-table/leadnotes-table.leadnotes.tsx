@@ -8,7 +8,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getLeadNotesApi,
-  getTotalLeadNotesApi,
   searchLeadNotesApi,
   sortLeadNotesApi,
   postLeadNotesApi,
@@ -62,11 +61,16 @@ export const LeadNotesTable: React.FC<ILeadNotesTableProps> = (props) => {
     };
   };
 
-  const mapResponse = (response: any ): { data: ILeadNotesGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: ILeadNotesGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
 
   const {
@@ -110,7 +114,6 @@ export const LeadNotesTable: React.FC<ILeadNotesTableProps> = (props) => {
     ILeadNotesGetApi,
     ILeadNotesGetApi,
     { page: number; size: number; note_id?: string },
-    { note_id?: string; from?: string; to?: string },
     { page: number; size: number; note_id?: string; lead_id?: string; keysearch?: string; from?: string; to?: string },
     { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
     string
@@ -130,26 +133,6 @@ export const LeadNotesTable: React.FC<ILeadNotesTableProps> = (props) => {
         note_id: note_id || "",
       });
       console.log("get Lead Note Api response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      note_id,
-      from,
-      to,
-      lead_id,
-    }: {
-      note_id?: string;
-      from?: string;
-      to?: string;
-      lead_id?:string;
-    }) => {
-      const response = await getTotalLeadNotesApi({
-        note_id,
-        from,
-        to,
-        lead_id,
-      });
-      console.log("get Total Lead Note Api response:", response);
       return response;
     },
     searchData: async ({

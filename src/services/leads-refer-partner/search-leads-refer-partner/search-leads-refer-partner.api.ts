@@ -5,7 +5,7 @@ import { ISearchLeadsReferPartnerParams } from "./index";
 export const searchLeadsReferPartnerApi = (
   params: ISearchLeadsReferPartnerParams
 ) => {
-  return new Promise<ILeadsReferPartnerGetApi[]>((resolve, reject) => {
+  return new Promise<{ data: ILeadsReferPartnerGetApi[] }>((resolve, reject) => {
     MS_API.get<{ data: ILeadsReferPartnerGetApi[] }>(
       "/api/v1/leads-refer-partner/list",
       {
@@ -22,7 +22,7 @@ export const searchLeadsReferPartnerApi = (
         },
       }
     )
-      .then((res) => resolve(res.data.data))
+      .then((res) => resolve(res.data))
       .catch(() => reject());
   });
 };

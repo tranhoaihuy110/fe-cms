@@ -10,7 +10,7 @@ export interface ISortCampaignEmailTemplateParams {
 
 export const sortCampaignEmailTemplateApi = async (
   params: ISortCampaignEmailTemplateParams
-): Promise<ICampaignEmailTemplateGetApi[]> => {
+): Promise<{data:ICampaignEmailTemplateGetApi[]}> => {
   const token = localStorage.getItem("access_token");
   if (!token) throw new Error("Access token is missing");
 
@@ -24,5 +24,5 @@ export const sortCampaignEmailTemplateApi = async (
     params: queryParams,
     headers: { Authorization: `Bearer ${token}` },
   });
-  return res.data.data;
+  return res.data;
 };

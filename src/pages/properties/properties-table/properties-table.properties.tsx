@@ -9,7 +9,6 @@ import {
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getPropertiesApi,
-  getTotalPropertiesApi,
   searchPropertiesApi,
   sortPropertiesApi,
   postPropertiesApi,
@@ -111,11 +110,16 @@ export const PropertiesTable: React.FC<IPropertiesTableProps> = (props) => {
     };
   };
 
-  const mapResponse = (response: any ): { data: IPropertiesGetApi[] } => {
+const mapResponse = (
+    response: any
+  ): { data: IPropertiesGetApi[]; total?: number } => {
     if (!response || !response.data) {
-      return { data: [] };
+      return { data: [], total: 0 };
     }
-    return { data: response.data };
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
   };
 
   const {
@@ -162,7 +166,6 @@ export const PropertiesTable: React.FC<IPropertiesTableProps> = (props) => {
     IPropertiesGetApi,
     IPropertiesGetApi,
     { page: number; size: number; property_id?: string },
-    { property_id?: string; from?: string; to?: string },
     { page: number; size: number; property_id?: string; property_name?: string; property_type?: string; from?: string; to?: string },
     { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
     string
@@ -182,26 +185,6 @@ export const PropertiesTable: React.FC<IPropertiesTableProps> = (props) => {
         property_id: property_id || "",
       });
       console.log("get Property Api response:", response);
-      return response;
-    },
-    fetchTotal: async ({
-      property_id,
-      from,
-      to,
-      property_name,
-    }: {
-      property_id?: string;
-      from?: string;
-      to?: string;
-      property_name?:string;
-    }) => {
-      const response = await getTotalPropertiesApi({
-        property_id,
-        from,
-        to,
-        property_name,
-      });
-      console.log("get Total Property Api response:", response);
       return response;
     },
     searchData: async ({
