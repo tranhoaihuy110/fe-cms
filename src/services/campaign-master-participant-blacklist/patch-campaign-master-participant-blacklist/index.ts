@@ -1,0 +1,1 @@
+export * from './patch-campaign-master-participant-blacklist.api'

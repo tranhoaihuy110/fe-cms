@@ -1,0 +1,1 @@
+export * from './campaign-master-participant-blacklist.type'
