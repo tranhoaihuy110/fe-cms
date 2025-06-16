@@ -551,14 +551,14 @@ export const AppSidebar: React.FC = () => {
             <>
               <img
                 className="dark:hidden"
-                src="/images/logo/druce.jpg"
+                src="/images/logo/Clippathgroup.svg"
                 alt="Logo"
                 width={150}
                 height={40}
               />
               <img
                 className="hidden dark:block"
-                src="/images/logo/logo-dark.svg"
+                src="/images/logo/Clippathgroup.svg"
                 alt="Logo"
                 width={150}
                 height={40}
@@ -566,7 +566,7 @@ export const AppSidebar: React.FC = () => {
             </>
           ) : (
             <img
-              src="/images/logo/druce.jpg"
+              src="/images/logo/Clippathgroup.svg"
               alt="Logo"
               width={32}
               height={32}
