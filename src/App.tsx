@@ -40,7 +40,8 @@ import {
   LeadsPropertyRoomsTables,
   CampaignMasterTables,
   CampaignEmailTemplateTables,
-  CampaignMasterParticipantBlacklists
+  CampaignMasterParticipantBlacklists,
+  UserBehaviorLogTable
 } from "./pages/index";
 import { AppLayout } from "./layout/index";
 import { ScrollToTop } from "./components/index";
@@ -159,6 +160,7 @@ export const App = () => {
               <Route path="/CampaignMaster" element={<CampaignMasterTables />} />
               <Route path="/CampaignEmailTemplateTables" element={<CampaignEmailTemplateTables />} />
               <Route path="/CampaignMasterParticipantBlacklists" element={<CampaignMasterParticipantBlacklists />} />
+              <Route path="/UserBehaviorLogTable" element={<UserBehaviorLogTable />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

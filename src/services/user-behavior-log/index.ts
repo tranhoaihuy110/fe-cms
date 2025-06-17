@@ -1,0 +1,6 @@
+export * from './delete-user-behavior-log'
+export * from './post-user-behavior-log'
+export * from './patch-user-behavior-log'
+export * from './get-user-behavior-log'
+export * from './search-user-behavior-log'
+export * from './sort-user-behavior-log'

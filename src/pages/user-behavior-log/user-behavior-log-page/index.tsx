@@ -1,0 +1,1 @@
+export * from './user-behavior-log-page.user-behavior-log'

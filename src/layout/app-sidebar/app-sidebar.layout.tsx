@@ -66,6 +66,12 @@ const navItems: TNavItem[] = [
         pro: false,
         icon: <ListIcon />,
       },
+      {
+        name: "User Behavior Log Table",
+        path: "/UserBehaviorLogTable",
+        pro: false,
+        icon: <ListIcon />,
+      },
     ],
   },
   {

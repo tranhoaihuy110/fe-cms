@@ -44,7 +44,8 @@ export default defineConfig(() => {
     "/leads-property-rooms",
     "/campaign-master",
     "/campaign-email-template",
-    "/campaign-master-participant-blacklist"
+    "/campaign-master-participant-blacklist",
+    "/user-behavior-log"
   ];
 
   const proxyConfig = apiV1Routes
