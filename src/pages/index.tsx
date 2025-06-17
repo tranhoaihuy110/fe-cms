@@ -39,3 +39,4 @@ export * from "./potential-lead-action";
 export * from "./leads-property-rooms";
 export * from "./campaign-master";
 export * from './campaign-email-template'
+export * from './campaign-master-participant-blacklist'

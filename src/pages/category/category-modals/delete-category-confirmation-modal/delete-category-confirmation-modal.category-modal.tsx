@@ -33,7 +33,7 @@ export const DeleteCategoryConfirmationModal: React.FC<
             Confirm Delete
           </h4>
           <p className="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
-            Are you sure you want to delete the service "{category.name}"? This
+            Are you sure you want to delete the category "{category.name}"? This
             action cannot be undone.
           </p>
         </div>

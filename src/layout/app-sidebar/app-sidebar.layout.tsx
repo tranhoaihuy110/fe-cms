@@ -204,6 +204,12 @@ const navItems: TNavItem[] = [
         pro: false,
         icon: <CateIcon />,
       },
+      {
+        name: "Campaign Master Participant Blacklists",
+        path: "/CampaignMasterParticipantBlacklists",
+        pro: false,
+        icon: <CateIcon />,
+      },
     ],
   },
 ];

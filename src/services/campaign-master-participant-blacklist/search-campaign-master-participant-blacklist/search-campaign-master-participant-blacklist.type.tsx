@@ -1,6 +1,6 @@
 import { ICampaignMasterParticipantBlacklistGetApi } from "../../../models";
 
-export interface IPagination {
+ interface IPagination {
   total: number;
   page: number;
   size: number;
