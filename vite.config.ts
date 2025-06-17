@@ -45,7 +45,8 @@ export default defineConfig(() => {
     "/campaign-master",
     "/campaign-email-template",
     "/campaign-master-participant-blacklist",
-    "/user-behavior-log"
+    "/user-behavior-log",
+    "/property-floors"
   ];
 
   const proxyConfig = apiV1Routes

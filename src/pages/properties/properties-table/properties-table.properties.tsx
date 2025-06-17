@@ -16,7 +16,7 @@ import {
   deletePropertiesApi,
 } from "../../../services";
 import { IPropertiesTableProps } from "./index";
-import { IPropertiesGetApi,IPropertiesPatchApi } from "../../../models";
+import { IPropertiesGetApi, IPropertiesPatchApi } from "../../../models";
 import {
   PropertiesFormModal,
   DeletePropertiesConfirmationModal,
@@ -63,30 +63,32 @@ export const PropertiesTable: React.FC<IPropertiesTableProps> = (props) => {
   };
 
   const mapToForm = (data: IPropertiesGetApi): IPropertiesGetApi => ({
-      property_id: data.property_id || "",
-      property_name: data.property_name|| "",
-      property_type: data.property_type|| "",
-      description: data.description || "",
-      json_address: data.json_address|| {},
-      full_address: data.full_address|| "",
-      address: data.address|| "",
-      city: data.city|| "",
-      state: data.state|| "",
-      postal_code: data.postal_code|| "",
-      country: data.country|| "",
-      price: data.price|| "",
-      size: data.size|| "",
-      longtitude: data.longtitude|| "",
-      latitude: data.latitude || "",
-      scanned_outside_folder_url: data.scanned_outside_folder_url,
-      ksplat_url: data.ksplat_url|| "",
-      created_at: data.created_at|| "",
-      updated_at: data.updated_at|| "",
-      streetview_url: data.streetview_url|| "",
-      created_by: data.created_by|| "",
+    property_id: data.property_id || "",
+    property_name: data.property_name || "",
+    property_type: data.property_type || "",
+    description: data.description || "",
+    json_address: data.json_address || {},
+    full_address: data.full_address || "",
+    address: data.address || "",
+    city: data.city || "",
+    state: data.state || "",
+    postal_code: data.postal_code || "",
+    country: data.country || "",
+    price: data.price || "",
+    size: data.size || "",
+    longtitude: data.longtitude || "",
+    latitude: data.latitude || "",
+    scanned_outside_folder_url: data.scanned_outside_folder_url,
+    ksplat_url: data.ksplat_url || "",
+    created_at: data.created_at || "",
+    updated_at: data.updated_at || "",
+    streetview_url: data.streetview_url || "",
+    created_by: data.created_by || "",
   });
 
-  const mapFromForm = (data: IPropertiesGetApi): Partial<IPropertiesPatchApi> => {
+  const mapFromForm = (
+    data: IPropertiesGetApi
+  ): Partial<IPropertiesPatchApi> => {
     return {
       property_id: data.property_id,
       property_name: data.property_name,
@@ -110,7 +112,7 @@ export const PropertiesTable: React.FC<IPropertiesTableProps> = (props) => {
     };
   };
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: IPropertiesGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -166,8 +168,20 @@ const mapResponse = (
     IPropertiesGetApi,
     IPropertiesGetApi,
     { page: number; size: number; property_id?: string },
-    { page: number; size: number; property_id?: string; property_name?: string; property_type?: string; from?: string; to?: string },
-    { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
+    {
+      page: number;
+      size: number;
+      property_id?: string;
+      property_name?: string;
+      property_type?: string;
+      from?: string;
+      to?: string;
+    },
+    {
+      page: number;
+      size: number;
+      sort: { field: string; direction: "asc" | "desc" };
+    },
     string
   >({
     fetchData: async ({
@@ -270,7 +284,8 @@ const mapResponse = (
 
   const setSearchIdTerm = (value: string) =>
     setFilter("property_id", value || null);
-  const setSearchNameTerm = (value: string) => setFilter("property_name", value || null);
+  const setSearchNameTerm = (value: string) =>
+    setFilter("property_name", value || null);
   const setSearchTypeTerm = (value: string) =>
     setFilter("property_type", value || null);
 
@@ -279,23 +294,29 @@ const mapResponse = (
   const handleClearSearchAddress = () => handleClearFilter("property_type");
 
   const columns = [
-  { key: "property_id" as keyof IPropertiesGetApi, header: "property_id" },
-  { key: "property_name" as keyof IPropertiesGetApi, header: "Property Name" },
-  { key: "property_type" as keyof IPropertiesGetApi, header: "Property Type" },
-  {
-    key: "create_at" as keyof IPropertiesGetApi,
-    header: "Date Created",
-    render: (item: IPropertiesGetApi) =>
-      new Date(item.created_at || "").toLocaleString(),
-  },
-  {
-    key: "updated_at" as keyof IPropertiesGetApi,
-    header: "Date Updated",
-    render: (item: IPropertiesGetApi) =>
-      new Date(item.updated_at || "").toLocaleString(),
-  },
-  { key: "actions" as keyof IPropertiesGetApi, header: "Actions" },
-];
+    { key: "property_id" as keyof IPropertiesGetApi, header: "Property Id" },
+    {
+      key: "property_name" as keyof IPropertiesGetApi,
+      header: "Property Name",
+    },
+    {
+      key: "property_type" as keyof IPropertiesGetApi,
+      header: "Property Type",
+    },
+    {
+      key: "create_at" as keyof IPropertiesGetApi,
+      header: "Date Created",
+      render: (item: IPropertiesGetApi) =>
+        new Date(item.created_at || "").toLocaleString(),
+    },
+    {
+      key: "updated_at" as keyof IPropertiesGetApi,
+      header: "Date Updated",
+      render: (item: IPropertiesGetApi) =>
+        new Date(item.updated_at || "").toLocaleString(),
+    },
+    { key: "actions" as keyof IPropertiesGetApi, header: "Actions" },
+  ];
 
   return (
     <>

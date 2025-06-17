@@ -250,8 +250,8 @@ const othersItems: TNavItem[] = [
         icon: <ListIcon />,
       },
       {
-        name: "Property Ownership",
-        path: "/PropertyOwnerShipTables",
+        name: "Property Floors Table",
+        path: "/PropertyFloorsTable",
         pro: false,
         icon: <ListIcon />,
       },
