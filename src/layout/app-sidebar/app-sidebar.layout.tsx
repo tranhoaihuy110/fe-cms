@@ -291,6 +291,12 @@ const othersItems: TNavItem[] = [
         pro: false,
         icon: <ListIcon />,
       },
+      {
+        name: "Property Room Table",
+        path: "/PropertyRoomTable",
+        pro: false,
+        icon: <ListIcon />,
+      },
     ],
   },
 ];

@@ -17,7 +17,7 @@ export interface FieldMapping<T> {
 export interface IUseTableDataProps<
   T,
   FormT,
-  FetchParams = { page: number; size: number },
+  FetchParams = { page: number; size: number, },
   SearchParams = any,
   SortParams = any,
   FetchByIdParams = string

@@ -1,33 +1,45 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import { FormModal } from "../../../../index";
-import { IPropertyFloorsGetApi, IPropertiesGetApi } from "../../../../models";
 import {
-  searchPropertyFloorsApi,
+  IPropertyRoomGetApi,
+  IPropertiesGetApi,
+  IPropertyFloorsGetApi,
+} from "../../../../models";
+import {
+  searchPropertyRoomApi,
   searchPropertiesApi,
+  searchPropertyFloorsApi,
 } from "../../../../services";
-import { IPropertyFloorsFormModalProps } from "./index";
+import { IPropertyRoomFormModalProps } from "./index";
 import { toast } from "react-toastify";
 import debounce from "lodash/debounce";
 import { IFormField } from "../../../../components";
 
-export const PropertyFloorsFormModal: React.FC<
-  IPropertyFloorsFormModalProps
-> = ({ isOpen, onClose, onSubmit, mode, config, children = "" }) => {
-  const [formData, setFormData] = useState<IPropertyFloorsGetApi>(
+export const PropertyRoomFormModal: React.FC<IPropertyRoomFormModalProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  mode,
+  config,
+  children = "",
+}) => {
+  const [formData, setFormData] = useState<IPropertyRoomGetApi>(
     typeof config === "object" && config !== null
       ? {
           id: config.id || "",
           property_id: config.property_id || "",
-          floor_type: config.floor_type || "",
-          floor_name: config.floor_name || "",
+          floor_id: config.floor_id || "",
+          room_type: config.room_type || "",
+          room_name: config.room_name || "",
           status: config.status || "",
           created_at: config.created_at || "",
         }
       : {
           id: "",
           property_id: "",
-          floor_type: "",
-          floor_name: "",
+          floor_id: "",
+          room_type: "",
+          room_name: "",
           status: "",
           created_at: "",
         }
@@ -35,23 +47,24 @@ export const PropertyFloorsFormModal: React.FC<
   const [referpartneridSuggestions, setReferpartneridSuggestions] = useState<
     IPropertiesGetApi[]
   >([]);
-  const [leadIdSuggestions, setLeadIdSuggestions] = useState<
-    IPropertiesGetApi[]
+  const [floorIdSuggestions, setFloorIdSuggestions] = useState<
+    IPropertyFloorsGetApi[]
   >([]);
   const [showReferPartnerIdSuggestions, setShowReferPartnerIdSuggestions] =
     useState(false);
+  const [showFloorIdSuggestions, setShowFloorIdSuggestions] = useState(false);
 
   const referPartnerIdRef = useRef<HTMLDivElement | null>(null);
-  const leadIdRef = useRef<HTMLDivElement | null>(null);
+  const floorIdRef = useRef<HTMLDivElement | null>(null);
   const wasOpenRef = useRef<boolean>(false);
 
   useEffect(() => {
     if (isOpen && !wasOpenRef.current) {
       console.log("Modal opened in mode:", mode, "with config:", config);
       if ((mode === "edit" || mode === "detail") && config?.id) {
-        const fetchPropertyFloorsDetails = async () => {
+        const fetchPropertyRoomDetails = async () => {
           try {
-            const results = await searchPropertyFloorsApi({
+            const results = await searchPropertyRoomApi({
               size: 1,
               id: config.id,
             });
@@ -66,8 +79,9 @@ export const PropertyFloorsFormModal: React.FC<
                 id: fetchedConfig.id || config.id || "",
                 property_id:
                   fetchedConfig.property_id || config.property_id || "",
-                floor_type: fetchedConfig.floor_type || config.floor_type || "",
-                floor_name: fetchedConfig.floor_name || config.floor_name || "",
+                floor_id: fetchedConfig.floor_id || config.floor_id || "",
+                room_type: fetchedConfig.room_type || config.room_type || "",
+                room_name: fetchedConfig.room_name || config.room_name || "",
                 status: fetchedConfig.status || config.status || "",
                 created_at: fetchedConfig.created_at || config.created_at || "",
               };
@@ -76,8 +90,9 @@ export const PropertyFloorsFormModal: React.FC<
               const newFormData = {
                 id: config.id || "",
                 property_id: config.property_id || "",
-                floor_type: config.floor_type || "",
-                floor_name: config.floor_name || "",
+                floor_id: config.floor_id || "",
+                room_type: config.room_type || "",
+                room_name: config.room_name || "",
                 status: config.status || "",
                 created_at: config.created_at || "",
               };
@@ -92,8 +107,9 @@ export const PropertyFloorsFormModal: React.FC<
             const newFormData = {
               id: config.id || "",
               property_id: config.property_id || "",
-              floor_type: config.floor_type || "",
-              floor_name: config.floor_name || "",
+              floor_id: config.floor_id || "",
+              room_type: config.room_type || "",
+              room_name: config.room_name || "",
               status: config.status || "",
               created_at: config.created_at || "",
             };
@@ -101,20 +117,22 @@ export const PropertyFloorsFormModal: React.FC<
             console.log("formData set to fallback after error:", newFormData);
           }
         };
-        fetchPropertyFloorsDetails();
+        fetchPropertyRoomDetails();
       } else if (isOpen && mode === "add") {
         const defaultFormData = {
           id: "",
           property_id: "",
-          floor_type: "",
-          floor_name: "",
+          floor_id: "",
+          room_type: "",
+          room_name: "",
           status: "",
           created_at: "",
         };
         setFormData(defaultFormData);
         setReferpartneridSuggestions([]);
-        setLeadIdSuggestions([]);
+        setFloorIdSuggestions([]);
         setShowReferPartnerIdSuggestions(false);
+        setShowFloorIdSuggestions(false);
 
         console.log("formData initialized in add mode:", defaultFormData);
       }
@@ -131,8 +149,8 @@ export const PropertyFloorsFormModal: React.FC<
         setShowReferPartnerIdSuggestions(false);
       }
       if (
-        leadIdRef.current &&
-        !leadIdRef.current.contains(event.target as Node)
+        floorIdRef.current &&
+        !floorIdRef.current.contains(event.target as Node)
       ) {
       }
     };
@@ -165,9 +183,34 @@ export const PropertyFloorsFormModal: React.FC<
     []
   );
 
+  const searchFloorIdSuggestions = useCallback(
+    debounce(async (value: string) => {
+      if (!value.trim()) {
+        setFloorIdSuggestions([]);
+        setShowFloorIdSuggestions(false);
+        return;
+      }
+      try {
+        const results = await searchPropertyFloorsApi({
+          size: 15,
+          floor_name: value,
+        });
+        setFloorIdSuggestions(results.data);
+        setShowFloorIdSuggestions(results.data.length > 0);
+        if (results.data.length === 0) {
+          toast.warn("No floor id found for the given name.");
+        }
+      } catch (error) {
+        setFloorIdSuggestions([]);
+        setShowFloorIdSuggestions(false);
+      }
+    }, 500),
+    []
+  );
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    fieldName: keyof IPropertyFloorsGetApi
+    fieldName: keyof IPropertyRoomGetApi
   ) => {
     const { value } = e.target;
     console.log("Input change for field:", fieldName, "value:", value);
@@ -178,7 +221,7 @@ export const PropertyFloorsFormModal: React.FC<
     });
   };
 
-  const fields: IFormField<IPropertyFloorsGetApi>[] = [
+  const fields: IFormField<IPropertyRoomGetApi>[] = [
     ...(mode === "edit" || mode === "detail"
       ? [
           {
@@ -240,24 +283,71 @@ export const PropertyFloorsFormModal: React.FC<
       },
     } as const,
     {
-      name: "floor_type",
-      label: "Floor Type",
+      name: "floor_id",
+      label: "Floor ID",
       type: "text" as const,
+      inputType: "text" as const,
       required: true,
-      placeholder: "Enter floor type",
+      placeholder: "Enter Floor Name",
       disabled: mode === "detail",
-      value: formData.floor_type,
-      onChange: (e) => handleInputChange(e, "floor_type"),
+      value: formData.floor_id,
+      onChange: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      ) => {
+        handleInputChange(e, "floor_id");
+        if (e.target instanceof HTMLInputElement) {
+          searchFloorIdSuggestions(e.target.value);
+        }
+      },
+      suggestions:
+        showFloorIdSuggestions && floorIdSuggestions.length > 0
+          ? floorIdSuggestions.map((property) => ({
+              value: property.id || "",
+              label: `${property.floor_name || property.id} (ID: ${
+                property.id
+              })`,
+              onSelect: () => {
+                const updatedData = {
+                  floor_id: property.id || "",
+                };
+                setFormData((prev) => ({
+                  ...prev,
+                  floor_id: updatedData.floor_id,
+                }));
+                setShowFloorIdSuggestions(false);
+                return updatedData;
+              },
+            }))
+          : [],
+      suggestionRef: floorIdRef,
+      clearable: mode !== "detail" && !!formData.floor_id,
+      onClear: () => {
+        setFormData((prev) => ({
+          ...prev,
+          floor_id: "",
+        }));
+        return { floor_id: "" };
+      },
     } as const,
     {
-      name: "floor_name",
-      label: "Floor Name",
+      name: "room_type",
+      label: "Room Type",
       type: "text" as const,
       required: true,
-      placeholder: "Enter floor name",
+      placeholder: "Enter room type",
       disabled: mode === "detail",
-      value: formData.floor_name,
-      onChange: (e) => handleInputChange(e, "floor_name"),
+      value: formData.room_type,
+      onChange: (e) => handleInputChange(e, "room_type"),
+    } as const,
+    {
+      name: "room_name",
+      label: "Room Name",
+      type: "text" as const,
+      required: true,
+      placeholder: "Enter room name",
+      disabled: mode === "detail",
+      value: formData.room_name,
+      onChange: (e) => handleInputChange(e, "room_name"),
     } as const,
     {
       name: "status",
@@ -271,43 +361,25 @@ export const PropertyFloorsFormModal: React.FC<
     } as const,
   ];
 
-  console.log(
-    "Rendering Leads Refer Partner Form Modal with formData:",
-    formData
-  );
-  console.log("Fields passed to FormModal:", fields);
-  console.log(
-    "Current refer_partner_id suggestions:",
-    referpartneridSuggestions
-  );
-  console.log("Current lead ID suggestions:", leadIdSuggestions);
-
   return (
-    <FormModal<IPropertyFloorsGetApi>
+    <FormModal<IPropertyRoomGetApi>
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={async (data) => {
         if (mode !== "detail") {
           console.log("Submitting data:", data);
 
-          const submitData: IPropertyFloorsGetApi = {
+          const submitData: IPropertyRoomGetApi = {
             id: data.id || "",
             property_id: data.property_id || "",
-            floor_type: data.floor_type || "",
-            floor_name: data.floor_name || "",
+            floor_id: data.floor_id || "",
+            room_type: data.room_type || "",
+            room_name: data.room_name || "",
             status: data.status || "",
             created_at: data.created_at || "",
           };
-          console.log("Payload gửi lên API:", submitData);
 
           await onSubmit(submitData);
-          console.log(
-            "Phản hồi từ API sau khi lưu:",
-            await searchPropertyFloorsApi({
-              size: 1,
-              id: submitData.id,
-            })
-          );
         }
         onClose();
       }}
@@ -315,14 +387,14 @@ export const PropertyFloorsFormModal: React.FC<
       config={formData}
       fields={fields}
       title={{
-        add: "Add New Property Floor",
-        edit: "Edit Property Floor",
-        detail: "Property Floor Details",
+        add: "Add New Property Room",
+        edit: "Edit Property Room",
+        detail: "Property Room Details",
       }}
       description={{
-        add: "Create a new property floor with the details below.",
-        edit: "Update property floor details to keep information current.",
-        detail: "View details of the property floor below.",
+        add: "Create a new property room with the details below.",
+        edit: "Update property room details to keep information current.",
+        detail: "View details of the property room below.",
       }}
       children={children}
     />

@@ -43,6 +43,7 @@ import {
   CampaignMasterParticipantBlacklists,
   UserBehaviorLogTable,
   PropertyFloorsTable,
+  PropertyRoomTable,
 } from "./pages/index";
 import { AppLayout } from "./layout/index";
 import { ScrollToTop } from "./components/index";
@@ -177,6 +178,14 @@ export const App = () => {
               <Route
                 path="/PropertyFloorsTable"
                 element={<PropertyFloorsTable />}
+              />
+              <Route
+                path="/UserBehaviorLogTable"
+                element={<UserBehaviorLogTable />}
+              />
+              <Route
+                path="/PropertyRoomTable"
+                element={<PropertyRoomTable />}
               />
             </Route>
           </Route>
