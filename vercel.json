@@ -2,10 +2,10 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://all-oz-copied-ethics.trycloudflare.com/api/$1"
+      "destination": "https://crud-partner-be.vercel.app/api/$1"
     },
     {
-      "source": "/category-tables",
+      "source": "/api/(.*)",
       "destination": "/index.html"
     }
   ]
