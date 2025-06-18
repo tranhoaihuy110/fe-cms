@@ -1,3 +1,4 @@
+// src/services/api.ts
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import { API_ENDPOINT } from '../constants';
@@ -27,6 +28,12 @@ class ApiService {
         }),
     });
 
+    // Khởi tạo token ngay khi tạo instance
+    const accessToken = window.localStorage.getItem('access_token');
+    if (accessToken) {
+      this.authorization(accessToken);
+    }
+
     this.session.interceptors.response.use(
       (response: AxiosResponse) => response,
       async (error: AxiosError): Promise<any> => {
@@ -34,7 +41,7 @@ class ApiService {
         const status = error.response?.status;
         const data = error.response?.data as { statusCode?: string; error?: string; message?: string };
 
-        const isLoginRequest = originalRequest?.url?.includes('/');
+        const isLoginRequest = originalRequest?.url?.includes('/auth/login');
 
         if (status === 401 && !originalRequest?._retry && !isLoginRequest) {
           originalRequest._retry = true;
@@ -64,8 +71,7 @@ class ApiService {
           toast.error(data.message);
         } else if (data?.statusCode) {
           toast.error(data.statusCode);
-        }
-        else if (data?.error) {
+        } else if (data?.error) {
           toast.error(data.error);
         } else {
           toast.error('default_error');
@@ -90,22 +96,16 @@ class ApiService {
   logout(): void {
     window.localStorage.removeItem('access_token');
     window.localStorage.removeItem('refresh_token');
-
     setTimeout(() => {
-      window.location.href = '/';
+      window.location.href = '/login';
     }, 2000);
   }
 
   options: AxiosInstance['options'] = (...params) => this.session.options(...params);
-
   get: AxiosInstance['get'] = (...params) => this.session.get(...params);
-
   post: AxiosInstance['post'] = (...params) => this.session.post(...params);
-
   put: AxiosInstance['put'] = (...params) => this.session.put(...params);
-
   delete: AxiosInstance['delete'] = (...params) => this.session.delete(...params);
-
   patch: AxiosInstance['patch'] = (...params) => this.session.patch(...params);
 
   me(): Promise<AxiosResponse<{ data: Record<string, any> }>> {
