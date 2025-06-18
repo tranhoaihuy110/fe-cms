@@ -44,7 +44,6 @@ function useProvideAuth() {
       } else {
         window.location.href = "/";
       }
-      MS_API.authorization(newAccess);
 
       setAccessToken(newAccess);
       setRefreshToken(newRefresh);
