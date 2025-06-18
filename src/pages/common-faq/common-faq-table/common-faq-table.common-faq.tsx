@@ -14,7 +14,7 @@ import {
   deleteCommonFaqApi,
 } from "../../../services";
 import { ICommonFaqTableProps } from "./index";
-import {ICommonFaqGetApi} from '../../.././models'
+import { ICommonFaqGetApi } from "../../.././models";
 import { CommonFaqFormModal, DeleteCommonFaqConfirmationModal } from "../index";
 
 export const CommonFaqTable: React.FC<ICommonFaqTableProps> = (props) => {
@@ -60,7 +60,7 @@ export const CommonFaqTable: React.FC<ICommonFaqTableProps> = (props) => {
     faq_status: data.faq_status || 0,
   });
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: ICommonFaqGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -84,7 +84,7 @@ const mapResponse = (
     currentPage,
     setCurrentPage,
     itemsPerPage,
-    
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -94,9 +94,9 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
-    
+
     endDate,
-    
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -124,7 +124,14 @@ const mapResponse = (
     ICommonFaqGetApi,
     ICommonFaqGetApi,
     { page: number; size: number; id?: string; faq_q?: string },
-    { page: number; size: number; id?: string; faq_q?: string; from?: string; to?: string },
+    {
+      page: number;
+      size: number;
+      id?: string;
+      faq_q?: string;
+      from?: string;
+      to?: string;
+    },
     {
       page: number;
       size: number;
@@ -146,6 +153,7 @@ const mapResponse = (
         page,
         size,
         id: id || "",
+        sort: "create_date,desc"
       });
       console.log("getCommonFaqApi response:", response);
       return response;
@@ -223,7 +231,8 @@ const mapResponse = (
       : "";
 
   const setSearchIdTerm = (value: string) => setFilter("id", value || null);
-  const setSearchQuestionTerm = (value: string) => setFilter("faq_q", value || null);
+  const setSearchQuestionTerm = (value: string) =>
+    setFilter("faq_q", value || null);
 
   const handleClearSearchId = () => handleClearFilter("id");
   const handleClearSearchQuestion = () => handleClearFilter("faq_q");
@@ -299,7 +308,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

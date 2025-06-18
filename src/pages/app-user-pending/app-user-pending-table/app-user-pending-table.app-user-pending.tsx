@@ -14,12 +14,15 @@ import {
   deleteAppUserPendingApi,
 } from "../../../services";
 import { IAppUserPendingTableProps } from "./index";
-import { IAppUserPendingGetApi, } from "../../../models";
+import { IAppUserPendingGetApi } from "../../../models";
 import {
-  DeleteAppUserPendingConfirmationModal, AppUserPendingFormModal
+  DeleteAppUserPendingConfirmationModal,
+  AppUserPendingFormModal,
 } from "../index";
 
-export const AppUserPendingTable: React.FC<IAppUserPendingTableProps> = (props) => {
+export const AppUserPendingTable: React.FC<IAppUserPendingTableProps> = (
+  props
+) => {
   const { children = "" } = props;
 
   const initialFormData: IAppUserPendingGetApi = {
@@ -42,7 +45,7 @@ export const AppUserPendingTable: React.FC<IAppUserPendingTableProps> = (props) 
     otp_expired_at: "",
     job: "",
     expertise: "",
-    user_type: "",  
+    user_type: "",
   };
 
   const filterConfig: FilterConfig[] = [
@@ -81,7 +84,9 @@ export const AppUserPendingTable: React.FC<IAppUserPendingTableProps> = (props) 
     user_type: data.user_type || "",
   });
 
-  const mapFromForm = (data: IAppUserPendingGetApi): Partial<IAppUserPendingGetApi> => {
+  const mapFromForm = (
+    data: IAppUserPendingGetApi
+  ): Partial<IAppUserPendingGetApi> => {
     return {
       user_id: data.user_id,
       username: data.username,
@@ -105,7 +110,7 @@ export const AppUserPendingTable: React.FC<IAppUserPendingTableProps> = (props) 
     };
   };
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: IAppUserPendingGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -121,7 +126,7 @@ const mapResponse = (
     currentPage,
     setCurrentPage,
     itemsPerPage,
-    
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -131,9 +136,9 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
-    
+
     endDate,
-    
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -161,8 +166,21 @@ const mapResponse = (
     IAppUserPendingGetApi,
     IAppUserPendingGetApi,
     { page: number; size: number; user_id?: string },
-    { page: number; size: number; user_id?: string; username?: string; phone_number?: string; verify_status?: string; from?: string; to?: string },
-    { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
+    {
+      page: number;
+      size: number;
+      user_id?: string;
+      username?: string;
+      phone_number?: string;
+      verify_status?: string;
+      from?: string;
+      to?: string;
+    },
+    {
+      page: number;
+      size: number;
+      sort: { field: string; direction: "asc" | "desc" };
+    },
     string
   >({
     fetchData: async ({
@@ -178,6 +196,7 @@ const mapResponse = (
         page,
         size,
         user_id: user_id || "",
+        sort: "created_at,desc",
       });
       console.log("getAppUserPendingApi response:", response);
       return response;
@@ -281,20 +300,30 @@ const mapResponse = (
   const handleClearSearchId = () => handleClearFilter("user_id");
   const handleClearSearchUsername = () => handleClearFilter("username");
   const handleClearSearchPhone = () => handleClearFilter("phone_number");
-  const handleClearSearchVerifyStatus = () => handleClearFilter("verify_status");
+  const handleClearSearchVerifyStatus = () =>
+    handleClearFilter("verify_status");
 
   const columns = [
     { key: "user_id" as keyof IAppUserPendingGetApi, header: "USER ID" },
     { key: "username" as keyof IAppUserPendingGetApi, header: "Username" },
-    { key: "phone_number" as keyof IAppUserPendingGetApi, header: "Phone Number" },
+    {
+      key: "phone_number" as keyof IAppUserPendingGetApi,
+      header: "Phone Number",
+    },
     {
       key: "created_at" as keyof IAppUserPendingGetApi,
       header: "Date Created",
       render: (item: IAppUserPendingGetApi) =>
         new Date(item.created_at || "").toLocaleString(),
     },
-    { key: "verify_status" as keyof IAppUserPendingGetApi, header: "Verify Status" },
-    { key: "user_lastname" as keyof IAppUserPendingGetApi, header: "User Lastname" },
+    {
+      key: "verify_status" as keyof IAppUserPendingGetApi,
+      header: "Verify Status",
+    },
+    {
+      key: "user_lastname" as keyof IAppUserPendingGetApi,
+      header: "User Lastname",
+    },
     { key: "user_email" as keyof IAppUserPendingGetApi, header: "Email" },
     { key: "actions" as keyof IAppUserPendingGetApi, header: "Actions" },
   ];
@@ -333,7 +362,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

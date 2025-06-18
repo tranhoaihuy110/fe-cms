@@ -17,7 +17,10 @@ export interface FieldMapping<T> {
 export interface IUseTableDataProps<
   T,
   FormT,
-  FetchParams = { page: number; size: number, },
+  FetchParams = {
+    page: number;
+    size: number;
+  },
   SearchParams = any,
   SortParams = any,
   FetchByIdParams = string
@@ -58,13 +61,45 @@ export interface IUseTableDataReturn<T, FormT> {
   setStartDate: (date: Date | null) => void;
   endDate: Date | null;
   setEndDate: (date: Date | null) => void;
-  timeFilter: "today" | "yesterday" | "last7days" | "thisweek" | "last30days" | "thismonth" | "lastmonth" | "custom" | null;
-  setTimeFilter: (filter: "today" | "yesterday" | "last7days" | "thisweek" | "last30days" | "thismonth" | "lastmonth" | "custom" | null) => void;
+  timeFilter:
+    | "today"
+    | "yesterday"
+    | "last7days"
+    | "thisweek"
+    | "last30days"
+    | "thismonth"
+    | "lastmonth"
+    | "custom"
+    | null;
+  setTimeFilter: (
+    filter:
+      | "today"
+      | "yesterday"
+      | "last7days"
+      | "thisweek"
+      | "last30days"
+      | "thismonth"
+      | "lastmonth"
+      | "custom"
+      | null
+  ) => void;
   loading: boolean;
   error: string | null;
   isFilterActive: boolean;
-  handleTimeFilter: (filter: "today" | "yesterday" | "last7days" | "thisweek" | "last30days" | "thismonth" | "lastmonth" | "custom") => void;
-  handleItemsPerPageChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleTimeFilter: (
+    filter:
+      | "today"
+      | "yesterday"
+      | "last7days"
+      | "thisweek"
+      | "last30days"
+      | "thismonth"
+      | "lastmonth"
+      | "custom"
+  ) => void;
+  handleItemsPerPageChange: (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => void;
   handleStartDateChange: (date: Date | null) => void;
   handleEndDateChange: (date: Date | null) => void;
   openAddModal: () => void;

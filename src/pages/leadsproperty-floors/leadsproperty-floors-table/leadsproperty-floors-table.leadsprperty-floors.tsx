@@ -21,10 +21,9 @@ import {
   DeleteLeadPropertyFloorsConfirmationModal,
 } from "../index";
 
-
-export const LeadPropertyFloorsTable: React.FC<ILeadPropertyFloorsTableProps> = (
-  props
-) => {
+export const LeadPropertyFloorsTable: React.FC<
+  ILeadPropertyFloorsTableProps
+> = (props) => {
   const { children = "" } = props;
 
   const initialFormData: ILeadPropertyFloorsGetApi = {
@@ -46,7 +45,9 @@ export const LeadPropertyFloorsTable: React.FC<ILeadPropertyFloorsTableProps> = 
     createdAt: "created_at" as keyof ILeadPropertyFloorsGetApi,
   };
 
-  const mapToForm = (data: ILeadPropertyFloorsGetApi): ILeadPropertyFloorsGetApi => ({
+  const mapToForm = (
+    data: ILeadPropertyFloorsGetApi
+  ): ILeadPropertyFloorsGetApi => ({
     id: data.id || "",
     lead_property_id: data.lead_property_id || "",
     floor_type: data.floor_type || "",
@@ -63,7 +64,7 @@ export const LeadPropertyFloorsTable: React.FC<ILeadPropertyFloorsTableProps> = 
     floor_name: data.floor_name,
   });
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: ILeadPropertyFloorsGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -75,7 +76,9 @@ const mapResponse = (
     };
   };
 
-  const wrappedDeleteLeadPropertyFloorsApi = async (id: string): Promise<any> => {
+  const wrappedDeleteLeadPropertyFloorsApi = async (
+    id: string
+  ): Promise<any> => {
     if (!id) {
       throw new Error("Invalid ID format");
     }
@@ -86,7 +89,7 @@ const mapResponse = (
     currentPage,
     setCurrentPage,
     itemsPerPage,
-    
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -96,9 +99,9 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
-    
+
     endDate,
-    
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -165,7 +168,7 @@ const mapResponse = (
         lead_property_id: lead_property_id || "",
         floor_type: floor_type || "",
         floor_name: floor_name || "",
-
+        sort: "created_at,desc",
       });
       console.log("getLeadPropertyFloorsApi response:", response);
       return response;
@@ -251,7 +254,7 @@ const mapResponse = (
   const handleClearSearchId = () => handleClearFilter("id");
   const handleClearSearchKey = () => handleClearFilter("lead_property_id");
 
-   const columns = [
+  const columns = [
     { key: "id" as keyof ILeadPropertyFloorsGetApi, header: "ID" },
     {
       key: "lead_property_id" as keyof ILeadPropertyFloorsGetApi,
@@ -317,7 +320,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

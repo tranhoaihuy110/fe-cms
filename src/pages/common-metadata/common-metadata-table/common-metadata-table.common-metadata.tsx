@@ -13,13 +13,12 @@ import {
   searchCommonMetadataApi,
   sortCommonMetadataApi,
 } from "../../../services";
-import { ICommonMetaDataTableProps,columns } from "./index";
+import { ICommonMetaDataTableProps, columns } from "./index";
 import { ICommonMetadataGetApi } from "../../../models";
 import {
   CommonMetadataFormModal,
   DeleteCommonMetadataConfirmationModal,
 } from "../index";
-
 
 export const CommonMetadataTable: React.FC<ICommonMetaDataTableProps> = (
   props
@@ -59,7 +58,7 @@ export const CommonMetadataTable: React.FC<ICommonMetaDataTableProps> = (
     meta_values: data.meta_values,
   });
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: ICommonMetadataGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -82,7 +81,7 @@ const mapResponse = (
     currentPage,
     setCurrentPage,
     itemsPerPage,
-    
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -92,9 +91,9 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
-    
+
     endDate,
-    
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -153,6 +152,7 @@ const mapResponse = (
         size,
         id: id || "",
         meta_key: meta_key || "",
+        sort: "created_at,desc",
       });
       console.log("getCommonMetadataApi response:", response);
       return response;
@@ -236,8 +236,6 @@ const mapResponse = (
   const handleClearSearchId = () => handleClearFilter("id");
   const handleClearSearchKey = () => handleClearFilter("meta_key");
 
-  
-
   console.log("CommonMetadataTable state:", {
     isModalOpen,
     modalMode,
@@ -278,7 +276,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

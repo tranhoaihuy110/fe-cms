@@ -1,1 +1,0 @@
-export * from './mart-potential-lead-order.type'

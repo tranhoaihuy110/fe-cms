@@ -9,7 +9,6 @@ export interface IUserNotificationsGetApi {
   is_read?: string;
   data: Record<string, any>;
   read_at?: string;
-  // created_at?: string;
 }
 
 export interface IUserNotificationsResponseApi {

@@ -77,17 +77,17 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
     data_desc: data.data_desc,
   });
 
- const mapResponse = (
-     response: any
-   ): { data: IMetaDataApi[]; total?: number } => {
-     if (!response || !response.data) {
-       return { data: [], total: 0 };
-     }
-     return {
-       data: response.data,
-       total: response.pagination?.total || 0,
-     };
-   };
+  const mapResponse = (
+    response: any
+  ): { data: IMetaDataApi[]; total?: number } => {
+    if (!response || !response.data) {
+      return { data: [], total: 0 };
+    }
+    return {
+      data: response.data,
+      total: response.pagination?.total || 0,
+    };
+  };
 
   const {
     currentPage,
@@ -132,7 +132,13 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
   } = useTableData<
     IMetaDataApi,
     IMetaDataApi,
-    { page: number; size: number; data_type: string; id?: string },
+    {
+      page: number;
+      size: number;
+      data_type: string;
+      id?: string;
+      sort: string;
+    },
     {
       page: number;
       size: number;
@@ -166,6 +172,7 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
         size,
         data_type,
         id: id || "",
+        sort: "create_at,desc",
       });
       return response;
     },
@@ -295,7 +302,7 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

@@ -68,7 +68,7 @@ export const LeadActivityTable: React.FC<ILeadActivitiesTableProps> = (
     status: data.status,
   });
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: ILeadActivityGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -158,6 +158,7 @@ const mapResponse = (
         size,
         activity_id: activity_id || "",
         email: email || "",
+        sort: "activity_date,desc",
       });
       console.log("getLeadActivityApi response:", response);
       return response;
@@ -228,15 +229,17 @@ const mapResponse = (
   });
 
   const searchIdTerm =
-    filters.activity_id !== undefined && filters.activity_id !== null ? String(filters.activity_id) : "";
+    filters.activity_id !== undefined && filters.activity_id !== null
+      ? String(filters.activity_id)
+      : "";
   const searchKeyTerm =
     filters.email !== undefined && filters.email !== null
       ? String(filters.email)
       : "";
 
-  const setSearchIdTerm = (value: string) => setFilter("activity_id", value || null);
-  const setSearchKeyTerm = (value: string) =>
-    setFilter("email", value || null);
+  const setSearchIdTerm = (value: string) =>
+    setFilter("activity_id", value || null);
+  const setSearchKeyTerm = (value: string) => setFilter("email", value || null);
 
   const handleClearSearchId = () => handleClearFilter("activity_id");
   const handleClearSearchKey = () => handleClearFilter("email");
@@ -314,7 +317,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

@@ -20,7 +20,7 @@ import {
 } from "../../../models";
 import {
   DeleteCommonMetadataFinalConfirmationModal,
-  CommonMetadataFinalFormModal
+  CommonMetadataFinalFormModal,
 } from "../index";
 
 import { ICommonMetadataFinalTableProps } from "./index";
@@ -41,7 +41,7 @@ export const CommonMetadataFinalTable: React.FC<
   const filterConfig: FilterConfig[] = [
     { key: "id", label: "Id", type: "text" },
     { key: "meta_key", label: "Key", type: "text" },
-{ key: "meta_values", label: "Values", type: "text" },
+    { key: "meta_values", label: "Values", type: "text" },
   ];
 
   const fieldMapping = {
@@ -70,7 +70,7 @@ export const CommonMetadataFinalTable: React.FC<
     meta_values_display: data.meta_values_display,
   });
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: ICommonMetadataFinalGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -92,7 +92,7 @@ const mapResponse = (
     currentPage,
     setCurrentPage,
     itemsPerPage,
-    
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -102,9 +102,9 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
-    
+
     endDate,
-    
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -162,7 +162,8 @@ const mapResponse = (
         page,
         size,
         id: id || "",
-        meta_key : key ||"",
+        meta_key: key || "",
+        sort: "created_at,desc"
       });
       console.log("getCommonMetadataFinalApi response:", response);
       return response;
@@ -240,7 +241,8 @@ const mapResponse = (
       : "";
 
   const setSearchIdTerm = (value: string) => setFilter("id", value || null);
-  const setSearchKeyTerm = (value: string) => setFilter("meta_key", value || null);
+  const setSearchKeyTerm = (value: string) =>
+    setFilter("meta_key", value || null);
 
   const handleClearSearchId = () => handleClearFilter("id");
   const handleClearSearchKey = () => handleClearFilter("meta_key");
@@ -326,7 +328,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>
@@ -360,13 +362,13 @@ const mapResponse = (
           onItemsPerPageChange={handleItemsPerPageChange}
         />
       </div>
-       <CommonMetadataFinalFormModal
+      <CommonMetadataFinalFormModal
         isOpen={isModalOpen}
         onClose={closeModal}
         onSubmit={modalMode === "add" ? handleAddItem : handleEditItem}
         mode={modalMode}
         config={currentItem || initialFormData}
-      /> 
+      />
       <DeleteCommonMetadataFinalConfirmationModal
         isOpen={isDeleteModalOpen}
         onClose={closeDeleteModal}

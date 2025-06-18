@@ -15,9 +15,14 @@ import {
 } from "../../../services";
 import { ICommonBranchPostcodeTableProps } from "./index";
 import { ICommonBranchPostcodeGetApi } from "../../../models";
-import {  CommonBranchPostcodeDetailModal,DeleteCommonBranchPostcodeConfirmationModal } from "../index";
+import {
+  CommonBranchPostcodeDetailModal,
+  DeleteCommonBranchPostcodeConfirmationModal,
+} from "../index";
 
-export const CommonBranchPostcodeTable: React.FC<ICommonBranchPostcodeTableProps> = (props) => {
+export const CommonBranchPostcodeTable: React.FC<
+  ICommonBranchPostcodeTableProps
+> = (props) => {
   const { children = "" } = props;
 
   const initialFormData: ICommonBranchPostcodeGetApi = {
@@ -40,7 +45,9 @@ export const CommonBranchPostcodeTable: React.FC<ICommonBranchPostcodeTableProps
     createdAt: "created_at" as keyof ICommonBranchPostcodeGetApi,
   };
 
-  const mapToForm = (data: ICommonBranchPostcodeGetApi): ICommonBranchPostcodeGetApi => ({
+  const mapToForm = (
+    data: ICommonBranchPostcodeGetApi
+  ): ICommonBranchPostcodeGetApi => ({
     id: data.id || "",
     user_name: data.user_name || "",
     branch: data.branch || "",
@@ -48,15 +55,17 @@ export const CommonBranchPostcodeTable: React.FC<ICommonBranchPostcodeTableProps
     created_at: data.created_at || "",
   });
 
-  const mapFromForm = (data: ICommonBranchPostcodeGetApi): Partial<ICommonBranchPostcodeGetApi> => ({
+  const mapFromForm = (
+    data: ICommonBranchPostcodeGetApi
+  ): Partial<ICommonBranchPostcodeGetApi> => ({
     id: data.id,
     user_name: data.user_name,
-    branch: data.branch ,
-    postcodes: data.postcodes ,
-    created_at: data.created_at ,
+    branch: data.branch,
+    postcodes: data.postcodes,
+    created_at: data.created_at,
   });
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: ICommonBranchPostcodeGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -77,7 +86,7 @@ const mapResponse = (
     currentPage,
     setCurrentPage,
     itemsPerPage,
-    
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -87,9 +96,9 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
-    
+
     endDate,
-    
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -137,7 +146,8 @@ const mapResponse = (
       const response = await getCommonBranchPostcodeApi({
         page,
         size,
-        id: id ,
+        id: id,
+        sort: "create_at,desc",
       });
       console.log("getCommonBranchPostcodeApi response:", response);
       return response;
@@ -188,7 +198,7 @@ const mapResponse = (
       const response = await getCommonBranchPostcodeApi({
         page: 1,
         size: 1,
-        id: id ,
+        id: id,
       });
       console.log("getCommonBranchPostcodeApi (fetchById) response:", response);
       if (!response.data || !response.data[0]) {
@@ -208,9 +218,7 @@ const mapResponse = (
   });
 
   const searchIdTerm =
-    filters.id !== undefined && filters.id !== null
-      ? String(filters.id)
-      : "";
+    filters.id !== undefined && filters.id !== null ? String(filters.id) : "";
   const searchUserNameTerm =
     filters.user_name !== undefined && filters.user_name !== null
       ? String(filters.user_name)
@@ -237,8 +245,10 @@ const mapResponse = (
         return <div>{displayValue}</div>;
       },
     },
-    { key: "branch" as keyof ICommonBranchPostcodeGetApi, header: "Branch",
-         render: (item: ICommonBranchPostcodeGetApi) => {
+    {
+      key: "branch" as keyof ICommonBranchPostcodeGetApi,
+      header: "Branch",
+      render: (item: ICommonBranchPostcodeGetApi) => {
         const maxLength = 80;
         const displayValue =
           (item.branch || "").length > maxLength
@@ -246,9 +256,11 @@ const mapResponse = (
             : item.branch || "";
         return <div>{displayValue}</div>;
       },
-     },
-    { key: "postcodes" as keyof ICommonBranchPostcodeGetApi, header: "Postcodes",
-         render: (item: ICommonBranchPostcodeGetApi) => {
+    },
+    {
+      key: "postcodes" as keyof ICommonBranchPostcodeGetApi,
+      header: "Postcodes",
+      render: (item: ICommonBranchPostcodeGetApi) => {
         const maxLength = 80;
         const displayValue =
           (item.postcodes || "").length > maxLength
@@ -256,7 +268,7 @@ const mapResponse = (
             : item.postcodes || "";
         return <div>{displayValue}</div>;
       },
-     },
+    },
     {
       key: "created_at" as keyof ICommonBranchPostcodeGetApi,
       header: "Date Created",
@@ -292,10 +304,10 @@ const mapResponse = (
           hidePhoneEmail={true}
           hideAddButton={false}
           searchPhoneTerm=""
-                 />
+        />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

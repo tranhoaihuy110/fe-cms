@@ -22,7 +22,6 @@ import {
   DeleteUserProfileUrlMapConfirmationModal,
 } from "../index";
 
-
 export const UserProfileUrlMapTable: React.FC<IUserProfileUrlMapTableProps> = (
   props
 ) => {
@@ -45,7 +44,9 @@ export const UserProfileUrlMapTable: React.FC<IUserProfileUrlMapTableProps> = (
     email: "email" as keyof IUserProfileUrlMapGetApi,
   };
 
-  const mapToForm = (data: IUserProfileUrlMapGetApi): IUserProfileUrlMapGetApi => ({
+  const mapToForm = (
+    data: IUserProfileUrlMapGetApi
+  ): IUserProfileUrlMapGetApi => ({
     id: data.id || "",
     email: data.email || "",
     profile_url: data.profile_url || "",
@@ -61,7 +62,7 @@ export const UserProfileUrlMapTable: React.FC<IUserProfileUrlMapTableProps> = (
     profile_image: data.profile_image,
   });
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: IUserProfileUrlMapGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -73,7 +74,9 @@ const mapResponse = (
     };
   };
 
-  const wrappedDeleteUserProfileUrlMapApi = async (id: string): Promise<any> => {
+  const wrappedDeleteUserProfileUrlMapApi = async (
+    id: string
+  ): Promise<any> => {
     if (!id) {
       throw new Error("Invalid ID format");
     }
@@ -84,7 +87,7 @@ const mapResponse = (
     currentPage,
     setCurrentPage,
     itemsPerPage,
-    
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -94,9 +97,9 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
-    
+
     endDate,
-    
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -159,7 +162,7 @@ const mapResponse = (
         size,
         id: id || "",
         email: email || "",
-
+        sort: "id,desc",
       });
       console.log("getUserProfileUrlMapApi response:", response);
       return response;
@@ -235,13 +238,12 @@ const mapResponse = (
       : "";
 
   const setSearchIdTerm = (value: string) => setFilter("id", value || null);
-  const setSearchKeyTerm = (value: string) =>
-    setFilter("email", value || null);
+  const setSearchKeyTerm = (value: string) => setFilter("email", value || null);
 
   const handleClearSearchId = () => handleClearFilter("id");
   const handleClearSearchKey = () => handleClearFilter("email");
 
-   const columns = [
+  const columns = [
     { key: "id" as keyof IUserProfileUrlMapGetApi, header: "ID" },
     {
       key: "email" as keyof IUserProfileUrlMapGetApi,
@@ -302,7 +304,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

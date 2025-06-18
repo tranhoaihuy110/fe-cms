@@ -15,13 +15,18 @@ import {
   deleteLeadAssignmentApi,
 } from "../../../services";
 import { ILeadAssignmentTableProps } from "./index";
-import { ILeadAssignmentGetApi,ILeadAssignmentPatchApi } from "../../../models";
+import {
+  ILeadAssignmentGetApi,
+  ILeadAssignmentPatchApi,
+} from "../../../models";
 import {
   LeadAssignmentFormModal,
   DeleteLeadAssignmentConfirmationModal,
 } from "../index";
 
-export const LeadAssignmentTable: React.FC<ILeadAssignmentTableProps> = (props) => {
+export const LeadAssignmentTable: React.FC<ILeadAssignmentTableProps> = (
+  props
+) => {
   const { children = "" } = props;
 
   const initialFormData: ILeadAssignmentGetApi = {
@@ -52,15 +57,17 @@ export const LeadAssignmentTable: React.FC<ILeadAssignmentTableProps> = (props) 
   };
 
   const mapToForm = (data: ILeadAssignmentGetApi): ILeadAssignmentGetApi => ({
-        assignment_id: data.assignment_id || "",
-        lead_id: data.lead_id|| "",
-        email: data.email || "",
-        assigned_to_id: data.assigned_to_id|| "",
-        assigned_to: data.assigned_to|| "",
-        assigned_date: data.assigned_date || "",
+    assignment_id: data.assignment_id || "",
+    lead_id: data.lead_id || "",
+    email: data.email || "",
+    assigned_to_id: data.assigned_to_id || "",
+    assigned_to: data.assigned_to || "",
+    assigned_date: data.assigned_date || "",
   });
 
-  const mapFromForm = (data: ILeadAssignmentGetApi): Partial<ILeadAssignmentPatchApi> => {
+  const mapFromForm = (
+    data: ILeadAssignmentGetApi
+  ): Partial<ILeadAssignmentPatchApi> => {
     return {
       assignment_id: data.assignment_id,
       lead_id: data.lead_id,
@@ -71,7 +78,7 @@ export const LeadAssignmentTable: React.FC<ILeadAssignmentTableProps> = (props) 
     };
   };
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: ILeadAssignmentGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -124,8 +131,20 @@ const mapResponse = (
     ILeadAssignmentGetApi,
     ILeadAssignmentGetApi,
     { page: number; size: number; assignment_id?: string },
-    { page: number; size: number; assignment_id?: string; lead_id?: string; keysearch?: string; from?: string; to?: string },
-    { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
+    {
+      page: number;
+      size: number;
+      assignment_id?: string;
+      lead_id?: string;
+      keysearch?: string;
+      from?: string;
+      to?: string;
+    },
+    {
+      page: number;
+      size: number;
+      sort: { field: string; direction: "asc" | "desc" };
+    },
     string
   >({
     fetchData: async ({
@@ -141,6 +160,7 @@ const mapResponse = (
         page,
         size,
         assignment_id: assignment_id || "",
+        sort: "assigned_date,desc",
       });
       console.log("get Lead assignments Api response:", response);
       return response;
@@ -228,7 +248,8 @@ const mapResponse = (
 
   const setSearchIdTerm = (value: string) =>
     setFilter("assignment_id", value || null);
-  const setSearchNameTerm = (value: string) => setFilter("lead_id", value || null);
+  const setSearchNameTerm = (value: string) =>
+    setFilter("lead_id", value || null);
   const setSearchTypeTerm = (value: string) =>
     setFilter("email", value || null);
 
@@ -237,17 +258,26 @@ const mapResponse = (
   const handleClearSearchAddress = () => handleClearFilter("email");
 
   const columns = [
-    { key: "assignment_id" as keyof ILeadAssignmentGetApi, header: "Assignments ID" },
+    {
+      key: "assignment_id" as keyof ILeadAssignmentGetApi,
+      header: "Assignments ID",
+    },
     { key: "lead_id" as keyof ILeadAssignmentGetApi, header: "Lead ID" },
     { key: "email" as keyof ILeadAssignmentGetApi, header: "Email" },
-    { key: "assigned_to_id" as keyof ILeadAssignmentGetApi, header: "Assignments to id" },
-    { key: "assigned_to" as keyof ILeadAssignmentGetApi, header: "Assignments to" },
     {
-    key: "assigned_date" as keyof ILeadAssignmentGetApi,
-    header: "assigned_date",
+      key: "assigned_to_id" as keyof ILeadAssignmentGetApi,
+      header: "Assignments To Id",
+    },
+    {
+      key: "assigned_to" as keyof ILeadAssignmentGetApi,
+      header: "Assignments To",
+    },
+    {
+      key: "assigned_date" as keyof ILeadAssignmentGetApi,
+      header: "Assigned Date",
     },
     { key: "actions" as keyof ILeadAssignmentGetApi, header: "Actions" },
-];
+  ];
 
   return (
     <>
@@ -281,7 +311,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

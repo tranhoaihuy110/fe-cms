@@ -177,6 +177,7 @@ export const CampaignMasterParticipantBlacklistTable: React.FC<
         page,
         size,
         id: id || "",
+        sort: "created_at,desc",
       });
       console.log(
         "getCampaignMasterParticipantBlacklistApi response:",
@@ -367,7 +368,7 @@ export const CampaignMasterParticipantBlacklistTable: React.FC<
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

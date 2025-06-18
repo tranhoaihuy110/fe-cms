@@ -197,6 +197,7 @@ export const PropertiesTable: React.FC<IPropertiesTableProps> = (props) => {
         page,
         size,
         property_id: property_id || "",
+        sort: "created_at,desc",
       });
       console.log("get Property Api response:", response);
       return response;
@@ -350,7 +351,7 @@ export const PropertiesTable: React.FC<IPropertiesTableProps> = (props) => {
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

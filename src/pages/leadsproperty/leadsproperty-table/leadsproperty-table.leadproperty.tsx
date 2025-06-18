@@ -14,7 +14,11 @@ import {
   deleteLeadsPropertyApi,
 } from "../../../services";
 import { ILeadPropertyTableProps } from "./index";
-import { ILeadsPropertyGetApi, ILeadsPropertyPatchApi, ILeadsPropertyPostApi } from "../../../models";
+import {
+  ILeadsPropertyGetApi,
+  ILeadsPropertyPatchApi,
+  ILeadsPropertyPostApi,
+} from "../../../models";
 import {
   LeadPropertyFormModal,
   DeleteLeadPropertyConfirmationModal,
@@ -94,7 +98,9 @@ export const LeadPropertyTable: React.FC<ILeadPropertyTableProps> = (props) => {
     location_status: data.location_status || "",
   });
 
-  const mapFromForm = (data: ILeadsPropertyGetApi): Partial<ILeadsPropertyGetApi> => {
+  const mapFromForm = (
+    data: ILeadsPropertyGetApi
+  ): Partial<ILeadsPropertyGetApi> => {
     return {
       lead_property_id: data.lead_property_id,
       lead_id: data.lead_id,
@@ -122,7 +128,7 @@ export const LeadPropertyTable: React.FC<ILeadPropertyTableProps> = (props) => {
     };
   };
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: ILeadsPropertyGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -134,7 +140,9 @@ const mapResponse = (
     };
   };
 
-  const transformToPostData = (data: Partial<ILeadsPropertyGetApi>): Partial<ILeadsPropertyPostApi> => {
+  const transformToPostData = (
+    data: Partial<ILeadsPropertyGetApi>
+  ): Partial<ILeadsPropertyPostApi> => {
     return {
       lead_property_id: data.lead_property_id,
       lead_id: data.lead_id,
@@ -154,7 +162,8 @@ const mapResponse = (
       longitude: data.longitude,
       latitude: data.latitude,
       ksplat_urls: data.ksplat_urls?.map((item) => item.url) || null,
-      captured_video_urls: data.captured_video_urls?.map((item) => item.url) || null,
+      captured_video_urls:
+        data.captured_video_urls?.map((item) => item.url) || null,
       ["3d_outside_status"]: data["3d_outside_status"],
       lead_property_stage: data.lead_property_stage,
       lead_property_status: data.lead_property_status,
@@ -163,7 +172,9 @@ const mapResponse = (
     };
   };
 
-  const transformToPatchData = (data: Partial<ILeadsPropertyGetApi>): Partial<ILeadsPropertyPatchApi> => {
+  const transformToPatchData = (
+    data: Partial<ILeadsPropertyGetApi>
+  ): Partial<ILeadsPropertyPatchApi> => {
     return {
       lead_property_id: data.lead_property_id,
       lead_id: data.lead_id,
@@ -183,7 +194,8 @@ const mapResponse = (
       longitude: data.longitude,
       latitude: data.latitude,
       ksplat_urls: data.ksplat_urls?.map((item) => item.url) || null,
-      captured_video_urls: data.captured_video_urls?.map((item) => item.url) || null,
+      captured_video_urls:
+        data.captured_video_urls?.map((item) => item.url) || null,
       ["3d_outside_status"]: data["3d_outside_status"],
       lead_property_stage: data.lead_property_stage,
       lead_property_status: data.lead_property_status,
@@ -196,7 +208,7 @@ const mapResponse = (
     currentPage,
     setCurrentPage,
     itemsPerPage,
-    
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -206,9 +218,9 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
-    
+
     endDate,
-    
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -236,8 +248,20 @@ const mapResponse = (
     ILeadsPropertyGetApi,
     ILeadsPropertyGetApi,
     { page: number; size: number; lead_property_id?: string },
-    { page: number; size: number; lead_property_id?: string; email?: string; address?: string; from?: string; to?: string },
-    { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
+    {
+      page: number;
+      size: number;
+      lead_property_id?: string;
+      email?: string;
+      address?: string;
+      from?: string;
+      to?: string;
+    },
+    {
+      page: number;
+      size: number;
+      sort: { field: string; direction: "asc" | "desc" };
+    },
     string
   >({
     fetchData: async ({
@@ -253,6 +277,7 @@ const mapResponse = (
         page,
         size,
         lead_property_id: lead_property_id || "",
+        sort: "created_at,desc",
       });
       console.log("getLeadPropertyApi response:", response);
       return response;
@@ -352,7 +377,8 @@ const mapResponse = (
 
   const setSearchIdTerm = (value: string) =>
     setFilter("lead_property_id", value || null);
-  const setSearchEmailTerm = (value: string) => setFilter("email", value || null);
+  const setSearchEmailTerm = (value: string) =>
+    setFilter("email", value || null);
   const setSearchAddressTerm = (value: string) =>
     setFilter("address", value || null);
 
@@ -361,7 +387,10 @@ const mapResponse = (
   const handleClearSearchAddress = () => handleClearFilter("address");
 
   const columns = [
-    { key: "lead_property_id" as keyof ILeadsPropertyGetApi, header: "Lead Property ID" },
+    {
+      key: "lead_property_id" as keyof ILeadsPropertyGetApi,
+      header: "Lead Property ID",
+    },
     { key: "email" as keyof ILeadsPropertyGetApi, header: "Email" },
     { key: "address" as keyof ILeadsPropertyGetApi, header: "Address" },
     {
@@ -410,7 +439,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

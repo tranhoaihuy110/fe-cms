@@ -85,7 +85,7 @@ export const CampaignEmailTemplateTable: React.FC<
     user_create: data.user_create,
   });
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: ICampaignEmailTemplateGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -165,6 +165,7 @@ const mapResponse = (
         page,
         size,
         id: id,
+        sort: "created_at,desc",
       });
       console.log("getCampaignEmailTemplateApi response:", response);
       return response;
@@ -311,7 +312,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

@@ -22,10 +22,9 @@ import {
   DeleteLeadsPropertyRoomsConfirmationModal,
 } from "../index";
 
-
-export const LeadsPropertyRoomsTable: React.FC<ILeadsPropertyRoomsTableProps> = (
-  props
-) => {
+export const LeadsPropertyRoomsTable: React.FC<
+  ILeadsPropertyRoomsTableProps
+> = (props) => {
   const { children = "" } = props;
 
   const initialFormData: ILeadsPropertyRoomsGetApi = {
@@ -49,7 +48,9 @@ export const LeadsPropertyRoomsTable: React.FC<ILeadsPropertyRoomsTableProps> = 
     createdAt: "created_at" as keyof ILeadsPropertyRoomsGetApi,
   };
 
-  const mapToForm = (data: ILeadsPropertyRoomsGetApi): ILeadsPropertyRoomsGetApi => ({
+  const mapToForm = (
+    data: ILeadsPropertyRoomsGetApi
+  ): ILeadsPropertyRoomsGetApi => ({
     id: data.id || "",
     lead_property_id: data.lead_property_id || "",
     floor_id: data.floor_id || "",
@@ -71,7 +72,7 @@ export const LeadsPropertyRoomsTable: React.FC<ILeadsPropertyRoomsTableProps> = 
     created_at: data.created_at,
   });
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: ILeadsPropertyRoomsGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -83,7 +84,9 @@ const mapResponse = (
     };
   };
 
-  const wrappedDeleteLeadsPropertyRoomsApi = async (id: string): Promise<any> => {
+  const wrappedDeleteLeadsPropertyRoomsApi = async (
+    id: string
+  ): Promise<any> => {
     if (!id) {
       throw new Error("Invalid ID format");
     }
@@ -106,7 +109,7 @@ const mapResponse = (
     startDate,
 
     endDate,
- 
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -130,21 +133,21 @@ const mapResponse = (
     sortConfig,
     loading,
     error,
-    } = useTableData<
+  } = useTableData<
     ILeadsPropertyRoomsGetApi,
     ILeadsPropertyRoomsGetApi,
     { page: number; size: number; id?: string; lead_property_id?: string },
     {
-        page: number;
-        size: number;
-        id?: string;
-        lead_property_id?: string;
-        floor_id?: string;
-        floor_name?: string;
-        room_type?: string;
-        room_name?: string;
-        from?: string;
-        to?: string;
+      page: number;
+      size: number;
+      id?: string;
+      lead_property_id?: string;
+      floor_id?: string;
+      floor_name?: string;
+      room_type?: string;
+      room_name?: string;
+      from?: string;
+      to?: string;
     },
     {
       page: number;
@@ -175,7 +178,7 @@ const mapResponse = (
         lead_property_id: lead_property_id || "",
         floor_id: floor_id || "",
         floor_name: floor_name || "",
-
+        sort: "created_at,desc",
       });
       console.log("get Leads Property Rooms Api response:", response);
       return response;
@@ -231,7 +234,10 @@ const mapResponse = (
         size: 1,
         id,
       });
-      console.log("get Leads Property Rooms Api (fetchById) response:", response);
+      console.log(
+        "get Leads Property Rooms Api (fetchById) response:",
+        response
+      );
       if (!response.data || !response.data[0]) {
         throw new Error("Metadata not found");
       }
@@ -246,147 +252,147 @@ const mapResponse = (
     mapResponse,
     filterConfig,
     fieldMapping,
-    });
+  });
 
-    const searchIdTerm =
+  const searchIdTerm =
     filters.id !== undefined && filters.id !== null ? String(filters.id) : "";
-    const searchKeyTerm =
+  const searchKeyTerm =
     filters.floor_name !== undefined && filters.floor_name !== null
-        ? String(filters.floor_name)
-        : "";
+      ? String(filters.floor_name)
+      : "";
 
-    const setSearchIdTerm = (value: string) => setFilter("id", value || null);
-    const setSearchKeyTerm = (value: string) =>
+  const setSearchIdTerm = (value: string) => setFilter("id", value || null);
+  const setSearchKeyTerm = (value: string) =>
     setFilter("floor_name", value || null);
 
-    const handleClearSearchId = () => handleClearFilter("id");
-    const handleClearSearchKey = () => handleClearFilter("floor_name");
+  const handleClearSearchId = () => handleClearFilter("id");
+  const handleClearSearchKey = () => handleClearFilter("floor_name");
 
-    const columns = [
+  const columns = [
     { key: "id" as keyof ILeadsPropertyRoomsGetApi, header: "ID" },
     {
-        key: "lead_property_id" as keyof ILeadsPropertyRoomsGetApi,
-        header: "Leads Property ID",
+      key: "lead_property_id" as keyof ILeadsPropertyRoomsGetApi,
+      header: "Leads Property ID",
     },
     {
-        key: "floor_id" as keyof ILeadsPropertyRoomsGetApi,
-        header: "Floor ID",
+      key: "floor_id" as keyof ILeadsPropertyRoomsGetApi,
+      header: "Floor ID",
     },
     {
-        key: "floor_name" as keyof ILeadsPropertyRoomsGetApi,
-        header: "Floor name",
+      key: "floor_name" as keyof ILeadsPropertyRoomsGetApi,
+      header: "Floor name",
     },
     {
-        key: "room_type" as keyof ILeadsPropertyRoomsGetApi,
-        header: "Room Type",
+      key: "room_type" as keyof ILeadsPropertyRoomsGetApi,
+      header: "Room Type",
     },
     {
-        key: "room_name" as keyof ILeadsPropertyRoomsGetApi,
-        header: "Room Name",
+      key: "room_name" as keyof ILeadsPropertyRoomsGetApi,
+      header: "Room Name",
     },
     {
-        key: "created_at" as keyof ILeadsPropertyRoomsGetApi,
-        header: "Created At",
-        render: (item: ILeadsPropertyRoomsGetApi) =>
+      key: "created_at" as keyof ILeadsPropertyRoomsGetApi,
+      header: "Created At",
+      render: (item: ILeadsPropertyRoomsGetApi) =>
         new Date(item.created_at || "").toLocaleString(),
     },
     {
-        key: "actions" as keyof ILeadsPropertyRoomsGetApi,
-        header: "Actions",
+      key: "actions" as keyof ILeadsPropertyRoomsGetApi,
+      header: "Actions",
     },
-    ];
+  ];
 
-    console.log("Leads Property Rooms Table state:", {
+  console.log("Leads Property Rooms Table state:", {
     isModalOpen,
     modalMode,
     currentItem,
-    });
+  });
 
-    return (
+  return (
     <>
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
+      <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
         <FilterSection
-            startDate={startDate}
-            setStartDate={handleStartDateChange}
-            endDate={endDate}
-            setEndDate={handleEndDateChange}
-            timeFilter={timeFilter}
-            handleTimeFilter={handleTimeFilter}
-            searchIdTerm={searchIdTerm}
-            setSearchIdTerm={setSearchIdTerm}
-            searchNameTerm={searchKeyTerm}
-            setSearchNameTerm={setSearchKeyTerm}
-            handleClearSearchId={handleClearSearchId}
-            handleClearSearchName={handleClearSearchKey}
-            handleSearch={handleSearch}
-            handleReset={handleReset}
-            openAddModal={openAddModal}
-            hideNameSearch={false}
-            firstSearchLabel="Search by ID"
-            secondSearchLabel="Search by Floor Name"
-            idSearchType="text"
-            hidePhoneEmail={true}
-            hideAddButton={false}
-            searchPhoneTerm=""
-            searchUsernameTerm=""
-            setSearchPhoneTerm={() => {}}
-            setSearchUsernameTerm={() => {}}
-            handleClearSearchPhone={() => {}}
-            handleClearSearchUsername={() => {}}
+          startDate={startDate}
+          setStartDate={handleStartDateChange}
+          endDate={endDate}
+          setEndDate={handleEndDateChange}
+          timeFilter={timeFilter}
+          handleTimeFilter={handleTimeFilter}
+          searchIdTerm={searchIdTerm}
+          setSearchIdTerm={setSearchIdTerm}
+          searchNameTerm={searchKeyTerm}
+          setSearchNameTerm={setSearchKeyTerm}
+          handleClearSearchId={handleClearSearchId}
+          handleClearSearchName={handleClearSearchKey}
+          handleSearch={handleSearch}
+          handleReset={handleReset}
+          openAddModal={openAddModal}
+          hideNameSearch={false}
+          firstSearchLabel="Search by ID"
+          secondSearchLabel="Search by Floor Name"
+          idSearchType="text"
+          hidePhoneEmail={true}
+          hideAddButton={false}
+          searchPhoneTerm=""
+          searchUsernameTerm=""
+          setSearchPhoneTerm={() => {}}
+          setSearchUsernameTerm={() => {}}
+          handleClearSearchPhone={() => {}}
+          handleClearSearchUsername={() => {}}
         />
 
         <div className="max-w-full overflow-x-auto">
-            {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
-                Loading...
+              Loading...
             </div>
-            ) : error ? (
+          ) : error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">
-                {error}
+              {error}
             </div>
-            ) : !paginatedData || paginatedData.length === 0 ? (
+          ) : !paginatedData || paginatedData.length === 0 ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
-                No Metadata found for the selected filters.
+              No Metadata found for the selected filters.
             </div>
-            ) : (
+          ) : (
             <TableComponent
-                data={paginatedData}
-                columns={columns}
-                onEdit={openEditModal}
-                onDelete={openDeleteModal}
-                onDetail={openDetailModal}
-                sortConfig={sortConfig}
-                handleSort={handleSort}
+              data={paginatedData}
+              columns={columns}
+              onEdit={openEditModal}
+              onDelete={openDeleteModal}
+              onDetail={openDetailModal}
+              sortConfig={sortConfig}
+              handleSort={handleSort}
             />
-            )}
+          )}
         </div>
 
         <PaginationSection
-            totalItems={effectiveTotalItems}
-            itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
-            itemsPerPageOptions={itemsPerPageOptions}
-            onPageChange={setCurrentPage}
-            onItemsPerPageChange={handleItemsPerPageChange}
+          totalItems={effectiveTotalItems}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          itemsPerPageOptions={itemsPerPageOptions}
+          onPageChange={setCurrentPage}
+          onItemsPerPageChange={handleItemsPerPageChange}
         />
-        </div>
+      </div>
 
-        <LeadsPropertyRoomsFormModal
+      <LeadsPropertyRoomsFormModal
         isOpen={isModalOpen}
         onClose={closeModal}
         onSubmit={modalMode === "add" ? handleAddItem : handleEditItem}
         mode={modalMode}
         config={currentItem || initialFormData}
-        />
+      />
 
-        <DeleteLeadsPropertyRoomsConfirmationModal
+      <DeleteLeadsPropertyRoomsConfirmationModal
         isOpen={isDeleteModalOpen}
         onClose={closeDeleteModal}
         onConfirm={handleDeleteItem}
         config={itemToDelete || null}
       />
 
-        {children}
+      {children}
     </>
-    );
+  );
 };

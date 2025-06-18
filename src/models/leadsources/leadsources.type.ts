@@ -20,5 +20,4 @@ export interface ILeadsourcesPatchApi {
 export interface ILeadsourcesPostApi {
   source_name?: string;
   description: string | null;
-  
 }

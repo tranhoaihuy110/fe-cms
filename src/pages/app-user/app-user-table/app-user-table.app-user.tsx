@@ -144,7 +144,7 @@ export const AppUserTable: React.FC<IAppUserTableProps> = (props) => {
     user_status: data.user_status,
   });
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: IAppUserGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -227,6 +227,7 @@ const mapResponse = (
         page,
         size,
         user_id: user_id || "",
+        sort: "created_at,desc",
       });
       console.log("getAppUserApi response:", response);
       return response;
@@ -380,11 +381,10 @@ const mapResponse = (
           firstSearchLabel="Search by User ID"
           idSearchType="number"
           hideAddButton={true}
-          
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

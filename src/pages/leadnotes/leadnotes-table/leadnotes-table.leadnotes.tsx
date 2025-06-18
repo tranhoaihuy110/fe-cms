@@ -15,11 +15,8 @@ import {
   deleteLeadNotesApi,
 } from "../../../services";
 import { ILeadNotesTableProps } from "./index";
-import { ILeadNotesGetApi,ILeadNotesPatchApi } from "../../../models";
-import {
-  LeadNotesFormModal,
-  DeleteLeadNotesConfirmationModal,
-} from "../index";
+import { ILeadNotesGetApi, ILeadNotesPatchApi } from "../../../models";
+import { LeadNotesFormModal, DeleteLeadNotesConfirmationModal } from "../index";
 
 export const LeadNotesTable: React.FC<ILeadNotesTableProps> = (props) => {
   const { children = "" } = props;
@@ -46,11 +43,11 @@ export const LeadNotesTable: React.FC<ILeadNotesTableProps> = (props) => {
   };
 
   const mapToForm = (data: ILeadNotesGetApi): ILeadNotesGetApi => ({
-        note_id: data.note_id || "",
-        lead_id: data.lead_id|| 0,
-        email: data.email || "",
-        note_text: data.note_text|| "",
-        created_at: data.created_at || "",
+    note_id: data.note_id || "",
+    lead_id: data.lead_id || 0,
+    email: data.email || "",
+    note_text: data.note_text || "",
+    created_at: data.created_at || "",
   });
 
   const mapFromForm = (data: ILeadNotesGetApi): Partial<ILeadNotesPatchApi> => {
@@ -61,7 +58,7 @@ export const LeadNotesTable: React.FC<ILeadNotesTableProps> = (props) => {
     };
   };
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: ILeadNotesGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -114,8 +111,20 @@ const mapResponse = (
     ILeadNotesGetApi,
     ILeadNotesGetApi,
     { page: number; size: number; note_id?: string },
-    { page: number; size: number; note_id?: string; lead_id?: string; keysearch?: string; from?: string; to?: string },
-    { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
+    {
+      page: number;
+      size: number;
+      note_id?: string;
+      lead_id?: string;
+      keysearch?: string;
+      from?: string;
+      to?: string;
+    },
+    {
+      page: number;
+      size: number;
+      sort: { field: string; direction: "asc" | "desc" };
+    },
     string
   >({
     fetchData: async ({
@@ -131,6 +140,7 @@ const mapResponse = (
         page,
         size,
         note_id: note_id || "",
+        sort: "created_at,desc",
       });
       console.log("get Lead Note Api response:", response);
       return response;
@@ -218,7 +228,8 @@ const mapResponse = (
 
   const setSearchIdTerm = (value: string) =>
     setFilter("note_id", value || null);
-  const setSearchNameTerm = (value: string) => setFilter("lead_id", value || null);
+  const setSearchNameTerm = (value: string) =>
+    setFilter("lead_id", value || null);
   const setSearchTypeTerm = (value: string) =>
     setFilter("note_text", value || null);
 
@@ -227,15 +238,15 @@ const mapResponse = (
   const handleClearSearchAddress = () => handleClearFilter("note_text");
 
   const columns = [
-  { key: "note_id" as keyof ILeadNotesGetApi, header: "Note ID" },
-  { key: "lead_id" as keyof ILeadNotesGetApi, header: "Lead ID" },
-  { key: "note_text" as keyof ILeadNotesGetApi, header: "Note Text" },
-  {
-    key: "created_at" as keyof ILeadNotesGetApi,
-    header: "Created At",
-  },
-  { key: "actions" as keyof ILeadNotesGetApi, header: "Actions" },
-];
+    { key: "note_id" as keyof ILeadNotesGetApi, header: "Note ID" },
+    { key: "lead_id" as keyof ILeadNotesGetApi, header: "Lead ID" },
+    { key: "note_text" as keyof ILeadNotesGetApi, header: "Note Text" },
+    {
+      key: "created_at" as keyof ILeadNotesGetApi,
+      header: "Created At",
+    },
+    { key: "actions" as keyof ILeadNotesGetApi, header: "Actions" },
+  ];
 
   return (
     <>
@@ -269,7 +280,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

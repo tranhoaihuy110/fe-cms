@@ -129,7 +129,8 @@ const mapResponse = (
       const response = await getLeadsourcesApi({
         page,
         size,
-        source_id: source_id || "",
+        source_id: source_id  || "",
+        sort: "source_id,desc"
       });
       console.log("get Lead sources Api response:", response);
       return response;
@@ -259,7 +260,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

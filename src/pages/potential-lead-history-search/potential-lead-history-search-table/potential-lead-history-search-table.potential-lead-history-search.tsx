@@ -140,6 +140,7 @@ const mapResponse = (
         page,
         size,
         id: id || "",
+        sort: "create_at,desc",
       });
       console.log("get potential lead history search Api response:", response);
       return response;
@@ -281,7 +282,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

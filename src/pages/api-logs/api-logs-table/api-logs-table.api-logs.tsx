@@ -126,6 +126,7 @@ export const ApiLogsTable: React.FC<IApiLogsTableProps> = (props) => {
         page,
         size,
         id: id || "",
+        sort:"create_date,desc"
       });
       console.log("getApiLogsApi response:", response);
       return response;
@@ -289,7 +290,7 @@ export const ApiLogsTable: React.FC<IApiLogsTableProps> = (props) => {
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading ? (
+          {loading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>
