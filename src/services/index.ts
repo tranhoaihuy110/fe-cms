@@ -41,3 +41,4 @@ export * from "./campaign-master-participant-blacklist";
 export * from "./user-behavior-log";
 export * from "./property-floors";
 export * from "./property-rooms";
+export * from "./campaign-audience-master";

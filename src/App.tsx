@@ -44,6 +44,7 @@ import {
   UserBehaviorLogTable,
   PropertyFloorsTable,
   PropertyRoomTable,
+  CampaignAudienceMasterTable
 } from "./pages/index";
 import { AppLayout } from "./layout/index";
 import { ScrollToTop } from "./components/index";
@@ -186,6 +187,10 @@ export const App = () => {
               <Route
                 path="/PropertyRoomTable"
                 element={<PropertyRoomTable />}
+              />
+              <Route
+                path="/CampaignAudienceMasterTable"
+                element={<CampaignAudienceMasterTable />}
               />
             </Route>
           </Route>

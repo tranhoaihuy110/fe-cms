@@ -216,6 +216,12 @@ const navItems: TNavItem[] = [
         pro: false,
         icon: <CateIcon />,
       },
+        {
+        name: "Campaign Audience Master Table",
+        path: "/CampaignAudienceMasterTable",
+        pro: false,
+        icon: <CateIcon />,
+      },
     ],
   },
 ];
