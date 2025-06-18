@@ -5,7 +5,7 @@
       "destination": "https://crud-partner-be.vercel.app/api/$1"
     },
     {
-      "source": "/api/(.*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
