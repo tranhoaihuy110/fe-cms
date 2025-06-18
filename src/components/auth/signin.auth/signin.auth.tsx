@@ -39,11 +39,8 @@ function useProvideAuth() {
       window.localStorage.setItem("access_token", newAccess);
       window.localStorage.setItem("refresh_token", newRefresh);
       window.localStorage.setItem("user_role", newUserRole);
-      if (accessToken) {
-        MS_API.authorization(accessToken);
-      } else {
-        window.location.href = "/";
-      }
+
+      MS_API.authorization(newAccess);
 
       setAccessToken(newAccess);
       setRefreshToken(newRefresh);
