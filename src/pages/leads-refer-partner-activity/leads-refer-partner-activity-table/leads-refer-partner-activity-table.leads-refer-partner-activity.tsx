@@ -48,7 +48,7 @@ export const LeadsReferPartnerActivityTable: React.FC<
     { key: "status_new", label: "Status New", type: "text" },
     { key: "user_action", label: "User Action", type: "text" },
     { key: "note", label: "Note", type: "text" },
-    {key: "json_metadata", label: "Json Metadata", type: "text"},
+    { key: "json_metadata", label: "Json Metadata", type: "text" },
   ];
 
   const fieldMapping = {
@@ -64,7 +64,7 @@ export const LeadsReferPartnerActivityTable: React.FC<
   ): ILeadsReferPartnerActivityGetApi => ({
     id: data.id || "",
     refer_partner_id: data.refer_partner_id || "",
-    json_metadata: data.json_metadata || {"":""},
+    json_metadata: data.json_metadata || { "": "" },
     user_action: data.user_action || "",
     note: data.note || "",
     status_old: data.status_old || "",
@@ -79,7 +79,7 @@ export const LeadsReferPartnerActivityTable: React.FC<
     return {
       id: data.id,
       refer_partner_id: data.refer_partner_id || "",
-      json_metadata: data.json_metadata || {"":""},
+      json_metadata: data.json_metadata || { "": "" },
       user_action: data.user_action,
       note: data.note,
       status_old: data.status_old,
@@ -89,7 +89,7 @@ export const LeadsReferPartnerActivityTable: React.FC<
     };
   };
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: ILeadsReferPartnerActivityGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -162,6 +162,7 @@ const mapResponse = (
     effectiveTotalItems,
     sortConfig,
     loading,
+    isOperationLoading,
     error,
   } = useTableData<
     ILeadsReferPartnerActivityGetApi,
@@ -196,7 +197,7 @@ const mapResponse = (
         page,
         size,
         id: id || "",
-        sort: "created_at,desc"
+        sort: "created_at,desc",
       });
       console.log("getLeadsReferPartnerActivityApi response:", response);
       return response;
@@ -375,7 +376,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && !paginatedData.length ? (
+          {isOperationLoading && !paginatedData.length ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Loading...
             </div>

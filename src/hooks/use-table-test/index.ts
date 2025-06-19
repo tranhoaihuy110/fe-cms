@@ -41,6 +41,7 @@ export interface IUseTableDataProps<
 }
 
 export interface IUseTableDataReturn<T, FormT> {
+  isOperationLoading: boolean;
   currentPage: number;
   setCurrentPage: (page: number) => void;
   itemsPerPage: number;

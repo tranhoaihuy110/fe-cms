@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
+
 import {
   FilterSection,
   PaginationSection,
@@ -255,8 +256,8 @@ export const ServiceTable: React.FC<IServiceTableProps> = (props) => {
       ? String(filters.category_name)
       : "";
   const searchCategoryIdTerm =
-    filters.data_image !== undefined && filters.data_image !== null
-      ? String(filters.data_image)
+    filters.category_id !== undefined && filters.category_id !== null
+      ? String(filters.category_id)
       : "";
 
   const setSearchIdTerm = (value: string) => setFilter("id", value || null);
@@ -264,20 +265,19 @@ export const ServiceTable: React.FC<IServiceTableProps> = (props) => {
   const setSearchCategoryNameTerm = (value: string) =>
     setFilter("category_name", value || null);
   const setSearchCategoryIdTerm = (value: string) =>
-    setFilter("data_image", value || null);
+    setFilter("category_id", value || null);
 
   const handleClearSearchId = () => handleClearFilter("id");
   const handleClearSearchName = () => handleClearFilter("name");
   const handleClearSearchCategoryName = () =>
     handleClearFilter("category_name");
-  const handleClearSearchCategoryId = () => handleClearFilter("data_image");
+  const handleClearSearchCategoryId = () => handleClearFilter("category_id");
 
   const columns = [
     { key: "id" as keyof IMetaDataApi, header: "Service ID" },
     { key: "name" as keyof IMetaDataApi, header: "Service Name" },
     { key: "category_name" as keyof IMetaDataApi, header: "Category Name" },
     { key: "category_id" as keyof IMetaDataApi, header: "Category ID" },
-    { key: "data_image" as keyof IMetaDataApi, header: "Data Image" },
     {
       key: "create_at" as keyof IMetaDataApi,
       header: "Date Create",
@@ -318,7 +318,7 @@ export const ServiceTable: React.FC<IServiceTableProps> = (props) => {
           firstSearchLabel="Search by Service ID"
           secondSearchLabel="Search by Service Name"
           thirdSearchLabel="Search by Category Name"
-          fourthSearchLabel="Search by Data Image"
+          fourthSearchLabel="Search by Category ID"
           idSearchType="text"
         />
 

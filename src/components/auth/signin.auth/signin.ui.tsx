@@ -1,52 +1,56 @@
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { Input, Label, Button, Checkbox } from '../../../components';
 import { EyeIcon, EyeCloseIcon } from '../../../icons'; 
 import { useState } from 'react';
 import { useAuth } from './index';
 import { useNavigate } from 'react-router-dom';
-
+import { LoadingSpinner } from '../../../components';
 export const SignIns = () => {
   const navigate = useNavigate();
-  const { signin,profile } = useAuth();
+  const { signin, profile } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
-  e.preventDefault();
-  try {
-     await signin(username, password, '', ''); 
-    const accessToken = window.localStorage.getItem('access_token');
-    if (!accessToken) {
-      throw new Error('Access token not found');
+    e.preventDefault();
+    try {
+      await signin(username, password, '', '');
+      const accessToken = window.localStorage.getItem('access_token');
+      if (!accessToken) {
+        throw new Error('Access token not found');
+      }
+      await profile(accessToken);
+      setIsLoading(true);
+      setErrorMessage(null);
+      setTimeout(() => {
+        setIsLoading(false);
+        navigate('/category-tables');
+      }, 2000);
+    } catch (error) {
+      let errorMessage = 'Incorrect username or password. Please try again.';
+      if (error instanceof Error) {
+        errorMessage = error.message || errorMessage;
+      }
+      setErrorMessage(errorMessage);
+      setIsLoading(false);
     }
-     await profile(accessToken);
-    setSuccessMessage('Login successful!');
-    setErrorMessage(null);
-    setTimeout(() => {
-      navigate('/category-tables');
-    }, 2000);
-  } catch (error) {
-
-    let errorMessage = 'Incorrect username or password. Please try again.';
-    if (error instanceof Error) {
-      errorMessage = error.message || errorMessage;
-    }
-    setErrorMessage(errorMessage);
-    setSuccessMessage(null);
-  }
-};
+  };
 
   const closeDialog = () => {
     setErrorMessage(null);
-    setSuccessMessage(null);
   };
 
   return (
     <div className="flex flex-col flex-1">
+      {isLoading && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-100/50 dark:bg-gray-900/50">
+          <LoadingSpinner className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-lg" />
+        </div>
+      )}
       <div className="w-full max-w-md pt-10 mx-auto"></div>
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
         <div>
@@ -176,22 +180,6 @@ export const SignIns = () => {
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-300 mb-6">
                     {errorMessage}
-                  </p>
-                  <Button className="w-full" size="sm" onClick={closeDialog}>
-                    Close
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {successMessage && (
-              <div className="fixed inset-0 flex items-center justify-center z-50">
-                <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm w-full">
-                  <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-                    Login Success
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-6">
-                    {successMessage}
                   </p>
                   <Button className="w-full" size="sm" onClick={closeDialog}>
                     Close
