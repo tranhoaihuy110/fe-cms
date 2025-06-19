@@ -22,6 +22,8 @@ export const UserDropdown = () => {
   function closeDropdown() {
     setIsOpen(false);
   }
+  const username = localStorage.getItem("username") || "Guest";
+  const email = localStorage.getItem("email") || "No email";
   return (
     <div className="relative">
       <button
@@ -29,7 +31,13 @@ export const UserDropdown = () => {
         className="flex items-center text-gray-700 dropdown-toggle dark:text-gray-400"
       >
         <span className="mr-3 overflow-hidden rounded-full h-11 w-11">
-          <img src="/images/user/owner.jpg" alt="User" />
+          <img
+            alt={email.split("@")[0] || "Default"}
+            src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
+              username.charAt(0) || ""
+            )}&color=7F9CF5&background=EBF4FF`}
+            className="object-cover w-full h-full"
+          />
         </span>
 
         <span className="block mr-1 font-medium text-theme-sm text-white">
