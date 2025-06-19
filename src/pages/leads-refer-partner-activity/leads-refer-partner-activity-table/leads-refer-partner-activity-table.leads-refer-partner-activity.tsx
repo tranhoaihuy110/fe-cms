@@ -200,6 +200,7 @@ export const LeadsReferPartnerActivityTable: React.FC<
         sort: "created_at,desc",
       });
       console.log("getLeadsReferPartnerActivityApi response:", response);
+      console.log("getLeadsReferPartnerActivityApi response:", loading);
       return response;
     },
     searchData: async ({
