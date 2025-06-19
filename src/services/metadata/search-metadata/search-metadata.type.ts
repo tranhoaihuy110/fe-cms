@@ -19,5 +19,6 @@ export interface ISearchMetaDataParams {
   id?: string;
   name?: string;
   category_name?: string;
+  category_id?: string;
   service_name?: string;
 }

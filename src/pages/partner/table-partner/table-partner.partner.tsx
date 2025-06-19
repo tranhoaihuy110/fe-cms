@@ -83,7 +83,7 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
     data_desc: data.data_desc,
   });
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: IMetaDataApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -94,11 +94,11 @@ const mapResponse = (
       total: response.pagination?.total || 0,
     };
   };
+
   const {
     currentPage,
     setCurrentPage,
     itemsPerPage,
-
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -108,9 +108,7 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
-
     endDate,
-
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -256,12 +254,24 @@ const mapResponse = (
     filters.name !== undefined && filters.name !== null
       ? String(filters.name)
       : "";
+  const searchCategoryNameTerm =
+    filters.category_name !== undefined && filters.category_name !== null
+      ? String(filters.category_name)
+      : "";
+  const searchServiceNameTerm =
+    filters.service_name !== undefined && filters.service_name !== null
+      ? String(filters.service_name)
+      : "";
 
   const setSearchIdTerm = (value: string) => setFilter("id", value || null);
   const setSearchNameTerm = (value: string) => setFilter("name", value || null);
+  const setSearchCategoryNameTerm = (value: string) => setFilter("category_name", value || null);
+  const setSearchServiceNameTerm = (value: string) => setFilter("service_name", value || null);
 
   const handleClearSearchId = () => handleClearFilter("id");
   const handleClearSearchName = () => handleClearFilter("name");
+  const handleClearSearchCategoryName = () => handleClearFilter("category_name");
+  const handleClearSearchServiceName = () => handleClearFilter("service_name");
 
   const columns = [
     { key: "id" as keyof IMetaDataApi, header: "Partner ID" },
@@ -291,24 +301,25 @@ const mapResponse = (
           setSearchIdTerm={setSearchIdTerm}
           searchNameTerm={searchNameTerm}
           setSearchNameTerm={setSearchNameTerm}
-
+          searchUsernameTerm={searchCategoryNameTerm}
+          setSearchUsernameTerm={setSearchCategoryNameTerm}
+          searchPhoneTerm={searchServiceNameTerm}
+          setSearchPhoneTerm={setSearchServiceNameTerm}
           handleClearSearchId={handleClearSearchId}
           handleClearSearchName={handleClearSearchName}
-
+          handleClearSearchUsername={handleClearSearchCategoryName}
+          handleClearSearchPhone={handleClearSearchServiceName}
           handleSearch={handleSearch}
           handleReset={handleReset}
           openAddModal={openAddModal}
           hideAddButton={false}
-          hidePhoneEmail={true}
+          hidePhoneEmail={false}
           hideNameSearch={false}
           firstSearchLabel="Search by Partner ID"
           secondSearchLabel="Search by Partner Name"
-          searchPhoneTerm=""
-          searchUsernameTerm=""
-          setSearchPhoneTerm={setSearchNameTerm}
-          setSearchUsernameTerm={setSearchNameTerm}
-          handleClearSearchPhone={handleClearSearchId}
-          handleClearSearchUsername={handleClearSearchId}
+          thirdSearchLabel="Search by Category Name"
+          fourthSearchLabel="Search by Service Name"
+          idSearchType="text"
         />
 
         <div className="max-w-full overflow-x-auto">

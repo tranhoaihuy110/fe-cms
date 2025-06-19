@@ -34,13 +34,14 @@ export const ServiceTable: React.FC<IServiceTableProps> = (props) => {
     data_parent_id: "",
     data_image: "",
     data_desc: "",
-    data_parent_id_v2: ""
+    data_parent_id_v2: "",
   };
 
   const filterConfig: FilterConfig[] = [
     { key: "id", label: "Service ID", type: "text" },
     { key: "name", label: "Service Name", type: "text" },
     { key: "category_name", label: "Category Name", type: "text" },
+    { key: "category_id", label: "Category ID", type: "text" },
   ];
 
   const fieldMapping = {
@@ -61,7 +62,7 @@ export const ServiceTable: React.FC<IServiceTableProps> = (props) => {
     data_parent_id: data.data_parent_id || "",
     data_image: data.data_image || "",
     data_desc: data.data_desc || "",
-    data_parent_id_v2 : data.data_parent_id_v2 || ""
+    data_parent_id_v2: data.data_parent_id_v2 || "",
   });
 
   const mapFromForm = (data: IMetaDataApi): Partial<IMetaDataApi> => ({
@@ -75,10 +76,10 @@ export const ServiceTable: React.FC<IServiceTableProps> = (props) => {
     data_parent_id: data.data_parent_id,
     data_image: data.data_image,
     data_desc: data.data_desc,
-    data_parent_id_v2 :data.data_parent_id_v2
+    data_parent_id_v2: data.data_parent_id_v2,
   });
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: IMetaDataApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -94,7 +95,6 @@ const mapResponse = (
     currentPage,
     setCurrentPage,
     itemsPerPage,
-
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -104,9 +104,7 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
-
     endDate,
- 
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -141,6 +139,7 @@ const mapResponse = (
       id?: string;
       name?: string;
       category_name?: string;
+      category_id?: string;
       from?: string;
       to?: string;
     },
@@ -173,12 +172,12 @@ const mapResponse = (
       return response;
     },
     searchData: async ({
-
       size,
       data_type = "service",
       id,
       name,
       category_name,
+      category_id,
       from,
       to,
     }: {
@@ -188,18 +187,19 @@ const mapResponse = (
       id?: string;
       name?: string;
       category_name?: string;
+      category_id?: string;
       from?: string;
       to?: string;
     }) => {
       return searchMetaDataApi({
         from,
         to,
-
         size,
         data_type,
         id,
         name,
         category_name: category_name || "",
+        category_id: category_id || "",
       });
     },
     sortData: async ({
@@ -250,21 +250,34 @@ const mapResponse = (
     filters.name !== undefined && filters.name !== null
       ? String(filters.name)
       : "";
-
+  const searchCategoryNameTerm =
+    filters.category_name !== undefined && filters.category_name !== null
+      ? String(filters.category_name)
+      : "";
+  const searchCategoryIdTerm =
+    filters.data_image !== undefined && filters.data_image !== null
+      ? String(filters.data_image)
+      : "";
 
   const setSearchIdTerm = (value: string) => setFilter("id", value || null);
   const setSearchNameTerm = (value: string) => setFilter("name", value || null);
-
+  const setSearchCategoryNameTerm = (value: string) =>
+    setFilter("category_name", value || null);
+  const setSearchCategoryIdTerm = (value: string) =>
+    setFilter("data_image", value || null);
 
   const handleClearSearchId = () => handleClearFilter("id");
   const handleClearSearchName = () => handleClearFilter("name");
-
+  const handleClearSearchCategoryName = () =>
+    handleClearFilter("category_name");
+  const handleClearSearchCategoryId = () => handleClearFilter("data_image");
 
   const columns = [
     { key: "id" as keyof IMetaDataApi, header: "Service ID" },
     { key: "name" as keyof IMetaDataApi, header: "Service Name" },
     { key: "category_name" as keyof IMetaDataApi, header: "Category Name" },
-
+    { key: "category_id" as keyof IMetaDataApi, header: "Category ID" },
+    { key: "data_image" as keyof IMetaDataApi, header: "Data Image" },
     {
       key: "create_at" as keyof IMetaDataApi,
       header: "Date Create",
@@ -288,22 +301,25 @@ const mapResponse = (
           setSearchIdTerm={setSearchIdTerm}
           searchNameTerm={searchNameTerm}
           setSearchNameTerm={setSearchNameTerm}
+          searchUsernameTerm={searchCategoryNameTerm}
+          setSearchUsernameTerm={setSearchCategoryNameTerm}
+          searchPhoneTerm={searchCategoryIdTerm}
+          setSearchPhoneTerm={setSearchCategoryIdTerm}
           handleClearSearchId={handleClearSearchId}
           handleClearSearchName={handleClearSearchName}
+          handleClearSearchUsername={handleClearSearchCategoryName}
+          handleClearSearchPhone={handleClearSearchCategoryId}
           handleSearch={handleSearch}
           handleReset={handleReset}
           openAddModal={openAddModal}
           hideAddButton={false}
-          hidePhoneEmail={true}
+          hidePhoneEmail={false}
           hideNameSearch={false}
-          searchPhoneTerm=""
-          searchUsernameTerm=""
           firstSearchLabel="Search by Service ID"
-          secondSearchLabel = "Search by Service Name"
-          setSearchPhoneTerm={setSearchNameTerm}
-          setSearchUsernameTerm={setSearchNameTerm}
-          handleClearSearchPhone={handleClearSearchId}
-          handleClearSearchUsername={handleClearSearchId}
+          secondSearchLabel="Search by Service Name"
+          thirdSearchLabel="Search by Category Name"
+          fourthSearchLabel="Search by Data Image"
+          idSearchType="text"
         />
 
         <div className="max-w-full overflow-x-auto">

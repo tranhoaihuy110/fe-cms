@@ -11,6 +11,7 @@ export const searchMetaDataApi = (params: ISearchMetaDataParams) => {
           id: params.id,
           name: params.name,
           category_name: params.category_name,
+          category_id: params.category_id,
           service_name: params.service_name,
           create_at_from: params.from,
           create_at_to: params.to,
