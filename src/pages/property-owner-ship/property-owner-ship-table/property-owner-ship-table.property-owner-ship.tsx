@@ -8,7 +8,11 @@ import {
 } from "../../../components/table";
 import { LoadingMore } from "../../../components";
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
-import { IPropertyOwnerShipGetApi, IPropertyOwnerShipPatchApi, IPropertyOwnerShipPostApi } from "../../../models";
+import {
+  IPropertyOwnerShipGetApi,
+  IPropertyOwnerShipPatchApi,
+  IPropertyOwnerShipPostApi,
+} from "../../../models";
 import {
   deletePropertyOwnerShipApi,
   getPropertyOwnerShipApi,
@@ -23,7 +27,9 @@ import {
 } from "../index";
 import { IPropertyOwnerShipTableProps } from "./index";
 
-export const PropertyOwnerShipTable: React.FC<IPropertyOwnerShipTableProps> = (props) => {
+export const PropertyOwnerShipTable: React.FC<IPropertyOwnerShipTableProps> = (
+  props
+) => {
   const { children = "" } = props;
 
   const initialFormData: IPropertyOwnerShipGetApi = {
@@ -41,7 +47,11 @@ export const PropertyOwnerShipTable: React.FC<IPropertyOwnerShipTableProps> = (p
     { key: "ownership_id", label: "Ownership ID", type: "text" },
     { key: "property_id", label: "Property ID", type: "text" },
     { key: "owner_id", label: "Owner ID", type: "text" },
-    { key: "ownership_percentage", label: "Ownership Percentage", type: "text" },
+    {
+      key: "ownership_percentage",
+      label: "Ownership Percentage",
+      type: "text",
+    },
     { key: "start_date", label: "Start Date", type: "text" },
     { key: "end_date", label: "End Date", type: "text" },
   ];
@@ -50,14 +60,17 @@ export const PropertyOwnerShipTable: React.FC<IPropertyOwnerShipTableProps> = (p
     id: "ownership_id" as keyof IPropertyOwnerShipGetApi,
     property_id: "property_id" as keyof IPropertyOwnerShipGetApi,
     owner_id: "owner_id" as keyof IPropertyOwnerShipGetApi,
-    ownership_percentage: "ownership_percentage" as keyof IPropertyOwnerShipGetApi,
+    ownership_percentage:
+      "ownership_percentage" as keyof IPropertyOwnerShipGetApi,
     start_date: "start_date" as keyof IPropertyOwnerShipGetApi,
     end_date: "end_date" as keyof IPropertyOwnerShipGetApi,
     email: "email" as keyof IPropertyOwnerShipGetApi,
     property_name: "property_name" as keyof IPropertyOwnerShipGetApi,
   };
 
-  const mapToForm = (data: IPropertyOwnerShipGetApi): IPropertyOwnerShipGetApi => ({
+  const mapToForm = (
+    data: IPropertyOwnerShipGetApi
+  ): IPropertyOwnerShipGetApi => ({
     ownership_id: data.ownership_id || "",
     property_id: data.property_id || "",
     owner_id: data.owner_id || "",
@@ -66,7 +79,9 @@ export const PropertyOwnerShipTable: React.FC<IPropertyOwnerShipTableProps> = (p
     end_date: data.end_date || "",
   });
 
-  const mapFromForm = (data: IPropertyOwnerShipGetApi): IPropertyOwnerShipPostApi => {
+  const mapFromForm = (
+    data: IPropertyOwnerShipGetApi
+  ): IPropertyOwnerShipPostApi => {
     return {
       ownership_id: data.ownership_id || "",
       property_id: data.property_id,
@@ -77,7 +92,7 @@ export const PropertyOwnerShipTable: React.FC<IPropertyOwnerShipTableProps> = (p
     };
   };
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: IPropertyOwnerShipGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -89,7 +104,9 @@ const mapResponse = (
     };
   };
 
-  const transformToPostData = (data: IPropertyOwnerShipGetApi): IPropertyOwnerShipPostApi => {
+  const transformToPostData = (
+    data: IPropertyOwnerShipGetApi
+  ): IPropertyOwnerShipPostApi => {
     return {
       property_id: data.property_id,
       owner_id: data.owner_id,
@@ -99,7 +116,9 @@ const mapResponse = (
     };
   };
 
-  const transformToPatchData = (data: IPropertyOwnerShipGetApi): IPropertyOwnerShipPatchApi => {
+  const transformToPatchData = (
+    data: IPropertyOwnerShipGetApi
+  ): IPropertyOwnerShipPatchApi => {
     return {
       ownership_id: data.ownership_id,
       email: data.email,
@@ -125,9 +144,9 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
- 
+
     endDate,
- 
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -151,13 +170,25 @@ const mapResponse = (
     sortConfig,
     loading,
     error,
-    isFilterActive
+    isFilterActive,
   } = useTableData<
     IPropertyOwnerShipGetApi,
-    IPropertyOwnerShipPostApi, 
+    IPropertyOwnerShipPostApi,
     { page: number; size: number; ownership_id?: string },
-    { page: number; size: number; ownership_id?: string; property_id?: string; owner_id?: string; from?: string; to?: string },
-    { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
+    {
+      page: number;
+      size: number;
+      ownership_id?: string;
+      property_id?: string;
+      owner_id?: string;
+      from?: string;
+      to?: string;
+    },
+    {
+      page: number;
+      size: number;
+      sort: { field: string; direction: "asc" | "desc" };
+    },
     string
   >({
     fetchData: async ({
@@ -236,13 +267,17 @@ const mapResponse = (
       return response.data[0];
     },
     addData: async (data: Partial<IPropertyOwnerShipPostApi>) => {
-      const transformedData = transformToPostData(data as IPropertyOwnerShipGetApi);
+      const transformedData = transformToPostData(
+        data as IPropertyOwnerShipGetApi
+      );
       const response = await postPropertyOwnerShipApi(transformedData);
       console.log("postPropertyOwnerShipApi response:", response);
       return response;
     },
     updateData: async (data: Partial<IPropertyOwnerShipPatchApi>) => {
-      const transformedData = transformToPatchData(data as IPropertyOwnerShipGetApi);
+      const transformedData = transformToPatchData(
+        data as IPropertyOwnerShipGetApi
+      );
       const response = await patchPropertyOwnerShipApi(transformedData);
       console.log("patchPropertyOwnerShipApi response:", response);
       return response;
@@ -281,10 +316,19 @@ const mapResponse = (
   const handleClearSearchOwnerId = () => handleClearFilter("owner_id");
 
   const columns = [
-    { key: "ownership_id" as keyof IPropertyOwnerShipGetApi, header: "Ownership ID" },
-    { key: "property_id" as keyof IPropertyOwnerShipGetApi, header: "Property ID" },
+    {
+      key: "ownership_id" as keyof IPropertyOwnerShipGetApi,
+      header: "Ownership ID",
+    },
+    {
+      key: "property_id" as keyof IPropertyOwnerShipGetApi,
+      header: "Property ID",
+    },
     { key: "owner_id" as keyof IPropertyOwnerShipGetApi, header: "Owner ID" },
-    { key: "ownership_percentage" as keyof IPropertyOwnerShipGetApi, header: "Ownership Percentage" },
+    {
+      key: "ownership_percentage" as keyof IPropertyOwnerShipGetApi,
+      header: "Ownership Percentage",
+    },
     {
       key: "start_date" as keyof IPropertyOwnerShipGetApi,
       header: "Start Date",
@@ -334,16 +378,16 @@ const mapResponse = (
 
         <div className="max-w-full overflow-x-auto">
           {loading && (isFilterActive || !paginatedData.length) ? (
-            <div className="p-4 text-center text-gray-500 dark:text-gray-400">
-              Đang tải...
+            <div className="p-4 flex justify-center items-center">
+              <LoadingMore />
             </div>
           ) : error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">
               {error}
             </div>
           ) : !paginatedData || paginatedData.length === 0 ? (
-            <div className="p-4 text-center text-gray-500 dark:text-gray-400">              
-No property ownership found with the selected filter.
+            <div className="p-4 text-center text-gray-500 dark:text-gray-400">
+              No property ownership found with the selected filter.
             </div>
           ) : (
             <TableComponent
