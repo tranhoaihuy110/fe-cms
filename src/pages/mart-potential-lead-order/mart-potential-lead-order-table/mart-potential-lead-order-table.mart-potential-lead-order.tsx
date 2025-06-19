@@ -15,12 +15,18 @@ import {
   deleteMartPotentialLeadOrderApi,
 } from "../../../services";
 import { IMartPotentialLeadOrderTableProps } from "./index";
-import { IMartPotentialLeadOrderGetApi,IMartPotentialLeadOrderPatchApi } from "../../../models";
 import {
-  DeleteMartPotentialLeadOrderConfirmationModal,MartPotentialLeadOrderFormModal
+  IMartPotentialLeadOrderGetApi,
+  IMartPotentialLeadOrderPatchApi,
+} from "../../../models";
+import {
+  DeleteMartPotentialLeadOrderConfirmationModal,
+  MartPotentialLeadOrderFormModal,
 } from "../index";
 
-export const MartPotentialLeadOrderTable: React.FC<IMartPotentialLeadOrderTableProps> = (props) => {
+export const MartPotentialLeadOrderTable: React.FC<
+  IMartPotentialLeadOrderTableProps
+> = (props) => {
   const { children = "" } = props;
 
   const initialFormData: IMartPotentialLeadOrderGetApi = {
@@ -34,9 +40,12 @@ export const MartPotentialLeadOrderTable: React.FC<IMartPotentialLeadOrderTableP
   };
 
   const filterConfig: FilterConfig[] = [
-    { key: "potential_lead_order_id", label: "Potential Lead Order ID", type: "text" },
+    {
+      key: "potential_lead_order_id",
+      label: "Potential Lead Order ID",
+      type: "text",
+    },
     { key: "full_address", label: "Full address", type: "text" },
-    
   ];
 
   const fieldMapping = {
@@ -45,7 +54,9 @@ export const MartPotentialLeadOrderTable: React.FC<IMartPotentialLeadOrderTableP
     createdAt: "created_at" as keyof IMartPotentialLeadOrderGetApi,
   };
 
-  const mapToForm = (data: IMartPotentialLeadOrderGetApi): IMartPotentialLeadOrderGetApi => ({
+  const mapToForm = (
+    data: IMartPotentialLeadOrderGetApi
+  ): IMartPotentialLeadOrderGetApi => ({
     potential_lead_order_id: data.potential_lead_order_id || "",
     full_address: data.full_address || "",
     postal_code: data.postal_code || "",
@@ -55,7 +66,9 @@ export const MartPotentialLeadOrderTable: React.FC<IMartPotentialLeadOrderTableP
     username_order: data.username_order || "",
   });
 
-  const mapFromForm = (data: IMartPotentialLeadOrderGetApi): Partial<IMartPotentialLeadOrderPatchApi> => {
+  const mapFromForm = (
+    data: IMartPotentialLeadOrderGetApi
+  ): Partial<IMartPotentialLeadOrderPatchApi> => {
     return {
       potential_lead_order_id: data.potential_lead_order_id,
       full_address: data.full_address,
@@ -65,7 +78,7 @@ export const MartPotentialLeadOrderTable: React.FC<IMartPotentialLeadOrderTableP
     };
   };
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: IMartPotentialLeadOrderGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -81,7 +94,7 @@ const mapResponse = (
     currentPage,
     setCurrentPage,
     itemsPerPage,
-    
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -91,9 +104,9 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
-    
+
     endDate,
-    
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -117,13 +130,23 @@ const mapResponse = (
     sortConfig,
     loading,
     error,
-    isFilterActive
   } = useTableData<
     IMartPotentialLeadOrderGetApi,
     IMartPotentialLeadOrderGetApi,
     { page: number; size: number; potential_lead_order_id?: string },
-    { page: number; size: number; potential_lead_order_id?: string; full_address?: string;from?: string; to?: string },
-    { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
+    {
+      page: number;
+      size: number;
+      potential_lead_order_id?: string;
+      full_address?: string;
+      from?: string;
+      to?: string;
+    },
+    {
+      page: number;
+      size: number;
+      sort: { field: string; direction: "asc" | "desc" };
+    },
     string
   >({
     fetchData: async ({
@@ -190,9 +213,12 @@ const mapResponse = (
       const response = await getMartPotentialLeadOrderApi({
         page: 1,
         size: 1,
-        potential_lead_order_id, 
+        potential_lead_order_id,
       });
-      console.log("getMartPotentialLeadOrderApi (fetchById) response:", response);
+      console.log(
+        "getMartPotentialLeadOrderApi (fetchById) response:",
+        response
+      );
       if (!response.data || !response.data[0]) {
         throw new Error("Mart Potential Lead Order not found");
       }
@@ -210,7 +236,8 @@ const mapResponse = (
   });
 
   const searchIdTerm =
-    filters.potential_lead_order_id !== undefined && filters.potential_lead_order_id !== null
+    filters.potential_lead_order_id !== undefined &&
+    filters.potential_lead_order_id !== null
       ? String(filters.potential_lead_order_id)
       : "";
   const searchEmailTerm =
@@ -224,18 +251,29 @@ const mapResponse = (
 
   const setSearchIdTerm = (value: string) =>
     setFilter("potential_lead_order_id", value || null);
-  const setSearchEmailTerm = (value: string) => setFilter("full_address", value || null);
+  const setSearchEmailTerm = (value: string) =>
+    setFilter("full_address", value || null);
   const setSearchAddressTerm = (value: string) =>
     setFilter("address", value || null);
 
-  const handleClearSearchId = () => handleClearFilter("potential_lead_order_id");
+  const handleClearSearchId = () =>
+    handleClearFilter("potential_lead_order_id");
   const handleClearSearchEmail = () => handleClearFilter("full_address");
   const handleClearSearchAddress = () => handleClearFilter("address");
 
   const columns = [
-    { key: "potential_lead_order_id" as keyof IMartPotentialLeadOrderGetApi, header: "Potential Lead Order ID" },
-    { key: "full_address" as keyof IMartPotentialLeadOrderGetApi, header: "Full Address" },
-    { key: "postal_code" as keyof IMartPotentialLeadOrderGetApi, header: "Postal Code" },
+    {
+      key: "potential_lead_order_id" as keyof IMartPotentialLeadOrderGetApi,
+      header: "Potential Lead Order ID",
+    },
+    {
+      key: "full_address" as keyof IMartPotentialLeadOrderGetApi,
+      header: "Full Address",
+    },
+    {
+      key: "postal_code" as keyof IMartPotentialLeadOrderGetApi,
+      header: "Postal Code",
+    },
     {
       key: "created_at" as keyof IMartPotentialLeadOrderGetApi,
       header: "Date Created",
@@ -249,7 +287,10 @@ const mapResponse = (
         new Date(item.updated_at || "").toLocaleString(),
     },
 
-    { key: "actions" as keyof IMartPotentialLeadOrderGetApi, header: "Actions" },
+    {
+      key: "actions" as keyof IMartPotentialLeadOrderGetApi,
+      header: "Actions",
+    },
   ];
 
   return (
@@ -283,11 +324,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && (isFilterActive || !paginatedData.length) ? (
-            <div className="p-4 flex justify-center items-center">
-              <LoadingMore />
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">
               {error}
             </div>
@@ -305,6 +342,11 @@ const mapResponse = (
               sortConfig={sortConfig}
               handleSort={handleSort}
             />
+          )}
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 dark:bg-gray-900/50 z-10">
+              <LoadingMore />
+            </div>
           )}
         </div>
 

@@ -15,12 +15,9 @@ import {
   deleteOwnersApi,
 } from "../../../services";
 import { IOwnersTableProps } from "./index";
-import { IOwnersGetApi,IOwnersPatchApi } from "../../../models";
-import {
-  DeleteOwnersConfirmationModal,OwnersFormModal
+import { IOwnersGetApi, IOwnersPatchApi } from "../../../models";
+import { DeleteOwnersConfirmationModal, OwnersFormModal } from "../index";
 
-} from "../index";
-  
 export const OwnersTable: React.FC<IOwnersTableProps> = (props) => {
   const { children = "" } = props;
 
@@ -37,7 +34,6 @@ export const OwnersTable: React.FC<IOwnersTableProps> = (props) => {
   const filterConfig: FilterConfig[] = [
     { key: "owner_id", label: "Owner ID", type: "text" },
     { key: "email", label: "Email", type: "text" },
-   
   ];
 
   const fieldMapping = {
@@ -68,7 +64,7 @@ export const OwnersTable: React.FC<IOwnersTableProps> = (props) => {
     };
   };
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: IOwnersGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -83,7 +79,7 @@ const mapResponse = (
     currentPage,
     setCurrentPage,
     itemsPerPage,
-    
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -93,9 +89,9 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
-    
+
     endDate,
-    
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -119,13 +115,24 @@ const mapResponse = (
     sortConfig,
     loading,
     error,
-    isFilterActive
   } = useTableData<
     IOwnersGetApi,
     IOwnersGetApi,
     { page: number; size: number; owner_id?: string },
-    { page: number; size: number; owner_id?: string; email?: string; address?: string; from?: string; to?: string },
-    { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
+    {
+      page: number;
+      size: number;
+      owner_id?: string;
+      email?: string;
+      address?: string;
+      from?: string;
+      to?: string;
+    },
+    {
+      page: number;
+      size: number;
+      sort: { field: string; direction: "asc" | "desc" };
+    },
     string
   >({
     fetchData: async ({
@@ -229,7 +236,8 @@ const mapResponse = (
 
   const setSearchIdTerm = (value: string) =>
     setFilter("owner_id", value || null);
-  const setSearchEmailTerm = (value: string) => setFilter("email", value || null);
+  const setSearchEmailTerm = (value: string) =>
+    setFilter("email", value || null);
   const setSearchAddressTerm = (value: string) =>
     setFilter("address", value || null);
 
@@ -248,7 +256,6 @@ const mapResponse = (
       render: (item: IOwnersGetApi) =>
         new Date(item.created_at || "").toLocaleString(),
     },
-    
 
     { key: "actions" as keyof IOwnersGetApi, header: "Actions" },
   ];
@@ -284,11 +291,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && (isFilterActive || !paginatedData.length) ? (
-            <div className="p-4 flex justify-center items-center">
-              <LoadingMore />
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">
               {error}
             </div>
@@ -306,6 +309,11 @@ const mapResponse = (
               sortConfig={sortConfig}
               handleSort={handleSort}
             />
+          )}
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 dark:bg-gray-900/50 z-10">
+              <LoadingMore />
+            </div>
           )}
         </div>
 

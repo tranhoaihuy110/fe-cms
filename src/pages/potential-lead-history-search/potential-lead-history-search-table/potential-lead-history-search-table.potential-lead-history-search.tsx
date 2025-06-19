@@ -8,7 +8,10 @@ import {
 } from "../../../components/table";
 import { LoadingMore } from "../../../components";
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
-import { IPotentialLeadHistorySearchGetApi, IPotentialLeadHistorySearchPatchApi } from "../../../models";
+import {
+  IPotentialLeadHistorySearchGetApi,
+  IPotentialLeadHistorySearchPatchApi,
+} from "../../../models";
 import {
   deletePotentialLeadHistorySeachApi,
   getPotentialLeadHistorySearchApi,
@@ -23,7 +26,9 @@ import {
 } from "../index";
 import { IPotentialLeadHistorySearchTableProps } from "./index";
 
-export const PotentialLeadHistorySearchTable: React.FC<IPotentialLeadHistorySearchTableProps> = (props) => {
+export const PotentialLeadHistorySearchTable: React.FC<
+  IPotentialLeadHistorySearchTableProps
+> = (props) => {
   const { children = "" } = props;
 
   const initialFormData: IPotentialLeadHistorySearchGetApi = {
@@ -49,16 +54,20 @@ export const PotentialLeadHistorySearchTable: React.FC<IPotentialLeadHistorySear
     createdAt: "create_at" as keyof IPotentialLeadHistorySearchGetApi,
   };
 
-  const mapToForm = (data: IPotentialLeadHistorySearchGetApi): IPotentialLeadHistorySearchGetApi => ({
-        id: data.id || "",
-        username: data.username|| "",
-        keysearch: data.keysearch|| "",
-        status_search: data.status_search || "",
-        json_data: data.json_data|| {},
-        create_at: data.create_at || "",
+  const mapToForm = (
+    data: IPotentialLeadHistorySearchGetApi
+  ): IPotentialLeadHistorySearchGetApi => ({
+    id: data.id || "",
+    username: data.username || "",
+    keysearch: data.keysearch || "",
+    status_search: data.status_search || "",
+    json_data: data.json_data || {},
+    create_at: data.create_at || "",
   });
 
-  const mapFromForm = (data: IPotentialLeadHistorySearchGetApi): Partial<IPotentialLeadHistorySearchPatchApi> => {
+  const mapFromForm = (
+    data: IPotentialLeadHistorySearchGetApi
+  ): Partial<IPotentialLeadHistorySearchPatchApi> => {
     return {
       id: data.id,
       username: data.username,
@@ -68,7 +77,7 @@ export const PotentialLeadHistorySearchTable: React.FC<IPotentialLeadHistorySear
     };
   };
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: IPotentialLeadHistorySearchGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -84,7 +93,7 @@ const mapResponse = (
     currentPage,
     setCurrentPage,
     itemsPerPage,
-    
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -94,9 +103,9 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
-    
+
     endDate,
-    
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -120,13 +129,24 @@ const mapResponse = (
     sortConfig,
     loading,
     error,
-    isFilterActive
   } = useTableData<
     IPotentialLeadHistorySearchGetApi,
     IPotentialLeadHistorySearchGetApi,
     { page: number; size: number; id?: string },
-    { page: number; size: number; id?: string; username?: string; keysearch?: string; from?: string; to?: string },
-    { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
+    {
+      page: number;
+      size: number;
+      id?: string;
+      username?: string;
+      keysearch?: string;
+      from?: string;
+      to?: string;
+    },
+    {
+      page: number;
+      size: number;
+      sort: { field: string; direction: "asc" | "desc" };
+    },
     string
   >({
     fetchData: async ({
@@ -174,7 +194,10 @@ const mapResponse = (
         from,
         to,
       });
-      console.log("search potential lead history search Api response:", response);
+      console.log(
+        "search potential lead history search Api response:",
+        response
+      );
       return response;
     },
     sortData: async ({
@@ -201,7 +224,10 @@ const mapResponse = (
         size: 1,
         id,
       });
-      console.log("get potential lead history search Api (fetchById) response:", response);
+      console.log(
+        "get potential lead history search Api (fetchById) response:",
+        response
+      );
       if (!response.data || !response.data[0]) {
         throw new Error(" potential lead history search not found");
       }
@@ -219,9 +245,7 @@ const mapResponse = (
   });
 
   const searchIdTerm =
-    filters.id !== undefined && filters.id !== null
-      ? String(filters.id)
-      : "";
+    filters.id !== undefined && filters.id !== null ? String(filters.id) : "";
   const searchEmailTerm =
     filters.username !== undefined && filters.username !== null
       ? String(filters.username)
@@ -231,9 +255,9 @@ const mapResponse = (
       ? String(filters.keysearch)
       : "";
 
-  const setSearchIdTerm = (value: string) =>
-    setFilter("id", value || null);
-  const setSearchNameTerm = (value: string) => setFilter("username", value || null);
+  const setSearchIdTerm = (value: string) => setFilter("id", value || null);
+  const setSearchNameTerm = (value: string) =>
+    setFilter("username", value || null);
   const setSearchTypeTerm = (value: string) =>
     setFilter("keysearch", value || null);
 
@@ -242,15 +266,24 @@ const mapResponse = (
   const handleClearSearchAddress = () => handleClearFilter("keysearch");
 
   const columns = [
-  { key: "id" as keyof IPotentialLeadHistorySearchGetApi, header: "id" },
-  { key: "username" as keyof IPotentialLeadHistorySearchGetApi, header: "User Name" },
-  { key: "keysearch" as keyof IPotentialLeadHistorySearchGetApi, header: "Key Search" },
-  {
-    key: "create_at" as keyof IPotentialLeadHistorySearchGetApi,
-    header: "Create At",
-  },
-  { key: "actions" as keyof IPotentialLeadHistorySearchGetApi, header: "Actions" },
-];
+    { key: "id" as keyof IPotentialLeadHistorySearchGetApi, header: "id" },
+    {
+      key: "username" as keyof IPotentialLeadHistorySearchGetApi,
+      header: "User Name",
+    },
+    {
+      key: "keysearch" as keyof IPotentialLeadHistorySearchGetApi,
+      header: "Key Search",
+    },
+    {
+      key: "create_at" as keyof IPotentialLeadHistorySearchGetApi,
+      header: "Create At",
+    },
+    {
+      key: "actions" as keyof IPotentialLeadHistorySearchGetApi,
+      header: "Actions",
+    },
+  ];
 
   return (
     <>
@@ -284,11 +317,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && (isFilterActive || !paginatedData.length) ? (
-            <div className="p-4 flex justify-center items-center">
-              <LoadingMore />
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">
               {error}
             </div>
@@ -306,6 +335,11 @@ const mapResponse = (
               sortConfig={sortConfig}
               handleSort={handleSort}
             />
+          )}
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 dark:bg-gray-900/50 z-10">
+              <LoadingMore />
+            </div>
           )}
         </div>
 

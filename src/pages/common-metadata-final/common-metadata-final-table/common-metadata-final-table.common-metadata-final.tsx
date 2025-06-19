@@ -129,7 +129,6 @@ export const CommonMetadataFinalTable: React.FC<
     sortConfig,
     loading,
     error,
-    isFilterActive
   } = useTableData<
     ICommonMetadataFinalGetApi,
     ICommonMetadataFinalPostApi,
@@ -165,7 +164,7 @@ export const CommonMetadataFinalTable: React.FC<
         size,
         id: id || "",
         meta_key: key || "",
-        sort: "created_at,desc"
+        sort: "created_at,desc",
       });
       console.log("getCommonMetadataFinalApi response:", response);
       return response;
@@ -330,11 +329,7 @@ export const CommonMetadataFinalTable: React.FC<
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && (isFilterActive || !paginatedData.length) ? (
-            <div className="p-4 flex justify-center items-center">
-              <LoadingMore />
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">
               {error}
             </div>
@@ -352,6 +347,11 @@ export const CommonMetadataFinalTable: React.FC<
               sortConfig={sortConfig}
               handleSort={handleSort}
             />
+          )}
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 dark:bg-gray-900/50 z-10">
+              <LoadingMore />
+            </div>
           )}
         </div>
 

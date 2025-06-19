@@ -130,7 +130,6 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
     sortConfig,
     loading,
     error,
-    isFilterActive
   } = useTableData<
     IMetaDataApi,
     IMetaDataApi,
@@ -258,8 +257,15 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
   const handleClearSearchName = () => handleClearFilter("name");
 
   const columns = [
-    { key: "id" as keyof IMetaDataApi, header: "Category ID" },
+    { key: "id" as keyof IMetaDataApi, header: " ID" },
     { key: "name" as keyof IMetaDataApi, header: "Category Name" },
+    { key: "data_code" as keyof IMetaDataApi, header: "Data Code" },
+    { key: "data_desc" as keyof IMetaDataApi, header: "Data Desc" },
+    { key: "data_parent_id" as keyof IMetaDataApi, header: "Data Parent Id" },
+    {
+      key: "data_parent_id_v2" as keyof IMetaDataApi,
+      header: "Data Parent Id v2",
+    },
     {
       key: "create_at" as keyof IMetaDataApi,
       header: "Date Create",
@@ -304,11 +310,7 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && (isFilterActive || !paginatedData.length) ? (
-            <div className="p-4 flex justify-center items-center">
-              <LoadingMore />
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">
               {error}
             </div>
@@ -326,6 +328,11 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
               sortConfig={sortConfig}
               handleSort={handleSort}
             />
+          )}
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 dark:bg-gray-900/50 z-10">
+              <LoadingMore />
+            </div>
           )}
         </div>
 

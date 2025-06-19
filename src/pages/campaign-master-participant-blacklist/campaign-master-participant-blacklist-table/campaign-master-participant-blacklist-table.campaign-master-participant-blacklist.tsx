@@ -142,7 +142,6 @@ export const CampaignMasterParticipantBlacklistTable: React.FC<
     sortConfig,
     loading,
     error,
-    isFilterActive
   } = useTableData<
     ICampaignMasterParticipantBlacklistGetApi,
     ICampaignMasterParticipantBlacklistGetApi,
@@ -370,11 +369,7 @@ export const CampaignMasterParticipantBlacklistTable: React.FC<
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && (isFilterActive || !paginatedData.length) ? (
-            <div className="p-4 flex justify-center items-center">
-              <LoadingMore />
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">
               {error}
             </div>
@@ -392,6 +387,11 @@ export const CampaignMasterParticipantBlacklistTable: React.FC<
               sortConfig={sortConfig}
               handleSort={handleSort}
             />
+          )}
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 dark:bg-gray-900/50 z-10">
+              <LoadingMore />
+            </div>
           )}
         </div>
 

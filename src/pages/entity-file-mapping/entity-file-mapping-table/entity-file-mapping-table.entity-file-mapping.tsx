@@ -85,7 +85,7 @@ export const EntityFileMappingTable: React.FC<IEntityFileMappingTableProps> = (
     metadata: data.metadata,
   });
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: IEntityFileMappingGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -110,7 +110,7 @@ const mapResponse = (
     currentPage,
     setCurrentPage,
     itemsPerPage,
-    
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -120,9 +120,9 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
-    
+
     endDate,
-    
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -146,7 +146,6 @@ const mapResponse = (
     sortConfig,
     loading,
     error,
-    isFilterActive
   } = useTableData<
     IEntityFileMappingGetApi,
     IEntityFileMappingGetApi,
@@ -190,7 +189,7 @@ const mapResponse = (
         entity_type,
         mapping_key,
         entity_id,
-        sort: "created_at,desc"
+        sort: "created_at,desc",
       });
       return response;
     },
@@ -360,11 +359,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && (isFilterActive || !paginatedData.length) ? (
-            <div className="p-4 flex justify-center items-center">
-              <LoadingMore />
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">
               {error}
             </div>
@@ -382,6 +377,11 @@ const mapResponse = (
               sortConfig={sortConfig}
               handleSort={handleSort}
             />
+          )}
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 dark:bg-gray-900/50 z-10">
+              <LoadingMore />
+            </div>
           )}
         </div>
 

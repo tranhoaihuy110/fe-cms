@@ -133,7 +133,6 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
     sortConfig,
     loading,
     error,
-    isFilterActive
   } = useTableData<
     IMetaDataApi,
     IMetaDataApi,
@@ -267,12 +266,15 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
 
   const setSearchIdTerm = (value: string) => setFilter("id", value || null);
   const setSearchNameTerm = (value: string) => setFilter("name", value || null);
-  const setSearchCategoryNameTerm = (value: string) => setFilter("category_name", value || null);
-  const setSearchServiceNameTerm = (value: string) => setFilter("service_name", value || null);
+  const setSearchCategoryNameTerm = (value: string) =>
+    setFilter("category_name", value || null);
+  const setSearchServiceNameTerm = (value: string) =>
+    setFilter("service_name", value || null);
 
   const handleClearSearchId = () => handleClearFilter("id");
   const handleClearSearchName = () => handleClearFilter("name");
-  const handleClearSearchCategoryName = () => handleClearFilter("category_name");
+  const handleClearSearchCategoryName = () =>
+    handleClearFilter("category_name");
   const handleClearSearchServiceName = () => handleClearFilter("service_name");
 
   const columns = [
@@ -325,11 +327,7 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && (isFilterActive || !paginatedData.length) ? (
-            <div className="p-4 flex justify-center items-center">
-              <LoadingMore />
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">
               {error}
             </div>
@@ -347,6 +345,11 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
               sortConfig={sortConfig}
               handleSort={handleSort}
             />
+          )}{" "}
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 dark:bg-gray-900/50 z-10">
+              <LoadingMore />
+            </div>
           )}
         </div>
 

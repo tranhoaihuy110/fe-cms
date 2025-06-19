@@ -17,7 +17,7 @@ import {
   deleteLeadsourcesApi,
 } from "../../../services";
 import { ILeadsourcesTableProps } from "./index";
-import { ILeadsourcesGetApi,ILeadsourcesPatchApi } from "../../../models";
+import { ILeadsourcesGetApi, ILeadsourcesPatchApi } from "../../../models";
 import {
   LeadsourcesFormModal,
   DeleteLeadsourcesConfirmationModal,
@@ -45,12 +45,14 @@ export const LeadsourcesTable: React.FC<ILeadsourcesTableProps> = (props) => {
   };
 
   const mapToForm = (data: ILeadsourcesGetApi): ILeadsourcesGetApi => ({
-        source_id: data.source_id || "",
-        source_name: data.source_name|| "",
-        description: data.description|| "",
+    source_id: data.source_id || "",
+    source_name: data.source_name || "",
+    description: data.description || "",
   });
 
-  const mapFromForm = (data: ILeadsourcesGetApi): Partial<ILeadsourcesPatchApi> => {
+  const mapFromForm = (
+    data: ILeadsourcesGetApi
+  ): Partial<ILeadsourcesPatchApi> => {
     return {
       source_id: data.source_id,
       source_name: data.source_name,
@@ -58,7 +60,7 @@ export const LeadsourcesTable: React.FC<ILeadsourcesTableProps> = (props) => {
     };
   };
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: ILeadsourcesGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -74,7 +76,7 @@ const mapResponse = (
     currentPage,
     setCurrentPage,
     itemsPerPage,
-    
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -84,9 +86,9 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
-    
+
     endDate,
-    
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -110,13 +112,24 @@ const mapResponse = (
     sortConfig,
     loading,
     error,
-    isFilterActive
   } = useTableData<
     ILeadsourcesGetApi,
     ILeadsourcesGetApi,
     { page: number; size: number; source_id?: string },
-    { page: number; size: number; source_id?: string; username?: string; keysearch?: string; from?: string; to?: string },
-    { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
+    {
+      page: number;
+      size: number;
+      source_id?: string;
+      username?: string;
+      keysearch?: string;
+      from?: string;
+      to?: string;
+    },
+    {
+      page: number;
+      size: number;
+      sort: { field: string; direction: "asc" | "desc" };
+    },
     string
   >({
     fetchData: async ({
@@ -131,8 +144,8 @@ const mapResponse = (
       const response = await getLeadsourcesApi({
         page,
         size,
-        source_id: source_id  || "",
-        sort: "source_id,desc"
+        source_id: source_id || "",
+        sort: "source_id,desc",
       });
       console.log("get Lead sources Api response:", response);
       return response;
@@ -214,7 +227,8 @@ const mapResponse = (
 
   const setSearchIdTerm = (value: string) =>
     setFilter("source_id", value || null);
-  const setSearchNameTerm = (value: string) => setFilter("source_name", value || null);
+  const setSearchNameTerm = (value: string) =>
+    setFilter("source_name", value || null);
   const setSearchTypeTerm = (value: string) =>
     setFilter("description", value || null);
 
@@ -223,11 +237,11 @@ const mapResponse = (
   const handleClearSearchAddress = () => handleClearFilter("description");
 
   const columns = [
-  { key: "source_id" as keyof ILeadsourcesGetApi, header: "Source Id" },
-  { key: "source_name" as keyof ILeadsourcesGetApi, header: "Source Name" },
-  { key: "description" as keyof ILeadsourcesGetApi, header: "Description" },
-  { key: "actions" as keyof ILeadsourcesGetApi, header: "Actions" },
-];
+    { key: "source_id" as keyof ILeadsourcesGetApi, header: "Source Id" },
+    { key: "source_name" as keyof ILeadsourcesGetApi, header: "Source Name" },
+    { key: "description" as keyof ILeadsourcesGetApi, header: "Description" },
+    { key: "actions" as keyof ILeadsourcesGetApi, header: "Actions" },
+  ];
 
   return (
     <>
@@ -262,11 +276,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && (isFilterActive || !paginatedData.length) ? (
-            <div className="p-4 flex justify-center items-center">
-              <LoadingMore />
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">
               {error}
             </div>
@@ -284,6 +294,11 @@ const mapResponse = (
               sortConfig={sortConfig}
               handleSort={handleSort}
             />
+          )}
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 dark:bg-gray-900/50 z-10">
+              <LoadingMore />
+            </div>
           )}
         </div>
 

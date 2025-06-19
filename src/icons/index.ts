@@ -62,7 +62,19 @@ import { ReactComponent as LogIcon } from "./terminal-svgrepo-com.svg?react";
 import { ReactComponent as LeadIcon } from "./group-of-people-svgrepo-com.svg?react";
 import { ReactComponent as PartnerIcon } from "./handshake-svgrepo-com.svg?react";
 import { ReactComponent as FAQIcon } from "./faq-svgrepo-com.svg?react";
-import {ReactComponent as MenuIcon } from "./menu-9-svgrepo-com.svg?react"
+import { ReactComponent as MenuIcon } from "./menu-9-svgrepo-com.svg?react";
+import { ReactComponent as CampaignIcon } from "./campaigning-svgrepo-com.svg?react";
+import { ReactComponent as MartIcon } from "./shopping-cart-free-15-svgrepo-com.svg?react";
+import { ReactComponent as PropertyIcon } from "./home-4-svgrepo-com.svg?react";
+import { ReactComponent as PotentialIcon } from "./lightbulb-bolt-svgrepo-com.svg?react";
+
+import { ReactComponent as AppuserIcon } from "./users-svgrepo-com.svg?react";
+import { ReactComponent as AppconfigIcon } from "./setting-svgrepo-com.svg?react";
+import { ReactComponent as AppuserpendingIcon } from "./hourglass-svgrepo-com.svg?react";
+import { ReactComponent as UserfcmtokenIcon } from "./key-svgrepo-com.svg?react";
+import { ReactComponent as UsernotificationIcon } from "./bell-svgrepo-com.svg?react";
+import { ReactComponent as UserprofileurlmapIcon } from "./link-svgrepo-com.svg?react";
+import { ReactComponent as UserbehaviorlogIcon } from "./text-scroll-line-svgrepo-com.svg?react";
 export {
   ErrorHexaIcon,
   AlertHexaIcon,
@@ -128,5 +140,16 @@ export {
   LeadIcon,
   PartnerIcon,
   FAQIcon,
-  MenuIcon
+  MenuIcon,
+  CampaignIcon,
+  MartIcon,
+  PotentialIcon,
+  PropertyIcon,
+  AppconfigIcon,
+  AppuserIcon,
+  AppuserpendingIcon,
+  UserbehaviorlogIcon,
+  UserfcmtokenIcon,
+  UsernotificationIcon,
+  UserprofileurlmapIcon,
 };

@@ -15,6 +15,17 @@ import {
   PartnerIcon,
   FAQIcon,
   PlugInIcon,
+  PropertyIcon,
+  PotentialIcon,
+  MartIcon,
+  CampaignIcon,
+  AppconfigIcon,
+  AppuserIcon,
+  AppuserpendingIcon,
+  UserfcmtokenIcon,
+  UsernotificationIcon,
+  UserprofileurlmapIcon,
+  UserbehaviorlogIcon,
 } from "../../icons";
 import { useSidebar } from "../../context/index";
 import { MenuIcon } from "lucide-react";
@@ -28,7 +39,7 @@ const navItems: TNavItem[] = [
         name: "App config",
         path: "/appconfig",
         pro: false,
-        icon: <ListIcon />,
+        icon: <AppconfigIcon />,
       },
     ],
   },
@@ -40,37 +51,37 @@ const navItems: TNavItem[] = [
         name: "App user",
         path: "/appuser",
         pro: false,
-        icon: <ListIcon />,
+        icon: <AppuserIcon />,
       },
       {
         name: "App user pending",
         path: "/appuserpending",
         pro: false,
-        icon: <ListIcon />,
+        icon: <AppuserpendingIcon />,
       },
       {
         name: "User fcm tokens",
         path: "/userfcmtokens",
         pro: false,
-        icon: <ListIcon />,
+        icon: <UserfcmtokenIcon />,
       },
       {
         name: "User notifications",
         path: "/usernotifications",
         pro: false,
-        icon: <ListIcon />,
+        icon: <UsernotificationIcon />,
       },
       {
         name: "User profile url map",
         path: "/userprofileurlmap",
         pro: false,
-        icon: <ListIcon />,
+        icon: <UserprofileurlmapIcon />,
       },
       {
         name: "User behavior log table",
         path: "/UserBehaviorLogTable",
         pro: false,
-        icon: <ListIcon />,
+        icon: <UserbehaviorlogIcon />,
       },
     ],
   },
@@ -196,7 +207,7 @@ const navItems: TNavItem[] = [
   },
   {
     name: "CAMPAIGN",
-    icon: <DataIcon />,
+    icon: <CampaignIcon />,
     subItems: [
       {
         name: "Campaign master",
@@ -229,7 +240,7 @@ const navItems: TNavItem[] = [
 const othersItems: TNavItem[] = [
   {
     name: "MART",
-    icon: <MenuIcon />,
+    icon: <MartIcon />,
     subItems: [
       {
         name: "Mart potential lead",
@@ -247,7 +258,7 @@ const othersItems: TNavItem[] = [
   },
   {
     name: "POTENTIAL",
-    icon: <MenuIcon />,
+    icon: <PotentialIcon />,
     subItems: [
       {
         name: "Potential lead action",
@@ -265,7 +276,7 @@ const othersItems: TNavItem[] = [
   },
   {
     name: "PROPERTY",
-    icon: <MenuIcon />,
+    icon: <PropertyIcon />,
     subItems: [
       {
         name: "Property room table",

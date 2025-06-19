@@ -68,7 +68,7 @@ export const UserFcmTokenTable: React.FC<IUserFcmTokenTableProps> = (props) => {
     updated_at: data.updated_at,
   });
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: IUserFcmTokenGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -124,7 +124,6 @@ const mapResponse = (
     sortConfig,
     loading,
     error,
-    isFilterActive
   } = useTableData<
     IUserFcmTokenGetApi,
     IUserFcmTokenGetApi,
@@ -333,11 +332,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && (isFilterActive || !paginatedData.length) ? (
-            <div className="p-4 flex justify-center items-center">
-              <LoadingMore />
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">
               {error}
             </div>
@@ -355,6 +350,11 @@ const mapResponse = (
               sortConfig={sortConfig}
               handleSort={handleSort}
             />
+          )}
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 dark:bg-gray-900/50 z-10">
+              <LoadingMore />
+            </div>
           )}
         </div>
 

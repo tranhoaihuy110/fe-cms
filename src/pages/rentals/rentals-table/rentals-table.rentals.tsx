@@ -15,12 +15,9 @@ import {
   deleteRentalsApi,
 } from "../../../services";
 import { IRentalsTableProps } from "./index";
-import { IRentalsGetApi,IRentalsPatchApi } from "../../../models";
-import {
-  DeleteRentalsConfirmationModal,RentalsFormModal
+import { IRentalsGetApi, IRentalsPatchApi } from "../../../models";
+import { DeleteRentalsConfirmationModal, RentalsFormModal } from "../index";
 
-} from "../index";
-  
 export const RentalsTable: React.FC<IRentalsTableProps> = (props) => {
   const { children = "" } = props;
 
@@ -31,7 +28,7 @@ export const RentalsTable: React.FC<IRentalsTableProps> = (props) => {
     tenant_name: "",
     tenant_phone: "",
     tenant_email: "",
-    rental_start_date:"",
+    rental_start_date: "",
     rental_end_date: "",
     rental_price: "",
     deposit: "",
@@ -41,7 +38,6 @@ export const RentalsTable: React.FC<IRentalsTableProps> = (props) => {
   const filterConfig: FilterConfig[] = [
     { key: "rental_id", label: "Rental ID", type: "text" },
     { key: "tenant_name", label: "Tenant Name", type: "text" },
-   
   ];
 
   const fieldMapping = {
@@ -55,30 +51,30 @@ export const RentalsTable: React.FC<IRentalsTableProps> = (props) => {
     property_id: data.property_id || "",
     property_name: data.property_name || "",
     tenant_name: data.tenant_name || "",
-    tenant_phone: data.tenant_phone||"",
-    tenant_email: data.tenant_email||"",
-    rental_start_date: data.rental_start_date||"",
-    rental_end_date: data.rental_end_date||"",
-    rental_price: data.rental_price||"",
-    deposit: data.deposit||"",
+    tenant_phone: data.tenant_phone || "",
+    tenant_email: data.tenant_email || "",
+    rental_start_date: data.rental_start_date || "",
+    rental_end_date: data.rental_end_date || "",
+    rental_price: data.rental_price || "",
+    deposit: data.deposit || "",
     created_at: data.created_at || "",
   });
 
   const mapFromForm = (data: IRentalsGetApi): Partial<IRentalsPatchApi> => {
     return {
-    rental_id: data.rental_id || "",
-    property_id: data.property_id || "",
-    tenant_name: data.tenant_name || "",
-    tenant_phone: data.tenant_phone||"",
-    tenant_email: data.tenant_email||"",
-    rental_start_date: data.rental_start_date||"",
-    rental_end_date: data.rental_end_date||"",
-    rental_price: data.rental_price||"",
-    deposit: data.deposit||"",
+      rental_id: data.rental_id || "",
+      property_id: data.property_id || "",
+      tenant_name: data.tenant_name || "",
+      tenant_phone: data.tenant_phone || "",
+      tenant_email: data.tenant_email || "",
+      rental_start_date: data.rental_start_date || "",
+      rental_end_date: data.rental_end_date || "",
+      rental_price: data.rental_price || "",
+      deposit: data.deposit || "",
     };
   };
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: IRentalsGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -130,13 +126,23 @@ const mapResponse = (
     sortConfig,
     loading,
     error,
-    isFilterActive
   } = useTableData<
     IRentalsGetApi,
     IRentalsGetApi,
     { page: number; size: number; rental_id?: string },
-    { page: number; size: number; rental_id?: string; tenant_name?: string; from?: string; to?: string },
-    { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
+    {
+      page: number;
+      size: number;
+      rental_id?: string;
+      tenant_name?: string;
+      from?: string;
+      to?: string;
+    },
+    {
+      page: number;
+      size: number;
+      sort: { field: string; direction: "asc" | "desc" };
+    },
     string
   >({
     fetchData: async ({
@@ -231,11 +237,10 @@ const mapResponse = (
       ? String(filters.tenant_name)
       : "";
 
-
   const setSearchIdTerm = (value: string) =>
     setFilter("rental_id", value || null);
-  const setSearchEmailTerm = (value: string) => setFilter("tenant_name", value || null);
-
+  const setSearchEmailTerm = (value: string) =>
+    setFilter("tenant_name", value || null);
 
   const handleClearSearchId = () => handleClearFilter("rental_id");
   const handleClearSearchEmail = () => handleClearFilter("tenant_name");
@@ -252,7 +257,6 @@ const mapResponse = (
       render: (item: IRentalsGetApi) =>
         new Date(item.created_at || "").toLocaleString(),
     },
-    
 
     { key: "actions" as keyof IRentalsGetApi, header: "Actions" },
   ];
@@ -285,11 +289,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && (isFilterActive || !paginatedData.length) ? (
-            <div className="p-4 flex justify-center items-center">
-              <LoadingMore />
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">
               {error}
             </div>
@@ -307,6 +307,11 @@ const mapResponse = (
               sortConfig={sortConfig}
               handleSort={handleSort}
             />
+          )}
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 dark:bg-gray-900/50 z-10">
+              <LoadingMore />
+            </div>
           )}
         </div>
 

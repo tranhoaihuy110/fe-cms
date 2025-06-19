@@ -55,7 +55,7 @@ export const AppConfigTable: React.FC<IAppConfigTableProps> = (props) => {
     description: data.description || null,
   });
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: IAppConfigGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -105,12 +105,10 @@ const mapResponse = (
     sortConfig,
     loading,
     error,
-    isFilterActive
   } = useTableData<
     IAppConfigGetApi,
     IAppConfigGetApi,
     { page: number; size: number; key?: string },
-  
     { page: number; size: number; key?: string; from?: string; to?: string },
     {
       page: number;
@@ -132,7 +130,7 @@ const mapResponse = (
         page,
         size,
         key: key || "",
-        sort:"created_at,desc"
+        sort: "created_at,desc",
       });
       console.log("getAppConFigApi response:", response);
       return response;
@@ -277,11 +275,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && (isFilterActive || !paginatedData.length) ? (
-            <div className="p-4 flex justify-center items-center">
-              <LoadingMore />
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">
               {error}
             </div>
@@ -299,6 +293,11 @@ const mapResponse = (
               sortConfig={sortConfig}
               handleSort={handleSort}
             />
+          )}
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 dark:bg-gray-900/50 z-10">
+              <LoadingMore />
+            </div>
           )}
         </div>
 
