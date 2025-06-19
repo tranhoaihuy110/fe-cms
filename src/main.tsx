@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+// import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import "swiper/swiper-bundle.css";
@@ -8,11 +8,11 @@ import { AppWrapper } from "./components/common/page-meta/page-meta.common.tsx";
 import { ThemeProvider } from "./context/theme/theme.context.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <ThemeProvider>
-      <AppWrapper>
-        <App />
-      </AppWrapper>
-    </ThemeProvider>
-  </StrictMode>
+  // <StrictMode>
+  <ThemeProvider>
+    <AppWrapper>
+      <App />
+    </AppWrapper>
+  </ThemeProvider>
+  // </StrictMode>
 );

@@ -1,14 +1,13 @@
-import { Pencil, Trash2, ClipboardList } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { IActionButtonsProps } from "./index";
 
 export const ActionButtons = <T,>({
   item,
   onEdit,
   onDelete,
-  onDetail,
+
   hideEdit = false,
   hideDelete = false,
-  hideDetail = false,
 }: IActionButtonsProps<T>) => {
   return (
     <div className="flex items-center gap-2">
@@ -30,7 +29,7 @@ export const ActionButtons = <T,>({
           <Trash2 size={16} />
         </button>
       )}
-      {onDetail && !hideDetail && (
+      {/* {onDetail && !hideDetail && (
         <button
           onClick={() => onDetail(item)}
           className="text-green-500 hover:text-green-700"
@@ -38,7 +37,7 @@ export const ActionButtons = <T,>({
         >
           <ClipboardList size={16} />
         </button>
-      )}
+      )} */}
     </div>
   );
 };

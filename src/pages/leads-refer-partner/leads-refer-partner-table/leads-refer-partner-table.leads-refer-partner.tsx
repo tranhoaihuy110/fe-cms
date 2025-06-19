@@ -1,30 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import {
-    FilterSection,
-    PaginationSection,
-    TableComponent,
+  FilterSection,
+  PaginationSection,
+  TableComponent,
 } from "../../../components/table";
+import { LoadingMore } from "../../../components";
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
-    getLeadsReferPartnerApi,
-    searchLeadsReferPartnerApi,
-    sortLeadsReferPartnerApi,
-    postLeadsReferPartnerApi,
-    patchLeadsReferPartnerApi,
-    deleteLeadsReferPartnerApi,
+  getLeadsReferPartnerApi,
+  searchLeadsReferPartnerApi,
+  sortLeadsReferPartnerApi,
+  postLeadsReferPartnerApi,
+  patchLeadsReferPartnerApi,
+  deleteLeadsReferPartnerApi,
 } from "../../../services";
 import { ILeadsReferPartnerTableProps } from "./index";
-import { ILeadsReferPartnerGetApi,ILeadsReferPartnerPatchApi } from "../../../models";
+import {
+  ILeadsReferPartnerGetApi,
+  ILeadsReferPartnerPatchApi,
+} from "../../../models";
 import {
   LeadsReferPartnerFormModal,
   DeleteLeadsReferPartnerConfirmationModal,
 } from "../index";
 
-export const LeadsReferPartnerTable: React.FC<ILeadsReferPartnerTableProps> = (props) => {
-    const { children = "" } = props;
+export const LeadsReferPartnerTable: React.FC<ILeadsReferPartnerTableProps> = (
+  props
+) => {
+  const { children = "" } = props;
 
-    const initialFormData: ILeadsReferPartnerGetApi = {
+  const initialFormData: ILeadsReferPartnerGetApi = {
     refer_partner_id: "",
     lead_id: 0,
     email: "",
@@ -34,45 +40,49 @@ export const LeadsReferPartnerTable: React.FC<ILeadsReferPartnerTableProps> = (p
     json_metadata: {},
     refer_partner_status: "",
     trans_value: "",
-    };
+  };
 
-    const filterConfig: FilterConfig[] = [
+  const filterConfig: FilterConfig[] = [
     { key: "refer_partner_id", label: "Refer Partner ID", type: "text" },
     { key: "lead_id", label: "Lead ID", type: "text" },
     { key: "email", label: "Email", type: "text" },
-    ];
+  ];
 
-    const fieldMapping = {
+  const fieldMapping = {
     id: "refer_partner_id" as keyof ILeadsReferPartnerGetApi,
     name: "lead_id" as keyof ILeadsReferPartnerGetApi,
     type: "email" as keyof ILeadsReferPartnerGetApi,
     createdAt: "create_at" as keyof ILeadsReferPartnerGetApi,
-    };
+  };
 
-    const mapToForm = (data: ILeadsReferPartnerGetApi): ILeadsReferPartnerGetApi => ({
-        refer_partner_id: data.refer_partner_id || "",
-        lead_id: data.lead_id|| 0,
-        email: data.email|| "",
-        created_at: data.created_at || "",
-        updated_at: data.updated_at|| "",
-        updated_by: data.updated_by || "",
-        json_metadata: data.json_metadata|| {},
-        refer_partner_status: data.refer_partner_status|| "",
-        trans_value: data.trans_value|| "",
-    });
+  const mapToForm = (
+    data: ILeadsReferPartnerGetApi
+  ): ILeadsReferPartnerGetApi => ({
+    refer_partner_id: data.refer_partner_id || "",
+    lead_id: data.lead_id || 0,
+    email: data.email || "",
+    created_at: data.created_at || "",
+    updated_at: data.updated_at || "",
+    updated_by: data.updated_by || "",
+    json_metadata: data.json_metadata || {},
+    refer_partner_status: data.refer_partner_status || "",
+    trans_value: data.trans_value || "",
+  });
 
-    const mapFromForm = (data: ILeadsReferPartnerGetApi): Partial<ILeadsReferPartnerPatchApi> => {
+  const mapFromForm = (
+    data: ILeadsReferPartnerGetApi
+  ): Partial<ILeadsReferPartnerPatchApi> => {
     return {
-        refer_partner_id: data.refer_partner_id,
-        lead_id: data.lead_id,
-        json_metadata: data.json_metadata,
-        refer_partner_status: data.refer_partner_status,
-        trans_value: data.trans_value,
-        updated_by: data.updated_by,
+      refer_partner_id: data.refer_partner_id,
+      lead_id: data.lead_id,
+      json_metadata: data.json_metadata,
+      refer_partner_status: data.refer_partner_status,
+      trans_value: data.trans_value,
+      updated_by: data.updated_by,
     };
-    };
+  };
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: ILeadsReferPartnerGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -121,12 +131,25 @@ const mapResponse = (
     sortConfig,
     loading,
     error,
-    } = useTableData<
+    isFilterActive,
+  } = useTableData<
     ILeadsReferPartnerGetApi,
     ILeadsReferPartnerGetApi,
     { page: number; size: number; refer_partner_id?: string },
-    { page: number; size: number; refer_partner_id?: string; lead_id?: string; email?: string; from?: string; to?: string },
-    { page: number; size: number; sort: { field: string; direction: "asc" | "desc" } },
+    {
+      page: number;
+      size: number;
+      refer_partner_id?: string;
+      lead_id?: string;
+      email?: string;
+      from?: string;
+      to?: string;
+    },
+    {
+      page: number;
+      size: number;
+      sort: { field: string; direction: "asc" | "desc" };
+    },
     string
   >({
     fetchData: async ({
@@ -142,7 +165,7 @@ const mapResponse = (
         page,
         size,
         refer_partner_id: refer_partner_id || "",
-        sort: "created_at,desc"
+        sort: "created_at,desc",
       });
       console.log("get Leads Refer Partner Api response:", response);
       return response;
@@ -200,7 +223,10 @@ const mapResponse = (
         size: 1,
         refer_partner_id,
       });
-      console.log("get Leads Refer Partner Api (fetchById) response:", response);
+      console.log(
+        "get Leads Refer Partner Api (fetchById) response:",
+        response
+      );
       if (!response.data || !response.data[0]) {
         throw new Error(" Leads Refer Partner not found");
       }
@@ -232,7 +258,8 @@ const mapResponse = (
 
   const setSearchIdTerm = (value: string) =>
     setFilter("refer_partner_id", value || null);
-  const setSearchNameTerm = (value: string) => setFilter("lead_id", value || null);
+  const setSearchNameTerm = (value: string) =>
+    setFilter("lead_id", value || null);
   const setSearchTypeTerm = (value: string) =>
     setFilter("email", value || null);
 
@@ -241,23 +268,26 @@ const mapResponse = (
   const handleClearSearchAddress = () => handleClearFilter("email");
 
   const columns = [
-  { key: "refer_partner_id" as keyof ILeadsReferPartnerGetApi, header: "Refer Partner ID" },
-  { key: "lead_id" as keyof ILeadsReferPartnerGetApi, header: "Lead ID" },
-  { key: "email" as keyof ILeadsReferPartnerGetApi, header: "Email" },
-  {
-    key: "created_at" as keyof ILeadsReferPartnerGetApi,
-    header: "Date Created",
-    render: (item: ILeadsReferPartnerGetApi) =>
-      new Date(item.created_at || "").toLocaleString(),
-  },
-  {
-    key: "updated_at" as keyof ILeadsReferPartnerGetApi,
-    header: "Date Updated",
-    render: (item: ILeadsReferPartnerGetApi) =>
-      new Date(item.updated_at || "").toLocaleString(),
-  },
-  { key: "actions" as keyof ILeadsReferPartnerGetApi, header: "Actions" },
-];
+    {
+      key: "refer_partner_id" as keyof ILeadsReferPartnerGetApi,
+      header: "Refer Partner ID",
+    },
+    { key: "lead_id" as keyof ILeadsReferPartnerGetApi, header: "Lead ID" },
+    { key: "email" as keyof ILeadsReferPartnerGetApi, header: "Email" },
+    {
+      key: "created_at" as keyof ILeadsReferPartnerGetApi,
+      header: "Date Created",
+      render: (item: ILeadsReferPartnerGetApi) =>
+        new Date(item.created_at || "").toLocaleString(),
+    },
+    {
+      key: "updated_at" as keyof ILeadsReferPartnerGetApi,
+      header: "Date Updated",
+      render: (item: ILeadsReferPartnerGetApi) =>
+        new Date(item.updated_at || "").toLocaleString(),
+    },
+    { key: "actions" as keyof ILeadsReferPartnerGetApi, header: "Actions" },
+  ];
 
   return (
     <>
@@ -291,9 +321,9 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && !paginatedData.length ? (
-            <div className="p-4 text-center text-gray-500 dark:text-gray-400">
-              Loading...
+          {loading && (isFilterActive || !paginatedData.length) ? (
+            <div className="p-4 flex justify-center items-center">
+              <LoadingMore />
             </div>
           ) : error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">

@@ -4,6 +4,8 @@ import {
   PaginationSection,
   TableComponent,
 } from "../../../components/table";
+import { LoadingMore } from "../../../components";
+
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getAppUserPendingApi,
@@ -162,6 +164,7 @@ export const AppUserPendingTable: React.FC<IAppUserPendingTableProps> = (
     sortConfig,
     loading,
     error,
+    isFilterActive,
   } = useTableData<
     IAppUserPendingGetApi,
     IAppUserPendingGetApi,
@@ -362,9 +365,9 @@ export const AppUserPendingTable: React.FC<IAppUserPendingTableProps> = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && !paginatedData.length ? (
-            <div className="p-4 text-center text-gray-500 dark:text-gray-400">
-              Loading...
+          {loading && (isFilterActive || !paginatedData.length) ? (
+            <div className="p-4 flex justify-center items-center">
+              <LoadingMore />
             </div>
           ) : error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">

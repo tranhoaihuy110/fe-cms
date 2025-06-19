@@ -1,37 +1,36 @@
 import { Link } from "react-router-dom";
-import { Input, Label, Button, Checkbox } from '../../../components';
-import { EyeIcon, EyeCloseIcon } from '../../../icons'; 
-import { useState } from 'react';
-import { useAuth } from './index';
-import { useNavigate } from 'react-router-dom';
-import { LoadingSpinner } from '../../../components';
+import { Input, Label, Button, Checkbox } from "../../../components";
+import { EyeIcon, EyeCloseIcon } from "../../../icons";
+import { useState } from "react";
+import { useAuth } from "./index";
+import { useNavigate } from "react-router-dom";
+import { LoadingSpinner } from "../../../components";
+
 export const SignIns = () => {
   const navigate = useNavigate();
   const { signin, profile } = useAuth();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
-      await signin(username, password, '', '');
-      const accessToken = window.localStorage.getItem('access_token');
+      await signin(username, password, "", "");
+      const accessToken = window.localStorage.getItem("access_token");
       if (!accessToken) {
-        throw new Error('Access token not found');
+        throw new Error("Access token not found");
       }
       await profile(accessToken);
-      setIsLoading(true);
       setErrorMessage(null);
-      setTimeout(() => {
-        setIsLoading(false);
-        navigate('/category-tables');
-      }, 2000);
+      setIsLoading(false);
+      navigate("/category-tables");
     } catch (error) {
-      let errorMessage = 'Incorrect username or password. Please try again.';
+      let errorMessage = "Incorrect username or password. Please try again.";
       if (error instanceof Error) {
         errorMessage = error.message || errorMessage;
       }

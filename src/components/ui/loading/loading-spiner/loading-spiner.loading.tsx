@@ -1,9 +1,13 @@
-import { LoadingSpinnerProps } from './index';
-import React from 'react';
+import { LoadingSpinnerProps } from "./index";
+import React from "react";
 
-export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ className = '' }) => {
+export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
+  className = "",
+}) => {
   return (
-    <div className={`flex h-screen w-full items-center justify-center ${className}`}>
+    <div
+      className={`flex h-screen w-full items-center justify-center ${className}`}
+    >
       <div className="text-center">
         <div role="status">
           <svg

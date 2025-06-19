@@ -63,7 +63,7 @@ export const useTableData = <
   } = useFilters(filterConfig);
 
   const { sortConfig, setSortConfig } = useSorting<T>();
-  const [isOperationLoading, setIsOperationLoading] = useState(false);
+
   const {
     isModalOpen,
     modalMode,
@@ -120,25 +120,16 @@ export const useTableData = <
   const [appliedFilters, setAppliedFilters] = useState<
     Record<string, string | number | null>
   >({});
-
   useEffect(() => {
-    const loadDataWithoutLoading = async () => {
-      try {
-        await loadData(
-          currentPage,
-          itemsPerPage,
-          timeFilter,
-          startDate,
-          endDate,
-          sortConfig,
-          appliedFilters
-        );
-      } catch (err) {
-        const error = err as { message: string };
-        setError(error.message);
-      }
-    };
-    loadDataWithoutLoading();
+    loadData(
+      currentPage,
+      itemsPerPage,
+      timeFilter,
+      startDate,
+      endDate,
+      sortConfig,
+      appliedFilters
+    );
   }, [currentPage, itemsPerPage, timeFilter, startDate, endDate, sortConfig]);
 
   useEffect(() => {
@@ -155,7 +146,6 @@ export const useTableData = <
     );
 
     try {
-      setIsOperationLoading(true); // Thêm dòng này
       let response: { data: T[]; total?: number };
       if (hasFilters || timeFilter) {
         const { from, to } = timeFilter
@@ -190,8 +180,6 @@ export const useTableData = <
     } catch (err) {
       const error = err as { message: string };
       setError(error.message);
-    } finally {
-      setIsOperationLoading(false); // Thêm dòng này
     }
   };
 
@@ -200,13 +188,8 @@ export const useTableData = <
     setStartDate(null);
     setEndDate(null);
     setAppliedFilters(filters);
-    setIsOperationLoading(true); // Thêm dòng này
-    try {
-      await handleSearch(currentPage, itemsPerPage, filters);
-      setIsFilterActive(Object.values(filters).some((value) => value !== null));
-    } finally {
-      setIsOperationLoading(false); // Thêm dòng này
-    }
+    await handleSearch(currentPage, itemsPerPage, filters);
+    setIsFilterActive(Object.values(filters).some((value) => value !== null));
   };
 
   const wrappedHandleReset = () => {
@@ -220,7 +203,6 @@ export const useTableData = <
   const effectiveTotalItems = totalItems;
 
   return {
-    isOperationLoading,
     currentPage,
     setCurrentPage,
     itemsPerPage,

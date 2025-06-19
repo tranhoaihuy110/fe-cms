@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { toast } from "react-toastify";
 import { IUseTableDataProps } from "./index";
 
@@ -8,6 +8,7 @@ export const useSorting = <T>() => {
     key: keyof T | null;
     direction: "asc" | "desc";
   }>({ key: null, direction: "asc" });
+  const isSortingRef = useRef(false); // Thêm cờ kiểm soát sort
 
   const handleSort = async (
     key: keyof T,
@@ -15,10 +16,18 @@ export const useSorting = <T>() => {
     page: number,
     itemsPerPage: number
   ) => {
+    if (isSortingRef.current) return; // Ngăn gọi nhiều lần
+    isSortingRef.current = true;
+
     let direction: "asc" | "desc" = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
       direction = "desc";
+    } else if (sortConfig.key === key && sortConfig.direction === "desc") {
+      setSortConfig({ key: null, direction: "asc" }); // Reset nếu đã desc
+      isSortingRef.current = false;
+      return;
     }
+
     setSortConfig({ key, direction });
 
     try {
@@ -33,6 +42,8 @@ export const useSorting = <T>() => {
       const error = err as { message: string };
       toast.error(error.message);
       throw err;
+    } finally {
+      isSortingRef.current = false; // Đặt lại cờ
     }
   };
 

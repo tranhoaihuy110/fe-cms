@@ -6,6 +6,7 @@ import {
   PaginationSection,
   TableComponent,
 } from "../../../components/table";
+import { LoadingMore } from "../../../components";
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import { IPropertyOwnerShipGetApi, IPropertyOwnerShipPatchApi, IPropertyOwnerShipPostApi } from "../../../models";
 import {
@@ -150,6 +151,7 @@ const mapResponse = (
     sortConfig,
     loading,
     error,
+    isFilterActive
   } = useTableData<
     IPropertyOwnerShipGetApi,
     IPropertyOwnerShipPostApi, 
@@ -331,7 +333,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && !paginatedData.length ? (
+          {loading && (isFilterActive || !paginatedData.length) ? (
             <div className="p-4 text-center text-gray-500 dark:text-gray-400">
               Đang tải...
             </div>

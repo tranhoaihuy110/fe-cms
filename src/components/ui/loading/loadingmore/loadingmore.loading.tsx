@@ -2,7 +2,7 @@ import React from "react";
 
 export const LoadingMore: React.FC = () => {
   return (
-    <div className="flex size-[25px] items-center justify-center" role="status">
+    <div className="flex size-[50px] items-center justify-center" role="status">
       <svg
         aria-hidden="true"
         className="size-8 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"

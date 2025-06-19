@@ -21,11 +21,11 @@ import { MenuIcon } from "lucide-react";
 
 const navItems: TNavItem[] = [
   {
-    name: "APP CONFIG",
+    name: "CONFIG",
     icon: <ConfigIcon />,
     subItems: [
       {
-        name: "App Config",
+        name: "App config",
         path: "/appconfig",
         pro: false,
         icon: <ListIcon />,
@@ -33,41 +33,41 @@ const navItems: TNavItem[] = [
     ],
   },
   {
-    name: "USERS",
+    name: "USER",
     icon: <AppUserIcon />,
     subItems: [
       {
-        name: "App User",
+        name: "App user",
         path: "/appuser",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "App User Pending",
+        name: "App user pending",
         path: "/appuserpending",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "User FCM Tokens",
+        name: "User fcm tokens",
         path: "/userfcmtokens",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "User Notifications",
+        name: "User notifications",
         path: "/usernotifications",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "User Profile URL Map",
+        name: "User profile url map",
         path: "/userprofileurlmap",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "User Behavior Log Table",
+        name: "User behavior log table",
         path: "/UserBehaviorLogTable",
         pro: false,
         icon: <ListIcon />,
@@ -75,65 +75,65 @@ const navItems: TNavItem[] = [
     ],
   },
   {
-    name: "LEADS",
+    name: "LEAD",
     icon: <LeadIcon />,
     subItems: [
       {
-        name: "Lead Tables",
+        name: "Lead tables",
         path: "/lead_tables",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "Leads Property Tables",
+        name: "Leads property tables",
         path: "/leads_property_table",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "Lead Activities",
+        name: "Lead activities",
         path: "/lead-activities",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "Lead Assignments",
+        name: "Lead assignments",
         path: "/LeadAssignmentTables",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "Lead Note",
+        name: "Lead note",
         path: "/LeadNotesTables",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "Lead Property Floors",
+        name: "Lead property floors",
         path: "/leadPropertyfloors",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "Leads Property Rooms",
+        name: "Leads property rooms",
         path: "/LeadsPropertyRoomsTables",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "Lead Sources",
+        name: "Lead sources",
         path: "/leadsourcestable",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "Leads Refer Partner",
+        name: "Leads refer partner",
         path: "/leadsReferPartnerTables",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "Leads Refer Partner Activity",
+        name: "Leads refer partner activity",
         path: "/leadsReferPartnerActivity",
         pro: false,
         icon: <ListIcon />,
@@ -145,25 +145,25 @@ const navItems: TNavItem[] = [
     icon: <FAQIcon />,
     subItems: [
       {
-        name: "Common Branch Postcode",
+        name: "Common branch postcode",
         path: "/commonbranchpostcode",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "Common FAQ",
+        name: "Common faq",
         path: "/commonfaq",
         pro: false,
         icon: <FAQIcon />,
       },
       {
-        name: "Common Metadata",
+        name: "Common metadata",
         path: "/commonmetadata",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "Common Metadata Final",
+        name: "Common metadata final",
         path: "/common_metadata_final",
         pro: false,
         icon: <ListIcon />,
@@ -175,19 +175,19 @@ const navItems: TNavItem[] = [
     icon: <DataIcon />,
     subItems: [
       {
-        name: "Category Tables",
+        name: "Category tables",
         path: "/category-tables",
         pro: false,
         icon: <CateIcon />,
       },
       {
-        name: "Partner Tables",
+        name: "Partner tables",
         path: "/partner-tables",
         pro: false,
         icon: <PartnerIcon />,
       },
       {
-        name: "Service Tables",
+        name: "Service tables",
         path: "/service-tables",
         pro: false,
         icon: <SerIcon />,
@@ -199,25 +199,25 @@ const navItems: TNavItem[] = [
     icon: <DataIcon />,
     subItems: [
       {
-        name: "Campaign Master",
+        name: "Campaign master",
         path: "/CampaignMaster",
         pro: false,
         icon: <CateIcon />,
       },
       {
-        name: "Campaign Email Template Tables",
+        name: "Campaign email template tables",
         path: "/CampaignEmailTemplateTables",
         pro: false,
         icon: <CateIcon />,
       },
       {
-        name: "Campaign Master Participant Blacklists",
+        name: "Campaign master participant blacklists",
         path: "/CampaignMasterParticipantBlacklists",
         pro: false,
         icon: <CateIcon />,
       },
-        {
-        name: "Campaign Audience Master Table",
+      {
+        name: "Campaign audience master table",
         path: "/CampaignAudienceMasterTable",
         pro: false,
         icon: <CateIcon />,
@@ -228,17 +228,77 @@ const navItems: TNavItem[] = [
 
 const othersItems: TNavItem[] = [
   {
-    name: "OTHERS",
+    name: "MART",
     icon: <MenuIcon />,
     subItems: [
       {
-        name: "API Logs",
+        name: "Mart potential lead",
+        path: "/martpotentiallead",
+        pro: false,
+        icon: <ListIcon />,
+      },
+      {
+        name: "Mart potential lead order",
+        path: "/mart-potential-lead-orders",
+        pro: false,
+        icon: <ListIcon />,
+      },
+    ],
+  },
+  {
+    name: "POTENTIAL",
+    icon: <MenuIcon />,
+    subItems: [
+      {
+        name: "Potential lead action",
+        path: "/potentialLeadActionTable",
+        pro: false,
+        icon: <ListIcon />,
+      },
+      {
+        name: "Potential lead history search",
+        path: "/userPotentialLeadHistorySearch",
+        pro: false,
+        icon: <ListIcon />,
+      },
+    ],
+  },
+  {
+    name: "PROPERTY",
+    icon: <MenuIcon />,
+    subItems: [
+      {
+        name: "Property room table",
+        path: "/PropertyRoomTable",
+        pro: false,
+        icon: <ListIcon />,
+      },
+      {
+        name: "Properties",
+        path: "/properties",
+        pro: false,
+        icon: <ListIcon />,
+      },
+      {
+        name: "Property floors table",
+        path: "/PropertyFloorsTable",
+        pro: false,
+        icon: <ListIcon />,
+      },
+    ],
+  },
+  {
+    name: "OTHER",
+    icon: <MenuIcon />,
+    subItems: [
+      {
+        name: "Api logs",
         path: "/apilogs",
         pro: false,
         icon: <LogIcon />,
       },
       {
-        name: "Entity File Mapping",
+        name: "Entity file mapping",
         path: "/entityfilemapping",
         pro: false,
         icon: <ListIcon />,
@@ -250,56 +310,14 @@ const othersItems: TNavItem[] = [
         icon: <ListIcon />,
       },
       {
-        name: "Properties",
-        path: "/properties",
-        pro: false,
-        icon: <ListIcon />,
-      },
-      {
-        name: "Property Floors Table",
-        path: "/PropertyFloorsTable",
-        pro: false,
-        icon: <ListIcon />,
-      },
-      {
         name: "Rentals",
         path: "/rental",
         pro: false,
         icon: <ListIcon />,
       },
       {
-        name: "SF Mart Leads",
+        name: "Sf mart leads",
         path: "/sfmartleads",
-        pro: false,
-        icon: <ListIcon />,
-      },
-      {
-        name: "Mart Potential Lead",
-        path: "/martpotentiallead",
-        pro: false,
-        icon: <ListIcon />,
-      },
-      {
-        name: "Mart Potential Lead Order",
-        path: "/mart-potential-lead-orders",
-        pro: false,
-        icon: <ListIcon />,
-      },
-      {
-        name: "Potential Lead Action",
-        path: "/potentialLeadActionTable",
-        pro: false,
-        icon: <ListIcon />,
-      },
-      {
-        name: "Potential Lead History Search",
-        path: "/userPotentialLeadHistorySearch",
-        pro: false,
-        icon: <ListIcon />,
-      },
-      {
-        name: "Property Room Table",
-        path: "/PropertyRoomTable",
         pro: false,
         icon: <ListIcon />,
       },

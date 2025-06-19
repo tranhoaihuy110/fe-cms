@@ -47,7 +47,7 @@ export const FilterSection: React.FC<IFilterSectionProps> = ({
         >
 
           {!hideDateFilter && (
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 z-60">
               <DatePicker
                 selected={startDate}
                 onChange={setStartDate}
