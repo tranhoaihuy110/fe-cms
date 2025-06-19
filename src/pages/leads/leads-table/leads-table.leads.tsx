@@ -43,7 +43,7 @@ export const LeadTable: React.FC<ILeadTableProps> = (props) => {
     { key: "lead_id", label: "Lead ID", type: "text" },
     { key: "email", label: "Email", type: "text" },
     { key: "phone_number", label: "Phone Number", type: "text" },
-    { key: "last_name", label: "Last Name", type: "text" }, 
+    { key: "last_name", label: "Last Name", type: "text" },
   ];
 
   const fieldMapping = {
@@ -56,7 +56,7 @@ export const LeadTable: React.FC<ILeadTableProps> = (props) => {
   const mapToForm = (data: ILeadsGetApi): ILeadsGetApi => ({
     lead_id: data.lead_id || "",
     first_name: data.first_name || null,
-    last_name: data.last_name || null, 
+    last_name: data.last_name || null,
     email: data.email || null,
     phone_number: data.phone_number || null,
     company_name: data.company_name || null,
@@ -73,7 +73,7 @@ export const LeadTable: React.FC<ILeadTableProps> = (props) => {
   const mapFromForm = (data: ILeadsGetApi): Partial<ILeadsGetApi> => ({
     lead_id: data.lead_id,
     first_name: data.first_name,
-    last_name: data.last_name, 
+    last_name: data.last_name,
     email: data.email,
     phone_number: data.phone_number,
     company_name: data.company_name,
@@ -85,7 +85,7 @@ export const LeadTable: React.FC<ILeadTableProps> = (props) => {
     salesforce_lead_id: data.salesforce_lead_id,
   });
 
-const mapResponse = (
+  const mapResponse = (
     response: any
   ): { data: ILeadsGetApi[]; total?: number } => {
     if (!response || !response.data) {
@@ -101,7 +101,7 @@ const mapResponse = (
     currentPage,
     setCurrentPage,
     itemsPerPage,
-    
+
     itemsPerPageOptions,
     isModalOpen,
     modalMode,
@@ -111,9 +111,9 @@ const mapResponse = (
     filters,
     setFilter,
     startDate,
-    
+
     endDate,
-    
+
     timeFilter,
     handleTimeFilter,
     handleItemsPerPageChange,
@@ -171,7 +171,7 @@ const mapResponse = (
         page,
         size,
         lead_id: lead_id,
-        sort: "created_at,desc"
+        sort: "created_at,desc",
       });
       console.log("getLeadsApi response:", response);
       return response;
@@ -332,11 +332,7 @@ const mapResponse = (
         />
 
         <div className="max-w-full overflow-x-auto">
-          {loading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 dark:bg-gray-900/50 z-10">
-              <LoadingMore />
-            </div>
-          ) : error ? (
+          {error ? (
             <div className="p-4 text-center text-red-500 dark:text-red-400">
               {error}
             </div>
@@ -354,6 +350,11 @@ const mapResponse = (
               sortConfig={sortConfig}
               handleSort={handleSort}
             />
+          )}
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 dark:bg-gray-900/50 z-10">
+              <LoadingMore />
+            </div>
           )}
         </div>
 
