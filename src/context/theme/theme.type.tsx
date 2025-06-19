@@ -1,4 +1,4 @@
-export type TTheme = "light" | "dark";
+export type TTheme =  "dark"| "light";
 
 export type TThemeContextType = {
   theme: TTheme;
