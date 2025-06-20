@@ -321,7 +321,6 @@ export const LeadPropertyFormModal: React.FC<ILeadsPropertyFormModalProps> = ({
         fetchLeadPropertyDetails();
       } else if (isOpen && mode === "add") {
         const defaultFormData = {
-
           lead_id: 0,
           lead_property_type: "",
           email: "",
@@ -472,7 +471,7 @@ export const LeadPropertyFormModal: React.FC<ILeadsPropertyFormModalProps> = ({
       required: true,
       placeholder: "Enter email",
       disabled: mode === "detail",
-      value: formData.email ,
+      value: formData.email,
       onChange: (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
       ) => {
@@ -797,7 +796,7 @@ export const LeadPropertyFormModal: React.FC<ILeadsPropertyFormModalProps> = ({
       onSubmit={async (data) => {
         if (mode !== "detail") {
           console.log("Submitting data:", data);
-          
+
           const email = data.email || "";
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailRegex.test(email)) {
@@ -805,7 +804,6 @@ export const LeadPropertyFormModal: React.FC<ILeadsPropertyFormModalProps> = ({
             throw new Error("Invalid email");
           }
 
-          
           const leadId = Number(data.lead_id) || 0;
           if (!leadId) {
             toast.error("Lead ID must be a valid number greater than 0.");

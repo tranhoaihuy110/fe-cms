@@ -268,8 +268,8 @@ export const LeadsourcesTable: React.FC<ILeadsourcesTableProps> = (props) => {
           handleSearch={handleSearch}
           handleReset={handleReset}
           openAddModal={openAddModal}
-          firstSearchLabel="Search by source_id"
-          secondSearchLabel="Search by source name"
+          firstSearchLabel="Search by Source Id"
+          secondSearchLabel="Search by Source Name"
           idSearchType="text"
           hidePhoneEmail={true}
           hideDateFilter={true}

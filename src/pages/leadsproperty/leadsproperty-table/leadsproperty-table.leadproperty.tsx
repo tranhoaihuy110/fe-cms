@@ -1,4 +1,5 @@
 import React from "react";
+import { StatusButton } from "../../../index";
 import {
   FilterSection,
   PaginationSection,
@@ -447,8 +448,25 @@ export const LeadPropertyTable: React.FC<ILeadPropertyTableProps> = (props) => {
     {
       key: "json_metadata" as keyof ILeadsPropertyGetApi,
       header: "Metadata",
-      render: (item: ILeadsPropertyGetApi) =>
-        item.json_metadata ? JSON.stringify(item.json_metadata) : "",
+      render: (item: ILeadsPropertyGetApi) => {
+        const maxLength = 80;
+        let displayString = "";
+        if (typeof item.json_metadata === "string") {
+          displayString = item.json_metadata;
+        } else if (
+          item.json_metadata &&
+          typeof item.json_metadata === "object"
+        ) {
+          displayString = JSON.stringify(item.json_metadata);
+        } else {
+          displayString = "";
+        }
+        const displayOutput =
+          displayString.length > maxLength
+            ? displayString.substring(0, maxLength) + "..."
+            : displayString;
+        return <div>{displayOutput}</div>;
+      },
     },
     {
       key: "lead_property_note" as keyof ILeadsPropertyGetApi,
@@ -457,8 +475,22 @@ export const LeadPropertyTable: React.FC<ILeadPropertyTableProps> = (props) => {
     {
       key: "json_address" as keyof ILeadsPropertyGetApi,
       header: "JSON Address",
-      render: (item: ILeadsPropertyGetApi) =>
-        item.json_address ? JSON.stringify(item.json_address) : "",
+      render: (item: ILeadsPropertyGetApi) => {
+        const maxLength = 80;
+        let displayString = "";
+        if (typeof item.json_address === "string") {
+          displayString = item.json_address;
+        } else if (item.json_address && typeof item.json_address === "object") {
+          displayString = JSON.stringify(item.json_address);
+        } else {
+          displayString = "";
+        }
+        const displayOutput =
+          displayString.length > maxLength
+            ? displayString.substring(0, maxLength) + "..."
+            : displayString;
+        return <div>{displayOutput}</div>;
+      },
     },
     {
       key: "property_id" as keyof ILeadsPropertyGetApi,
@@ -535,6 +567,24 @@ export const LeadPropertyTable: React.FC<ILeadPropertyTableProps> = (props) => {
     {
       key: "lead_property_status" as keyof ILeadsPropertyGetApi,
       header: "Property Status",
+      render: (item: ILeadsPropertyGetApi) => {
+        const statuses = Array.isArray(item.lead_property_status)
+          ? item.lead_property_status
+          : item.lead_property_status
+          ? [item.lead_property_status]
+          : ["unknown"];
+        const customStyles: Record<string, string> = {
+          new: "bg-green-600 text-white",
+          pending: "bg-yellow-600 text-black",
+        };
+        return (
+          <StatusButton
+            statuses={statuses}
+            customStyles={customStyles}
+            className="mr-1"
+          />
+        );
+      },
     },
     {
       key: "lead_property_sf_id" as keyof ILeadsPropertyGetApi,
@@ -543,6 +593,24 @@ export const LeadPropertyTable: React.FC<ILeadPropertyTableProps> = (props) => {
     {
       key: "location_status" as keyof ILeadsPropertyGetApi,
       header: "Location Status",
+      render: (item: ILeadsPropertyGetApi) => {
+        const statuses = Array.isArray(item.location_status)
+          ? item.location_status
+          : item.location_status
+          ? [item.location_status]
+          : ["unknown"];
+        const customStyles: Record<string, string> = {
+          confirmed: "bg-green-600 text-white",
+          pending_confirmation: "bg-red-600 text-black",
+        };
+        return (
+          <StatusButton
+            statuses={statuses}
+            customStyles={customStyles}
+            className="mr-1"
+          />
+        );
+      },
     },
     {
       key: "actions" as keyof ILeadsPropertyGetApi,
