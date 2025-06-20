@@ -339,11 +339,12 @@ export const LeadPropertyFloorsTable: React.FC<
               sortConfig={sortConfig}
               handleSort={handleSort}
             />
-          )}{loading && (
+          )}
+          {loading && (
             <div className="absolute inset-0 flex items-center justify-center bg-gray-100/50 dark:bg-gray-900/50 z-10">
               <LoadingMore />
             </div>
-          ) }
+          )}
         </div>
 
         <PaginationSection

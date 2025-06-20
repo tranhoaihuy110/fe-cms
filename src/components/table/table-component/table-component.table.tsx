@@ -1,21 +1,18 @@
-import { Table, TableBody } from "../../index";
+import { Table, TableBody, TableCell, TableRow } from "../../index";
 import { TableHeader } from "../table-header/table-header.table";
-import { TableRowComponent } from "../table-row-component/table-row-component.table";
 import { ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react";
-
 import { ITableComponentProps } from "./index";
+import { ActionButtons } from "../action-buttons/action-buttons.table";
 
 export const TableComponent = <T,>({
   data,
   columns,
   onEdit,
   onDelete,
-  onDetail,
   sortConfig,
   handleSort,
   hideEdit = false,
   hideDelete = false,
-  hideDetail = false,
 }: ITableComponentProps<T>) => {
   const renderSortIcon = (key: keyof T) => {
     if (sortConfig.key === key) {
@@ -29,27 +26,47 @@ export const TableComponent = <T,>({
   };
 
   return (
-    <Table>
-      <TableHeader
-        columns={columns}
-        onSort={handleSort}
-        renderSortIcon={renderSortIcon}
-      />
-      <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-        {data.map((item, index) => (
-          <TableRowComponent
-            key={index}
-            item={item}
-            columns={columns}
-            onEdit={onEdit}
-            onDelete={onDelete}
-            onDetail={onDetail}
-            hideEdit={hideEdit}
-            hideDelete={hideDelete}
-            hideDetail={hideDetail}
-          />
-        ))}
-      </TableBody>
-    </Table>
+    <div className="overflow-x-auto w-full">
+      <Table className="min-w-full">
+        <TableHeader
+          columns={columns}
+          onSort={handleSort}
+          renderSortIcon={renderSortIcon}
+        />
+        <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
+          {data.map((item, index) => (
+            <TableRow key={index}>
+              {columns.map((column, colIndex) => {
+                const isActionsColumn = column.key === "actions";
+                return (
+                  <TableCell
+                    key={colIndex}
+                    className={`px-5 py-3 text-theme-sm text-gray-700 dark:text-gray-300 whitespace-nowrap  ${
+                      isActionsColumn
+                        ? "sticky right-0 bg-white dark:bg-gray-900 z-10 min-w-[100px] "
+                        : ""
+                    }`}
+                  >
+                    {isActionsColumn ? (
+                      <ActionButtons
+                        item={item}
+                        onEdit={onEdit}
+                        onDelete={onDelete}
+                        hideEdit={hideEdit}
+                        hideDelete={hideDelete}
+                      />
+                    ) : column.render ? (
+                      column.render(item)
+                    ) : (
+                      (item[column.key] as string | number | undefined) || ""
+                    )}
+                  </TableCell>
+                );
+              })}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 };

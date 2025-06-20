@@ -12,14 +12,13 @@ export const TableRowComponent = <T,>({
   hideEdit = false,
   hideDelete = false,
   hideDetail = false,
-
 }: ITableRowComponentProps<T>) => {
   return (
     <TableRow>
       {columns.map((column) => (
         <TableCell
           key={String(column.key)}
-          className="px-5 py-3 text-theme-sm text-gray-700 dark:text-gray-300"
+          className="px-5 py-3 text-theme-sm text-gray-700 dark:text-gray-300 whitespace-nowrap"
         >
           {column.key === "actions" ? (
             <ActionButtons

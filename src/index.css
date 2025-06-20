@@ -784,5 +784,41 @@ span.flatpickr-weekday,
 
 .custom-toast-body {
   margin-top: 80px;
-  
+}
+.overflow-x-auto {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.min-w-full {
+  min-width: 100%;
+  table-layout: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.whitespace-nowrap {
+  white-space: nowrap; /* Ngăn văn bản xuống dòng */
+  overflow: hidden; /* Ẩn nội dung thừa */
+  text-overflow: ellipsis; /* Thêm dấu ... nếu nội dung dài */
+}
+.whitespace-header-nowrap {
+  white-space: nowrap; /* Ngăn văn bản xuống dòng */
+}
+.dark .overflow-x-auto::-webkit-scrollbar {
+  height: 10px; /* Chiều cao thanh cuộn */
+}
+
+.dark .overflow-x-auto::-webkit-scrollbar-track {
+  background: #3e7adb; /* Màu nền của thanh cuộn, phù hợp với theme dark */
+}
+.dark .overflow-x-auto::-webkit-scrollbar-thumb {
+  background-color: rgb(
+    221,
+    221,
+    67
+  ); /* Màu thanh cuộn, màu vàng nhạt như bạn yêu cầu */
+  border-radius: 4px; /* Bo góc thanh cuộn */
 }

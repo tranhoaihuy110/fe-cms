@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { CSSProperties } from "react";
 // Props for Table
 export interface ITableProps {
   children: ReactNode; // Table content (thead, tbody, etc.)
@@ -28,4 +29,5 @@ export interface ITableCellProps {
   children: ReactNode; // Cell content
   isHeader?: boolean; // If true, renders as <th>, otherwise <td>
   className?: string; // Optional className for styling
+  style?: CSSProperties;
 }

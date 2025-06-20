@@ -392,21 +392,162 @@ export const LeadPropertyTable: React.FC<ILeadPropertyTableProps> = (props) => {
       key: "lead_property_id" as keyof ILeadsPropertyGetApi,
       header: "Lead Property ID",
     },
-    { key: "email" as keyof ILeadsPropertyGetApi, header: "Email" },
-    { key: "address" as keyof ILeadsPropertyGetApi, header: "Address" },
+    {
+      key: "lead_id" as keyof ILeadsPropertyGetApi,
+      header: "Lead ID",
+    },
+    {
+      key: "lead_property_type" as keyof ILeadsPropertyGetApi,
+      header: "Lead Property Type",
+    },
+    {
+      key: "email" as keyof ILeadsPropertyGetApi,
+      header: "Email",
+    },
+    {
+      key: "location_elements" as keyof ILeadsPropertyGetApi,
+      header: "Location Elements",
+    },
+    {
+      key: "address" as keyof ILeadsPropertyGetApi,
+      header: "Address",
+    },
+    {
+      key: "full_address" as keyof ILeadsPropertyGetApi,
+      header: "Full Address",
+    },
+    {
+      key: "city" as keyof ILeadsPropertyGetApi,
+      header: "City",
+    },
+    {
+      key: "state" as keyof ILeadsPropertyGetApi,
+      header: "State",
+    },
+    {
+      key: "postal_code" as keyof ILeadsPropertyGetApi,
+      header: "Postal Code",
+    },
+    {
+      key: "country" as keyof ILeadsPropertyGetApi,
+      header: "Country",
+    },
     {
       key: "created_at" as keyof ILeadsPropertyGetApi,
       header: "Date Created",
       render: (item: ILeadsPropertyGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        item.created_at ? new Date(item.created_at).toLocaleString() : "",
     },
     {
       key: "updated_at" as keyof ILeadsPropertyGetApi,
       header: "Date Updated",
       render: (item: ILeadsPropertyGetApi) =>
-        new Date(item.updated_at || "").toLocaleString(),
+        item.updated_at ? new Date(item.updated_at).toLocaleString() : "",
     },
-    { key: "actions" as keyof ILeadsPropertyGetApi, header: "Actions" },
+    {
+      key: "json_metadata" as keyof ILeadsPropertyGetApi,
+      header: "Metadata",
+      render: (item: ILeadsPropertyGetApi) =>
+        item.json_metadata ? JSON.stringify(item.json_metadata) : "",
+    },
+    {
+      key: "lead_property_note" as keyof ILeadsPropertyGetApi,
+      header: "Property Note",
+    },
+    {
+      key: "json_address" as keyof ILeadsPropertyGetApi,
+      header: "JSON Address",
+      render: (item: ILeadsPropertyGetApi) =>
+        item.json_address ? JSON.stringify(item.json_address) : "",
+    },
+    {
+      key: "property_id" as keyof ILeadsPropertyGetApi,
+      header: "Property ID",
+    },
+    {
+      key: "longitude" as keyof ILeadsPropertyGetApi,
+      header: "Longitude",
+    },
+    {
+      key: "latitude" as keyof ILeadsPropertyGetApi,
+      header: "Latitude",
+    },
+    {
+      key: "ksplat_urls" as keyof ILeadsPropertyGetApi,
+      header: "KSplat URLs",
+      render: (item: ILeadsPropertyGetApi) => {
+        const maxLength = 80;
+        let urlsString = "";
+
+        if (Array.isArray(item.ksplat_urls)) {
+          urlsString = item.ksplat_urls
+            .map((u) => (u && typeof u === "object" && "url" in u ? u.url : ""))
+            .filter((url) => url)
+            .join(", ");
+        } else if (typeof item.ksplat_urls === "string") {
+          urlsString = item.ksplat_urls;
+        } else {
+          urlsString = "";
+        }
+
+        const displayValue =
+          urlsString.length > maxLength
+            ? urlsString.substring(0, maxLength) + "..."
+            : urlsString;
+
+        return <div>{displayValue}</div>;
+      },
+    },
+    {
+      key: "captured_video_urls" as keyof ILeadsPropertyGetApi,
+      header: "Captured Video URLs",
+      render: (item: ILeadsPropertyGetApi) => {
+        const maxLength = 80;
+        let urlsString = "";
+
+        if (Array.isArray(item.captured_video_urls)) {
+          urlsString = item.captured_video_urls
+            .map((u) => (u && typeof u === "object" && "url" in u ? u.url : ""))
+            .filter((url) => url)
+            .join(", ");
+        } else if (typeof item.captured_video_urls === "string") {
+          urlsString = item.captured_video_urls;
+        } else {
+          urlsString = "";
+        }
+
+        const displayValue =
+          urlsString.length > maxLength
+            ? urlsString.substring(0, maxLength) + "..."
+            : urlsString;
+
+        return <div>{displayValue}</div>;
+      },
+    },
+    {
+      key: "3d_outside_status" as keyof ILeadsPropertyGetApi,
+      header: "3D Outside Status",
+    },
+    {
+      key: "lead_property_stage" as keyof ILeadsPropertyGetApi,
+      header: "Property Stage",
+    },
+    {
+      key: "lead_property_status" as keyof ILeadsPropertyGetApi,
+      header: "Property Status",
+    },
+    {
+      key: "lead_property_sf_id" as keyof ILeadsPropertyGetApi,
+      header: "Salesforce ID",
+    },
+    {
+      key: "location_status" as keyof ILeadsPropertyGetApi,
+      header: "Location Status",
+    },
+    {
+      key: "actions" as keyof ILeadsPropertyGetApi,
+      header: "Actions",
+    },
   ];
 
   return (
