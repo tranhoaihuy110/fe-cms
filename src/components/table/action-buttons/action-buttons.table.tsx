@@ -10,11 +10,11 @@ export const ActionButtons = <T,>({
   hideDelete = false,
 }: IActionButtonsProps<T>) => {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center justify-center space-x-1">
       {onEdit && !hideEdit && (
         <button
           onClick={() => onEdit(item)}
-          className="text-blue-500 hover:text-blue-700"
+          className="text-blue-500 hover:text-blue-700 p-1 rounded-full"
           aria-label="Sửa"
         >
           <Pencil size={16} />
@@ -23,7 +23,7 @@ export const ActionButtons = <T,>({
       {onDelete && !hideDelete && (
         <button
           onClick={() => onDelete(item)}
-          className="text-red-500 hover:text-red-700"
+          className="text-red-500 hover:text-red-700 p-1 rounded-full"
           aria-label="Xóa"
         >
           <Trash2 size={16} />

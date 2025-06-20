@@ -33,7 +33,7 @@ export const FilterSection: React.FC<IFilterSectionProps> = ({
   secondSearchLabel = "Search by Email",
   fourthSearchLabel = "Search by Phone Number",
   thirdSearchLabel = "Search by UserName",
-  hideDateFilter = false, 
+  hideDateFilter = false,
 }) => {
   return (
     <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
@@ -45,9 +45,8 @@ export const FilterSection: React.FC<IFilterSectionProps> = ({
               : "flex flex-wrap items-center gap-2"
           }`}
         >
-
           {!hideDateFilter && (
-            <div className="flex flex-wrap items-center gap-2 z-60">
+            <div className="flex flex-wrap items-center gap-2">
               <DatePicker
                 selected={startDate}
                 onChange={setStartDate}

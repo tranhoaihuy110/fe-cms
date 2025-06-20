@@ -1,4 +1,5 @@
 import React from "react";
+import { StatusButton } from "../../../index";
 import {
   FilterSection,
   PaginationSection,
@@ -338,7 +339,39 @@ export const AppUserTable: React.FC<IAppUserTableProps> = (props) => {
     { key: "user_id" as keyof IAppUserGetApi, header: "User ID" },
     { key: "username" as keyof IAppUserGetApi, header: "Username" },
     { key: "user_email" as keyof IAppUserGetApi, header: "Email" },
+    { key: "user_firstname" as keyof IAppUserGetApi, header: "First Name" },
+    { key: "user_lastname" as keyof IAppUserGetApi, header: "Last Name" },
+    { key: "user_fullname" as keyof IAppUserGetApi, header: "Full Name" },
     { key: "phone_number" as keyof IAppUserGetApi, header: "Phone Number" },
+    { key: "user_gender" as keyof IAppUserGetApi, header: "Gender" },
+    { key: "user_avatar" as keyof IAppUserGetApi, header: "Avatar" },
+    { key: "date_of_birth" as keyof IAppUserGetApi, header: "Date of Birth" },
+    { key: "job" as keyof IAppUserGetApi, header: "Job" },
+    {
+      key: "user_status" as keyof IAppUserGetApi,
+      header: "Status",
+      render: (item: IAppUserGetApi) => {
+        const statuses = Array.isArray(item.user_status)
+          ? item.user_status.map((s) => s.toString())
+          : typeof item.user_status === "number"
+          ? [item.user_status]
+          : item.user_status
+          ? [item.user_status]
+          : [];
+        const customStyles: Record<string, string> = {
+          1: "bg-green-600 text-white",
+          0: "bg-yellow-600 text-black",
+          [-1]: "bg-gray-600 text-white",
+        };
+        return (
+          <StatusButton
+            statuses={statuses}
+            customStyles={customStyles}
+            className="mr-1"
+          />
+        );
+      },
+    },
     {
       key: "created_at" as keyof IAppUserGetApi,
       header: "Date Created",
@@ -351,6 +384,72 @@ export const AppUserTable: React.FC<IAppUserTableProps> = (props) => {
       render: (item: IAppUserGetApi) =>
         new Date(item.updated_at || "").toLocaleString(),
     },
+    { key: "group_id" as keyof IAppUserGetApi, header: "Group ID" },
+    { key: "user_session" as keyof IAppUserGetApi, header: "Session" },
+    { key: "parent_id" as keyof IAppUserGetApi, header: "Parent ID" },
+    { key: "province_id" as keyof IAppUserGetApi, header: "Province ID" },
+    { key: "district_id" as keyof IAppUserGetApi, header: "District ID" },
+    { key: "ward_id" as keyof IAppUserGetApi, header: "Ward ID" },
+    { key: "object_id" as keyof IAppUserGetApi, header: "Object ID" },
+    { key: "user_type" as keyof IAppUserGetApi, header: "User Type" },
+    { key: "department" as keyof IAppUserGetApi, header: "Department" },
+    {
+      key: "department_code" as keyof IAppUserGetApi,
+      header: "Department Code",
+    },
+    {
+      key: "language_session" as keyof IAppUserGetApi,
+      header: "Language Session",
+    },
+    { key: "rank" as keyof IAppUserGetApi, header: "Rank" },
+    { key: "company_name" as keyof IAppUserGetApi, header: "Company Name" },
+    {
+      key: "date_start_work" as keyof IAppUserGetApi,
+      header: "Start Work Date",
+    },
+    { key: "profession" as keyof IAppUserGetApi, header: "Profession" },
+    { key: "job_title" as keyof IAppUserGetApi, header: "Job Title" },
+    { key: "manager_email" as keyof IAppUserGetApi, header: "Manager Email" },
+    { key: "is_head" as keyof IAppUserGetApi, header: "Is Head" },
+    { key: "department_v2" as keyof IAppUserGetApi, header: "Department V2" },
+    {
+      key: "department_level2" as keyof IAppUserGetApi,
+      header: "Department Level 2",
+    },
+    { key: "test_mh" as keyof IAppUserGetApi, header: "Test MH" },
+    { key: "otp" as keyof IAppUserGetApi, header: "OTP" },
+    { key: "otp_expired_at" as keyof IAppUserGetApi, header: "OTP Expired At" },
+    {
+      key: "json_data" as keyof IAppUserGetApi,
+      header: "JSON Data",
+      render: (item: IAppUserGetApi) => {
+        const maxLength = 80;
+        let displayString = "";
+        if (typeof item.json_data === "string") {
+          displayString = item.json_data;
+        } else if (item.json_data && typeof item.json_data === "object") {
+          displayString = JSON.stringify(item.json_data);
+        } else {
+          displayString = "";
+        }
+        const displayOutput =
+          displayString.length > maxLength
+            ? displayString.substring(0, maxLength) + "..."
+            : displayString;
+        return <div>{displayOutput}</div>;
+      },
+    },
+    { key: "keycloak_id" as keyof IAppUserGetApi, header: "Keycloak ID" },
+    { key: "salesforce_id" as keyof IAppUserGetApi, header: "Salesforce ID" },
+    {
+      key: "salesforce_token" as keyof IAppUserGetApi,
+      header: "Salesforce Token",
+    },
+    { key: "expertise" as keyof IAppUserGetApi, header: "Expertise" },
+    { key: "fcm_token" as keyof IAppUserGetApi, header: "FCM Token" },
+    { key: "profile_url" as keyof IAppUserGetApi, header: "Profile URL" },
+    { key: "partner_code" as keyof IAppUserGetApi, header: "Partner Code" },
+    { key: "auth_provider" as keyof IAppUserGetApi, header: "Auth Provider" },
     { key: "actions" as keyof IAppUserGetApi, header: "Actions" },
   ];
 

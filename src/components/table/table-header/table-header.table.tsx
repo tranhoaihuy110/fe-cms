@@ -1,6 +1,6 @@
 import { TableCell, TableRow } from "../../index";
 
-import {ITableHeaderProps} from  "./index"
+import { ITableHeaderProps } from "./index";
 
 export const TableHeader = <T,>({
   columns,
@@ -14,10 +14,12 @@ export const TableHeader = <T,>({
           <TableCell
             key={String(column.key)}
             isHeader
-            className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400 whitespace-header-nowrap"
+            className={`px-2 py-2 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400 whitespace-nowrap ${
+              column.key === "actions" ? "text-center" : ""
+            }`}
           >
             {column.key === "actions" ? (
-              column.header
+              <span className="inline-block">{column.header}</span>
             ) : (
               <span
                 className="cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 flex items-center"

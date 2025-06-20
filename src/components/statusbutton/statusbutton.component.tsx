@@ -6,11 +6,13 @@ export const StatusButton: React.FC<StatusButtonProps> = ({
   className,
   customStyles,
 }) => {
-  const getDefaultStatusStyle = (status: string) => {
-    const lowerStatus = status.toLowerCase();
-    switch (lowerStatus) {
+  const getDefaultStatusStyle = (status: string | number) => {
+    const statusStr = status.toString().toLowerCase();
+    switch (statusStr) {
+      case "1":
       case "active":
         return "bg-green-500 text-white";
+      case "0":
       case "inactive":
         return "bg-gray-500 text-white";
       case "pending":
@@ -27,15 +29,20 @@ export const StatusButton: React.FC<StatusButtonProps> = ({
   return (
     <>
       {statuses.map((status, index) => {
+        const statusStr = String(status);
         const style =
-          customStyles?.[status.toLowerCase()] || getDefaultStatusStyle(status);
+          customStyles?.[status] ||
+          customStyles?.[statusStr.toLowerCase()] ||
+          getDefaultStatusStyle(statusStr);
         return (
           <button
             key={index}
             className={`px-3 py-1 rounded-full text-xs font-semibold focus:outline-none ${style} ${className}`}
             disabled
           >
-            {status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()}
+            {typeof status === "number"
+              ? status.toString()
+              : status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()}
           </button>
         );
       })}

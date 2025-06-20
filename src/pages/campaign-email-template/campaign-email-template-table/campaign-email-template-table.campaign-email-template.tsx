@@ -266,6 +266,18 @@ export const CampaignEmailTemplateTable: React.FC<
       header: "Email Subject",
     },
     {
+      key: "email_body" as keyof ICampaignEmailTemplateGetApi,
+      header: "Email Body",
+    },
+    {
+      key: "email_type" as keyof ICampaignEmailTemplateGetApi,
+      header: "Email Type",
+    },
+    {
+      key: "template_email_keys" as keyof ICampaignEmailTemplateGetApi,
+      header: "Template Email Keys",
+    },
+    {
       key: "user_create" as keyof ICampaignEmailTemplateGetApi,
       header: "User Create",
     },

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FormModal } from "../../../../index";
 import { toast } from "react-toastify";
-import {
-  IAppUserPendingGetApi,
-} from "../../../../models";
+import { IAppUserPendingGetApi } from "../../../../models";
 import { AppUserPendingFormModalProps } from "./index";
 import { IFormField } from "../../../../components";
 
@@ -66,7 +64,7 @@ export const AppUserPendingFormModal: React.FC<
         verify_code_expired: "",
         verify_status: "",
         otp: "",
-        json_data: {"":""},
+        json_data: { "": "" },
         otp_expired_at: "",
         job: "",
         expertise: "",
@@ -216,8 +214,8 @@ export const AppUserPendingFormModal: React.FC<
       placeholder: "Enter verify status",
       selectOptions: {
         options: [
-          { value: "0", label: "Complete" },
-          { value: "1", label: "Uncomplete" },
+          { value: 0, label: "Complete" },
+          { value: 1, label: "Uncomplete" },
         ],
       },
       rows: 6,
@@ -237,7 +235,7 @@ export const AppUserPendingFormModal: React.FC<
       type: "select" as const,
       required: true,
       placeholder: "Enter user type",
-       selectOptions: {
+      selectOptions: {
         options: [
           { value: "1", label: "Complete" },
           { value: "2", label: "Uncomplete" },

@@ -1,5 +1,5 @@
 export interface StatusButtonProps {
-  statuses: string[];
+  statuses: (string| number)[];
   className?: string;
-  customStyles?: Record<string, string>;
+  customStyles?: Record<string| number, string>;
 }

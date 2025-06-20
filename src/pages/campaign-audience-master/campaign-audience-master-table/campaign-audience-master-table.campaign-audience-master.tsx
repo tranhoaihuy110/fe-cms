@@ -4,7 +4,7 @@ import {
   PaginationSection,
   TableComponent,
 } from "../../../components/table";
-import { LoadingMore } from "../../../components";
+import { LoadingMore, StatusButton } from "../../../components";
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getCampaignAudienceMasterApi,
@@ -342,10 +342,34 @@ export const CampaignAudienceMasterTable: React.FC<
     {
       key: "status" as keyof ICampaignAudienceMasterGetApi,
       header: "Status",
+      render: (item: ICampaignAudienceMasterGetApi) => {
+        const statuses = Array.isArray(item.status)
+          ? item.status.map((s) => s.toString())
+          : typeof item.status === "number"
+          ? [item.status]
+          : item.status
+          ? [item.status.toString()]
+          : [];
+        const customStyles: Record<string, string> = {
+          "1": "bg-green-600 text-white",
+          "0": "bg-yellow-600 text-black",
+        };
+        return (
+          <StatusButton
+            statuses={statuses}
+            customStyles={customStyles}
+            className="mr-1"
+          />
+        );
+      },
     },
     {
       key: "mode" as keyof ICampaignAudienceMasterGetApi,
       header: "Mode",
+    },
+    {
+      key: "json_filter" as keyof ICampaignAudienceMasterGetApi,
+      header: "Json Filter",
     },
     {
       key: "fb_custom_audience_id" as keyof ICampaignAudienceMasterGetApi,

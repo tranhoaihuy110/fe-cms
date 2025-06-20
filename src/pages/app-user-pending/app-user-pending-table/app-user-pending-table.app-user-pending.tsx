@@ -4,7 +4,7 @@ import {
   PaginationSection,
   TableComponent,
 } from "../../../components/table";
-import { LoadingMore } from "../../../components";
+import { LoadingMore, StatusButton } from "../../../components";
 
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
@@ -309,8 +309,27 @@ export const AppUserPendingTable: React.FC<IAppUserPendingTableProps> = (
     { key: "user_id" as keyof IAppUserPendingGetApi, header: "USER ID" },
     { key: "username" as keyof IAppUserPendingGetApi, header: "Username" },
     {
+      key: "user_firstname" as keyof IAppUserPendingGetApi,
+      header: "User Firstname",
+    },
+    {
+      key: "user_lastname" as keyof IAppUserPendingGetApi,
+      header: "User Lastname",
+    },
+    { key: "user_password" as keyof IAppUserPendingGetApi, header: "Password" },
+    {
       key: "phone_number" as keyof IAppUserPendingGetApi,
       header: "Phone Number",
+    },
+    { key: "user_gender" as keyof IAppUserPendingGetApi, header: "Gender" },
+    { key: "user_email" as keyof IAppUserPendingGetApi, header: "Email" },
+    {
+      key: "date_of_birth" as keyof IAppUserPendingGetApi,
+      header: "Date of Birth",
+    },
+    {
+      key: "company_name" as keyof IAppUserPendingGetApi,
+      header: "Company Name",
     },
     {
       key: "created_at" as keyof IAppUserPendingGetApi,
@@ -319,15 +338,50 @@ export const AppUserPendingTable: React.FC<IAppUserPendingTableProps> = (
         new Date(item.created_at || "").toLocaleString(),
     },
     {
-      key: "verify_status" as keyof IAppUserPendingGetApi,
-      header: "Verify Status",
+      key: "verify_code" as keyof IAppUserPendingGetApi,
+      header: "Verify Code",
     },
     {
-      key: "user_lastname" as keyof IAppUserPendingGetApi,
-      header: "User Lastname",
+      key: "verify_code_expired" as keyof IAppUserPendingGetApi,
+      header: "Verify Code Expired",
     },
-    { key: "user_email" as keyof IAppUserPendingGetApi, header: "Email" },
-    { key: "actions" as keyof IAppUserPendingGetApi, header: "Actions" },
+    {
+      key: "verify_status" as keyof IAppUserPendingGetApi,
+      header: "Verify Status",
+      render: (item: IAppUserPendingGetApi) => {
+        const statuses = Array.isArray(item.verify_status)
+          ? item.verify_status.map((s) => s.toString())
+          : typeof item.verify_status === "number"
+          ? [item.verify_status]
+          : item.verify_status
+          ? [item.verify_status.toString()]
+          : [];
+        const customStyles: Record<string, string> = {
+          "1": "bg-green-600 text-white",
+          "0": "bg-yellow-600 text-black",
+        };
+        return (
+          <StatusButton
+            statuses={statuses}
+            customStyles={customStyles}
+            className="mr-1"
+          />
+        );
+      },
+    },
+    { key: "json_data" as keyof IAppUserPendingGetApi, header: "JSON Data" },
+    { key: "otp" as keyof IAppUserPendingGetApi, header: "OTP" },
+    {
+      key: "otp_expired_at" as keyof IAppUserPendingGetApi,
+      header: "OTP Expired At",
+    },
+    { key: "job" as keyof IAppUserPendingGetApi, header: "Job" },
+    { key: "expertise" as keyof IAppUserPendingGetApi, header: "Expertise" },
+    { key: "user_type" as keyof IAppUserPendingGetApi, header: "User Type" },
+    {
+      key: "actions" as keyof IAppUserPendingGetApi,
+      header: "Actions",
+    },
   ];
 
   return (

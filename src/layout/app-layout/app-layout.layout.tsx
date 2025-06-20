@@ -15,7 +15,7 @@ export const LayoutContent: React.FC = () => {
       </div>
       <div
         className={`flex-1 transition-all duration-300 ease-in-out ${
-          isExpanded || isHovered ? "lg:ml-[290px]" : "lg:ml-[90px]"
+          isExpanded || isHovered ? "lg:ml-[290px] z-50" : "lg:ml-[90px] z-50"
         } ${isMobileOpen ? "ml-0" : ""} overflow-x-hidden`}
       >
         <AppHeader />

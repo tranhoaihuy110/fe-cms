@@ -5,7 +5,8 @@ import {
   TableComponent,
 } from "../../../components/table";
 import { LoadingMore } from "../../../components";
-
+import { dayjs } from "../../../utils/dayjs";
+import { DEFAULT_TIMEZONE } from "../../../constants";
 import { FilterConfig, useTableData } from "../../../hooks/use-table-test";
 import {
   getAppConFigApi,
@@ -237,9 +238,12 @@ export const AppConfigTable: React.FC<IAppConfigTableProps> = (props) => {
       key: "updated_at" as keyof IAppConfigGetApi,
       header: "Date Updated",
       render: (item: IAppConfigGetApi) =>
-        new Date(item.updated_at || "").toLocaleString(),
+        dayjs(item.updated_at)
+          .tz(DEFAULT_TIMEZONE)
+          .format("HH:mm:ss YYYY-MM-DD"),
     },
     { key: "actions" as keyof IAppConfigGetApi, header: "Actions" },
+    
   ];
 
   return (
