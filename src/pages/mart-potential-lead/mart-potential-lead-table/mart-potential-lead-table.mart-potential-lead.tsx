@@ -19,6 +19,7 @@ import { IMartPotentialLeadGetApi,IMartPotentialLeadPatchApi } from "../../../mo
 import {
   DeleteMartPotentialLeadConfirmationModal,MartPotentialLeadFormModal
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const MartPotentialLeadTable: React.FC<IMartPotentialLeadTableProps> = (props) => {
   const { children = "" } = props;
@@ -301,13 +302,13 @@ const mapResponse = (
       key: "created_at" as keyof IMartPotentialLeadGetApi,
       header: "Date Created",
       render: (item: IMartPotentialLeadGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "updated_at" as keyof IMartPotentialLeadGetApi,
       header: "Date Updated",
       render: (item: IMartPotentialLeadGetApi) =>
-        new Date(item.updated_at || "").toLocaleString(),
+        dayjs(item.updated_at).format("HH:mm:ss DD-MM-YYYY"),
     },
 
     { key: "actions" as keyof IMartPotentialLeadGetApi, header: "Actions" },

@@ -20,6 +20,7 @@ import {
   DeleteEntityFileMappingConfirmationModal,
 } from "../index";
 import { IEntityFileMappingGetApi } from "../../../models";
+import { dayjs } from "../../../utils/dayjs";
 
 export const EntityFileMappingTable: React.FC<IEntityFileMappingTableProps> = (
   props
@@ -311,13 +312,13 @@ export const EntityFileMappingTable: React.FC<IEntityFileMappingTableProps> = (
       key: "created_at" as keyof IEntityFileMappingGetApi,
       header: "Created At",
       render: (item: IEntityFileMappingGetApi) =>
-        new Date(item.created_at).toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "updated_at" as keyof IEntityFileMappingGetApi,
       header: "Updated At",
       render: (item: IEntityFileMappingGetApi) =>
-        new Date(item.updated_at).toLocaleString(),
+        dayjs(item.updated_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "actions" as keyof IEntityFileMappingGetApi,

@@ -20,6 +20,7 @@ import {
   DeleteSfMartLeadsConfirmationModal,
   SfMartLeadsFormModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 export const SfMartLeadsTable: React.FC<ISfMartLeadsTableProps> = (props) => {
   const { children = "" } = props;
 
@@ -262,7 +263,7 @@ export const SfMartLeadsTable: React.FC<ISfMartLeadsTableProps> = (props) => {
       key: "created_at" as keyof ISfMartLeadsGetApi,
       header: "Date Created",
       render: (item: ISfMartLeadsGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
 
     { key: "actions" as keyof ISfMartLeadsGetApi, header: "Actions" },

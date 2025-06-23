@@ -20,6 +20,7 @@ import {
   CommonBranchPostcodeDetailModal,
   DeleteCommonBranchPostcodeConfirmationModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const CommonBranchPostcodeTable: React.FC<
   ICommonBranchPostcodeTableProps
@@ -274,7 +275,7 @@ export const CommonBranchPostcodeTable: React.FC<
       key: "created_at" as keyof ICommonBranchPostcodeGetApi,
       header: "Date Created",
       render: (item: ICommonBranchPostcodeGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "actions" as keyof ICommonBranchPostcodeGetApi, header: "Actions" },
   ];

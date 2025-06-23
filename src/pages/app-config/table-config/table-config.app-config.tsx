@@ -212,7 +212,7 @@ export const AppConfigTable: React.FC<IAppConfigTableProps> = (props) => {
 
   const handleClearSearchKey = () => handleClearFilter("key");
   const handleClearSearchValue = () => handleClearFilter("value");
-
+  console.log("DEFAULT_TIMEZONE:", DEFAULT_TIMEZONE);
   const columns = [
     { key: "key" as keyof IAppConfigGetApi, header: "Key" },
     {
@@ -232,18 +232,15 @@ export const AppConfigTable: React.FC<IAppConfigTableProps> = (props) => {
       key: "created_at" as keyof IAppConfigGetApi,
       header: "Date Created",
       render: (item: IAppConfigGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "updated_at" as keyof IAppConfigGetApi,
       header: "Date Updated",
       render: (item: IAppConfigGetApi) =>
-        dayjs(item.updated_at)
-          .tz(DEFAULT_TIMEZONE)
-          .format("HH:mm:ss YYYY-MM-DD"),
+        dayjs(item.updated_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "actions" as keyof IAppConfigGetApi, header: "Actions" },
-    
   ];
 
   return (

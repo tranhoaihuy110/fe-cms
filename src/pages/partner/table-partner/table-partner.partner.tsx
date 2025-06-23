@@ -20,6 +20,7 @@ import {
 import { IPartnerTableProps } from "./table-partner.type";
 import { IMetaDataApi } from "../../../models";
 import { PartnerConfirmationModal, PartnerFormModal } from "../partner-modal";
+import { dayjs } from "../../../utils/dayjs";
 
 export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
   const { children = "" } = props;
@@ -286,7 +287,7 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
       key: "create_at" as keyof IMetaDataApi,
       header: "Date Create",
       render: (item: IMetaDataApi) =>
-        new Date(item.create_at || "").toLocaleString(),
+        dayjs(item.create_at ).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "actions" as keyof IMetaDataApi, header: "Actions" },
   ];

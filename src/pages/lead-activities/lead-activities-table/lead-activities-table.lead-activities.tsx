@@ -21,6 +21,7 @@ import {
 } from "../index";
 
 import { ILeadActivitiesTableProps } from "./index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const LeadActivityTable: React.FC<ILeadActivitiesTableProps> = (
   props
@@ -279,7 +280,7 @@ export const LeadActivityTable: React.FC<ILeadActivitiesTableProps> = (
       key: "activity_date" as keyof ILeadActivityGetApi,
       header: "Activity Date",
       render: (item: ILeadActivityGetApi) =>
-        new Date(item.activity_date || "").toLocaleString(),
+        dayjs(item.activity_date ).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "actions" as keyof ILeadActivityGetApi, header: "Actions" },
   ];

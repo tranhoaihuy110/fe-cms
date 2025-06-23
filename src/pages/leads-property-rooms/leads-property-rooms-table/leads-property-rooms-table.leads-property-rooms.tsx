@@ -22,6 +22,7 @@ import {
   LeadsPropertyRoomsFormModal,
   DeleteLeadsPropertyRoomsConfirmationModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const LeadsPropertyRoomsTable: React.FC<
   ILeadsPropertyRoomsTableProps
@@ -295,7 +296,7 @@ export const LeadsPropertyRoomsTable: React.FC<
       key: "created_at" as keyof ILeadsPropertyRoomsGetApi,
       header: "Created At",
       render: (item: ILeadsPropertyRoomsGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "actions" as keyof ILeadsPropertyRoomsGetApi,

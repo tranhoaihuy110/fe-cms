@@ -23,6 +23,7 @@ import {
   DeleteMartPotentialLeadOrderConfirmationModal,
   MartPotentialLeadOrderFormModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const MartPotentialLeadOrderTable: React.FC<
   IMartPotentialLeadOrderTableProps
@@ -278,13 +279,13 @@ export const MartPotentialLeadOrderTable: React.FC<
       key: "created_at" as keyof IMartPotentialLeadOrderGetApi,
       header: "Date Created",
       render: (item: IMartPotentialLeadOrderGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "updated_at" as keyof IMartPotentialLeadOrderGetApi,
       header: "Date Updated",
       render: (item: IMartPotentialLeadOrderGetApi) =>
-        new Date(item.updated_at || "").toLocaleString(),
+        dayjs(item.updated_at).format("HH:mm:ss DD-MM-YYYY"),
     },
 
     {

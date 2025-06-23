@@ -21,6 +21,7 @@ import {
   LeadPropertyFloorsFormModal,
   DeleteLeadPropertyFloorsConfirmationModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const LeadPropertyFloorsTable: React.FC<
   ILeadPropertyFloorsTableProps
@@ -273,7 +274,7 @@ export const LeadPropertyFloorsTable: React.FC<
       key: "created_at" as keyof ILeadPropertyFloorsGetApi,
       header: "Created At",
       render: (item: ILeadPropertyFloorsGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "actions" as keyof ILeadPropertyFloorsGetApi,

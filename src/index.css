@@ -807,18 +807,23 @@ table {
 .whitespace-header-nowrap {
   white-space: nowrap; /* Ngăn văn bản xuống dòng */
 }
-.dark .overflow-x-auto::-webkit-scrollbar {
-  height: 10px; /* Chiều cao thanh cuộn */
+
+::-webkit-scrollbar {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  bottom: 2px;
+  top: 2px;
 }
 
-.dark .overflow-x-auto::-webkit-scrollbar-track {
-  background: #3e7adb; /* Màu nền của thanh cuộn, phù hợp với theme dark */
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  height: 59px;
+  display: block;
+  border-radius: inherit;
+  border-radius: 3px;
 }
-.dark .overflow-x-auto::-webkit-scrollbar-thumb {
-  background-color: rgb(
-    221,
-    221,
-    67
-  ); /* Màu thanh cuộn, màu vàng nhạt như bạn yêu cầu */
-  border-radius: 4px; /* Bo góc thanh cuộn */
+
+::-webkit-scrollbar-track {
+  background: transparent;
 }

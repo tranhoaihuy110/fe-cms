@@ -1,18 +1,29 @@
 import { useState } from "react";
 import { DropdownItem, Dropdown } from "../../ui/index";
-import { Link } from "react-router";
-import { useNavigate } from "react-router";
+import { Link } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
+import { LoadingSpinner } from "../../ui/index"; 
 
 export const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); 
   const navigate = useNavigate();
 
-  const handleSignOut = () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
-    localStorage.removeItem("email");
-    localStorage.removeItem("username");
-    navigate("/");
+  const handleSignOut = async () => {
+    setIsLoading(true); 
+    try {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("email");
+      localStorage.removeItem("username");
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      navigate("/");
+    } catch (error) {
+      console.error("Sign out failed:", error);
+    } finally {
+      setIsLoading(false); 
+    }
   };
 
   function toggleDropdown() {
@@ -22,8 +33,10 @@ export const UserDropdown = () => {
   function closeDropdown() {
     setIsOpen(false);
   }
+
   const username = localStorage.getItem("username") || "Guest";
   const email = localStorage.getItem("email") || "No email";
+
   return (
     <div className="relative">
       <button
@@ -62,6 +75,12 @@ export const UserDropdown = () => {
           />
         </svg>
       </button>
+
+      {isLoading && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-100/50 dark:bg-gray-900/50">
+          <LoadingSpinner className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg shadow-lg" />
+        </div>
+      )}
 
       <Dropdown
         isOpen={isOpen}

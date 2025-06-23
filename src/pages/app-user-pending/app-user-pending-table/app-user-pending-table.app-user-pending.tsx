@@ -21,6 +21,7 @@ import {
   DeleteAppUserPendingConfirmationModal,
   AppUserPendingFormModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const AppUserPendingTable: React.FC<IAppUserPendingTableProps> = (
   props
@@ -335,7 +336,7 @@ export const AppUserPendingTable: React.FC<IAppUserPendingTableProps> = (
       key: "created_at" as keyof IAppUserPendingGetApi,
       header: "Date Created",
       render: (item: IAppUserPendingGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "verify_code" as keyof IAppUserPendingGetApi,

@@ -17,6 +17,7 @@ import {
 import { IRentalsTableProps } from "./index";
 import { IRentalsGetApi, IRentalsPatchApi } from "../../../models";
 import { DeleteRentalsConfirmationModal, RentalsFormModal } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const RentalsTable: React.FC<IRentalsTableProps> = (props) => {
   const { children = "" } = props;
@@ -255,7 +256,7 @@ export const RentalsTable: React.FC<IRentalsTableProps> = (props) => {
       key: "created_at" as keyof IRentalsGetApi,
       header: "Date Created",
       render: (item: IRentalsGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
 
     { key: "actions" as keyof IRentalsGetApi, header: "Actions" },

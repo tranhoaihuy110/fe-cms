@@ -17,6 +17,7 @@ import {
 import { IAppUserTableProps } from "./index";
 import { IAppUserGetApi } from "../../../models";
 import { AppUserFormModal, DeleteAppUserConfirmationModal } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const AppUserTable: React.FC<IAppUserTableProps> = (props) => {
   const { children = "" } = props;
@@ -376,13 +377,13 @@ export const AppUserTable: React.FC<IAppUserTableProps> = (props) => {
       key: "created_at" as keyof IAppUserGetApi,
       header: "Date Created",
       render: (item: IAppUserGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "updated_at" as keyof IAppUserGetApi,
       header: "Date Updated",
       render: (item: IAppUserGetApi) =>
-        new Date(item.updated_at || "").toLocaleString(),
+        dayjs(item.updated_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "group_id" as keyof IAppUserGetApi, header: "Group ID" },
     { key: "user_session" as keyof IAppUserGetApi, header: "Session" },

@@ -25,6 +25,7 @@ import {
 } from "../index";
 
 import { ICommonMetadataFinalTableProps } from "./index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const CommonMetadataFinalTable: React.FC<
   ICommonMetadataFinalTableProps
@@ -290,7 +291,7 @@ export const CommonMetadataFinalTable: React.FC<
       key: "created_at" as keyof ICommonMetadataFinalGetApi,
       header: "Date Created",
       render: (item: ICommonMetadataFinalGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "actions" as keyof ICommonMetadataFinalGetApi, header: "Actions" },
   ];

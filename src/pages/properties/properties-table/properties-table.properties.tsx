@@ -22,6 +22,7 @@ import {
   PropertiesFormModal,
   DeletePropertiesConfirmationModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const PropertiesTable: React.FC<IPropertiesTableProps> = (props) => {
   const { children = "" } = props;
@@ -309,13 +310,13 @@ export const PropertiesTable: React.FC<IPropertiesTableProps> = (props) => {
       key: "create_at" as keyof IPropertiesGetApi,
       header: "Date Created",
       render: (item: IPropertiesGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "updated_at" as keyof IPropertiesGetApi,
       header: "Date Updated",
       render: (item: IPropertiesGetApi) =>
-        new Date(item.updated_at || "").toLocaleString(),
+        dayjs(item.updated_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "actions" as keyof IPropertiesGetApi, header: "Actions" },
   ];

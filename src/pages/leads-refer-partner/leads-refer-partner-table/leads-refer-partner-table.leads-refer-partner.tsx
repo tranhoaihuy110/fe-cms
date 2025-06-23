@@ -24,6 +24,7 @@ import {
   LeadsReferPartnerFormModal,
   DeleteLeadsReferPartnerConfirmationModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const LeadsReferPartnerTable: React.FC<ILeadsReferPartnerTableProps> = (
   props
@@ -277,13 +278,13 @@ export const LeadsReferPartnerTable: React.FC<ILeadsReferPartnerTableProps> = (
       key: "created_at" as keyof ILeadsReferPartnerGetApi,
       header: "Date Created",
       render: (item: ILeadsReferPartnerGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "updated_at" as keyof ILeadsReferPartnerGetApi,
       header: "Date Updated",
       render: (item: ILeadsReferPartnerGetApi) =>
-        new Date(item.updated_at || "").toLocaleString(),
+        dayjs(item.updated_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "actions" as keyof ILeadsReferPartnerGetApi, header: "Actions" },
   ];

@@ -20,6 +20,7 @@ import {
 import { IServiceTableProps } from "./table-service.type";
 import { IMetaDataApi } from "../../../models";
 import { DeleteConfirmationModal, ServiceFormModal } from "../service-modal";
+import { dayjs } from "../../../utils/dayjs";
 
 export const ServiceTable: React.FC<IServiceTableProps> = (props) => {
   const { children = "" } = props;
@@ -283,7 +284,7 @@ export const ServiceTable: React.FC<IServiceTableProps> = (props) => {
       key: "create_at" as keyof IMetaDataApi,
       header: "Date Create",
       render: (item: IMetaDataApi) =>
-        new Date(item.create_at || "").toLocaleString(),
+        dayjs(item.create_at ).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "actions" as keyof IMetaDataApi, header: "Actions" },
   ];

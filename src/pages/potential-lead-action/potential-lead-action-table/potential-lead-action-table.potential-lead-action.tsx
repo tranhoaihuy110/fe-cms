@@ -25,6 +25,7 @@ import {
   MartPotentialLeadActionFormModal,
   DeletePotentialLeadActionConfirmationModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const PotentialLeadActionTable: React.FC<
   IPotentialLeadActionTableProps
@@ -279,7 +280,7 @@ export const PotentialLeadActionTable: React.FC<
       key: "create_at" as keyof IPotentialLeadActionGetApi,
       header: "Date Created",
       render: (item: IPotentialLeadActionGetApi) =>
-        new Date(item.create_at || "").toLocaleString(),
+        dayjs(item.create_at ).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "actions" as keyof IPotentialLeadActionGetApi, header: "Actions" },
   ];

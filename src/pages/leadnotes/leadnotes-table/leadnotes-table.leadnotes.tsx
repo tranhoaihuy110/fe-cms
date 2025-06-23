@@ -18,6 +18,7 @@ import {
 import { ILeadNotesTableProps } from "./index";
 import { ILeadNotesGetApi, ILeadNotesPatchApi } from "../../../models";
 import { LeadNotesFormModal, DeleteLeadNotesConfirmationModal } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const LeadNotesTable: React.FC<ILeadNotesTableProps> = (props) => {
   const { children = "" } = props;
@@ -245,6 +246,8 @@ export const LeadNotesTable: React.FC<ILeadNotesTableProps> = (props) => {
     {
       key: "created_at" as keyof ILeadNotesGetApi,
       header: "Created At",
+      render: (item: ILeadNotesGetApi) =>
+        dayjs(item.created_at ).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "actions" as keyof ILeadNotesGetApi, header: "Actions" },
   ];

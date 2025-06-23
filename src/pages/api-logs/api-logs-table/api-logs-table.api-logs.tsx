@@ -12,6 +12,7 @@ import { IApiLogsTableProps } from "./index";
 import { IApiLogsGetApi } from "../../../models";
 import { ApiLogsDetailModal } from "../index";
 import { ActionButtons } from "../../../components/table/action-buttons";
+import { dayjs } from "../../../utils/dayjs";
 export const ApiLogsTable: React.FC<IApiLogsTableProps> = (props) => {
   const { children = "" } = props;
 
@@ -128,7 +129,7 @@ export const ApiLogsTable: React.FC<IApiLogsTableProps> = (props) => {
         page,
         size,
         id: id || "",
-        sort:"create_date,desc"
+        sort: "create_date,desc",
       });
       console.log("getApiLogsApi response:", response);
       return response;
@@ -242,7 +243,7 @@ export const ApiLogsTable: React.FC<IApiLogsTableProps> = (props) => {
       key: "create_date" as keyof IApiLogsGetApi,
       header: "Created At",
       render: (item: IApiLogsGetApi) =>
-        new Date(item.create_date || "").toLocaleString(),
+        dayjs(item.create_date).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "actions" as keyof IApiLogsGetApi,

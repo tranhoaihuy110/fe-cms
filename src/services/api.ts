@@ -28,7 +28,6 @@ class ApiService {
         }),
     });
 
-    // Khởi tạo token ngay khi tạo instance
     const accessToken = window.localStorage.getItem('access_token');
     if (accessToken) {
       this.authorization(accessToken);
@@ -97,7 +96,7 @@ class ApiService {
     window.localStorage.removeItem('access_token');
     window.localStorage.removeItem('refresh_token');
     setTimeout(() => {
-      window.location.href = '/login';
+      window.location.href = '/';
     }, 2000);
   }
 

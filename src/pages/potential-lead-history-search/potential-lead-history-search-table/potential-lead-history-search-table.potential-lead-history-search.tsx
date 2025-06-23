@@ -25,6 +25,7 @@ import {
   PotentialLeadHistorySearchFormModal,
 } from "../index";
 import { IPotentialLeadHistorySearchTableProps } from "./index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const PotentialLeadHistorySearchTable: React.FC<
   IPotentialLeadHistorySearchTableProps
@@ -278,6 +279,8 @@ export const PotentialLeadHistorySearchTable: React.FC<
     {
       key: "create_at" as keyof IPotentialLeadHistorySearchGetApi,
       header: "Create At",
+      render: (item: IPotentialLeadHistorySearchGetApi) =>
+        dayjs(item.create_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "actions" as keyof IPotentialLeadHistorySearchGetApi,

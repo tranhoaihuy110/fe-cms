@@ -20,6 +20,7 @@ import {
   DeleteCategoryConfirmationModal,
   CategoryFormModal,
 } from "../category-modals";
+import { dayjs } from "../../../utils/dayjs";
 
 export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
   const { children = "" } = props;
@@ -270,7 +271,7 @@ export const CategoryTable: React.FC<ICategoryTableProps> = (props) => {
       key: "create_at" as keyof IMetaDataApi,
       header: "Date Create",
       render: (item: IMetaDataApi) =>
-        new Date(item.create_at || "").toLocaleString(),
+        dayjs(item.create_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "data_image" as keyof IMetaDataApi, header: "Data Image" },
     { key: "actions" as keyof IMetaDataApi, header: "Actions" },

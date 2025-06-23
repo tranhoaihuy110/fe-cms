@@ -20,6 +20,7 @@ import {
   CampaignEmailTemplateFormModal,
   DeleteCampaignEmailTemplateConfirmationModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const CampaignEmailTemplateTable: React.FC<
   ICampaignEmailTemplateTableProps
@@ -285,13 +286,13 @@ export const CampaignEmailTemplateTable: React.FC<
       key: "created_at" as keyof ICampaignEmailTemplateGetApi,
       header: "Date Created",
       render: (item: ICampaignEmailTemplateGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "updated_at" as keyof ICampaignEmailTemplateGetApi,
       header: "Date Updated",
       render: (item: ICampaignEmailTemplateGetApi) =>
-        new Date(item.updated_at || "").toLocaleString(),
+        dayjs(item.updated_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "actions" as keyof ICampaignEmailTemplateGetApi, header: "Actions" },
   ];

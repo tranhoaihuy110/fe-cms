@@ -20,6 +20,7 @@ import {
   DeleteCampaignMasterConfirmationModal,
   CampaignMasterFormModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const CampaignMasterTable: React.FC<ICampaignMasterTableProps> = (
   props
@@ -294,13 +295,13 @@ export const CampaignMasterTable: React.FC<ICampaignMasterTableProps> = (
       key: "updated_at" as keyof ICampaignMasterGetApi,
       header: "Date Updated",
       render: (item: ICampaignMasterGetApi) =>
-        new Date(item.updated_at || "").toLocaleString(),
+        dayjs(item.updated_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "created_at" as keyof ICampaignMasterGetApi,
       header: "Date Created",
       render: (item: ICampaignMasterGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "actions" as keyof ICampaignMasterGetApi, header: "Actions" },
   ];

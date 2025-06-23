@@ -24,6 +24,7 @@ import {
   PropertyFloorsFormModal,
   DeletePropertyFloorsConfirmationModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const PropertyFloorsTable: React.FC<IPropertyFloorsTableProps> = (
   props
@@ -318,7 +319,7 @@ export const PropertyFloorsTable: React.FC<IPropertyFloorsTableProps> = (
       key: "created_at" as keyof IPropertyFloorsGetApi,
       header: "Date Created",
       render: (item: IPropertyFloorsGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "actions" as keyof IPropertyFloorsGetApi,

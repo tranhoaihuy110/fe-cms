@@ -20,6 +20,7 @@ import {
   DeleteUserBehaviorLogConfirmationModal,
   UserBehaviorLogFormModal,
 } from "../index";
+import dayjs from "dayjs";
 
 export const UserBehaviorLogTable: React.FC<IUserBehaviorLogProps> = (
   props
@@ -301,7 +302,7 @@ export const UserBehaviorLogTable: React.FC<IUserBehaviorLogProps> = (
       key: "created_at" as keyof IUserBehaviorLogGetApi,
       header: "Date Created",
       render: (item: IUserBehaviorLogGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "actions" as keyof IUserBehaviorLogGetApi,

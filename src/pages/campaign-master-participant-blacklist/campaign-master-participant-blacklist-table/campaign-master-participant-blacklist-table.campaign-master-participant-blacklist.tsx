@@ -20,6 +20,7 @@ import {
   DeleteCampaignMasterParticipantBlacklistConfirmationModal,
   CampaignMasterParticipantBlacklistFormModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const CampaignMasterParticipantBlacklistTable: React.FC<
   ICampaignMasterParticipantBlacklistProps
@@ -321,13 +322,13 @@ export const CampaignMasterParticipantBlacklistTable: React.FC<
       key: "updated_at" as keyof ICampaignMasterParticipantBlacklistGetApi,
       header: "Date Updated",
       render: (item: ICampaignMasterParticipantBlacklistGetApi) =>
-        new Date(item.updated_at || "").toLocaleString(),
+        dayjs(item.updated_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "created_at" as keyof ICampaignMasterParticipantBlacklistGetApi,
       header: "Date Created",
       render: (item: ICampaignMasterParticipantBlacklistGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "actions" as keyof ICampaignMasterParticipantBlacklistGetApi,

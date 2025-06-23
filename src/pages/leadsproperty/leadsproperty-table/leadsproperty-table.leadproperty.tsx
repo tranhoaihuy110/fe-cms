@@ -25,6 +25,7 @@ import {
   LeadPropertyFormModal,
   DeleteLeadPropertyConfirmationModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const LeadPropertyTable: React.FC<ILeadPropertyTableProps> = (props) => {
   const { children = "" } = props;
@@ -437,13 +438,13 @@ export const LeadPropertyTable: React.FC<ILeadPropertyTableProps> = (props) => {
       key: "created_at" as keyof ILeadsPropertyGetApi,
       header: "Date Created",
       render: (item: ILeadsPropertyGetApi) =>
-        item.created_at ? new Date(item.created_at).toLocaleString() : "",
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "updated_at" as keyof ILeadsPropertyGetApi,
       header: "Date Updated",
       render: (item: ILeadsPropertyGetApi) =>
-        item.updated_at ? new Date(item.updated_at).toLocaleString() : "",
+        dayjs(item.updated_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "json_metadata" as keyof ILeadsPropertyGetApi,

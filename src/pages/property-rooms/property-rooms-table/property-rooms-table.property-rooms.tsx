@@ -24,6 +24,7 @@ import {
   PropertyRoomFormModal,
   DeletePropertyRoomConfirmationModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const PropertyRoomTable: React.FC<IPropertyRoomTableProps> = (props) => {
   const { children = "" } = props;
@@ -332,7 +333,7 @@ export const PropertyRoomTable: React.FC<IPropertyRoomTableProps> = (props) => {
       key: "created_at" as keyof IPropertyRoomGetApi,
       header: "Date Created",
       render: (item: IPropertyRoomGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "actions" as keyof IPropertyRoomGetApi,

@@ -24,6 +24,7 @@ import {
   LeadAssignmentFormModal,
   DeleteLeadAssignmentConfirmationModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const LeadAssignmentTable: React.FC<ILeadAssignmentTableProps> = (
   props
@@ -276,6 +277,8 @@ export const LeadAssignmentTable: React.FC<ILeadAssignmentTableProps> = (
     {
       key: "assigned_date" as keyof ILeadAssignmentGetApi,
       header: "Assigned Date",
+      render: (item: ILeadAssignmentGetApi) =>
+        dayjs(item.assigned_date ).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "actions" as keyof ILeadAssignmentGetApi, header: "Actions" },
   ];

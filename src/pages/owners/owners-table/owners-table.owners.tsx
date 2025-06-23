@@ -17,6 +17,7 @@ import {
 import { IOwnersTableProps } from "./index";
 import { IOwnersGetApi, IOwnersPatchApi } from "../../../models";
 import { DeleteOwnersConfirmationModal, OwnersFormModal } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const OwnersTable: React.FC<IOwnersTableProps> = (props) => {
   const { children = "" } = props;
@@ -254,7 +255,7 @@ export const OwnersTable: React.FC<IOwnersTableProps> = (props) => {
       key: "created_at" as keyof IOwnersGetApi,
       header: "Date Created",
       render: (item: IOwnersGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
 
     { key: "actions" as keyof IOwnersGetApi, header: "Actions" },

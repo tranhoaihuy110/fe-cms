@@ -17,6 +17,7 @@ import {
 import { ICommonFaqTableProps } from "./index";
 import { ICommonFaqGetApi } from "../../.././models";
 import { CommonFaqFormModal, DeleteCommonFaqConfirmationModal } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const CommonFaqTable: React.FC<ICommonFaqTableProps> = (props) => {
   const { children = "" } = props;
@@ -269,7 +270,7 @@ export const CommonFaqTable: React.FC<ICommonFaqTableProps> = (props) => {
       key: "create_date" as keyof ICommonFaqGetApi,
       header: "Date Created",
       render: (item: ICommonFaqGetApi) =>
-        new Date(item.create_date || "").toLocaleString(),
+        dayjs(item.create_date ).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "faq_status" as keyof ICommonFaqGetApi, header: "Status" },
     { key: "actions" as keyof ICommonFaqGetApi, header: "Actions" },

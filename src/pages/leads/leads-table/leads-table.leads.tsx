@@ -18,6 +18,7 @@ import {
 import { ILeadsGetApi } from "../../../models";
 import { LeadFormModal, DeleteLeadConfirmationModal } from "../index";
 import { ILeadTableProps } from "./index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const LeadTable: React.FC<ILeadTableProps> = (props) => {
   const { children = "" } = props;
@@ -288,13 +289,13 @@ export const LeadTable: React.FC<ILeadTableProps> = (props) => {
       key: "created_at" as keyof ILeadsGetApi,
       header: "Date Created",
       render: (item: ILeadsGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "updated_at" as keyof ILeadsGetApi,
       header: "Date Updated",
       render: (item: ILeadsGetApi) =>
-        new Date(item.updated_at || "").toLocaleString(),
+        dayjs(item.updated_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "actions" as keyof ILeadsGetApi, header: "Actions" },
   ];

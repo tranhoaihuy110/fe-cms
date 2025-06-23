@@ -22,6 +22,7 @@ import {
   UserFcmTokenFormModal,
   DeleteUserFcmTokenConfirmationModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const UserFcmTokenTable: React.FC<IUserFcmTokenTableProps> = (props) => {
   const { children = "" } = props;
@@ -285,6 +286,8 @@ export const UserFcmTokenTable: React.FC<IUserFcmTokenTableProps> = (props) => {
     {
       key: "created_at" as keyof IUserFcmTokenGetApi,
       header: "Created At",
+      render: (item: IUserFcmTokenGetApi) =>
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "actions" as keyof IUserFcmTokenGetApi,

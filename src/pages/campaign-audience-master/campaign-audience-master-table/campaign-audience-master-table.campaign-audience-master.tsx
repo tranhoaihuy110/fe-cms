@@ -20,6 +20,7 @@ import {
   DeleteCampaignAudienceMasterConfirmationModal,
   CampaignAudienceMasterFormModal,
 } from "../index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const CampaignAudienceMasterTable: React.FC<
   ICampaignAudienceMasterProps
@@ -387,13 +388,13 @@ export const CampaignAudienceMasterTable: React.FC<
       key: "create_date" as keyof ICampaignAudienceMasterGetApi,
       header: "Date Created",
       render: (item: ICampaignAudienceMasterGetApi) =>
-        new Date(item.create_date || "").toLocaleString(),
+        dayjs(item.create_date).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "last_crond_date" as keyof ICampaignAudienceMasterGetApi,
       header: "Last Crond Date",
       render: (item: ICampaignAudienceMasterGetApi) =>
-        new Date(item.last_crond_date || "").toLocaleString(),
+        dayjs(item.last_crond_date).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "actions" as keyof ICampaignAudienceMasterGetApi,

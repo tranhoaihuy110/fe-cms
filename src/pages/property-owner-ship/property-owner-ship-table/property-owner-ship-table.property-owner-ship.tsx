@@ -26,6 +26,7 @@ import {
   PropertyOwnerShipFormModal,
 } from "../index";
 import { IPropertyOwnerShipTableProps } from "./index";
+import { dayjs } from "../../../utils/dayjs";
 
 export const PropertyOwnerShipTable: React.FC<IPropertyOwnerShipTableProps> = (
   props
@@ -332,13 +333,13 @@ export const PropertyOwnerShipTable: React.FC<IPropertyOwnerShipTableProps> = (
       key: "start_date" as keyof IPropertyOwnerShipGetApi,
       header: "Start Date",
       render: (item: IPropertyOwnerShipGetApi) =>
-        new Date(item.start_date || "").toLocaleString(),
+        dayjs(item.start_date).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "end_date" as keyof IPropertyOwnerShipGetApi,
       header: "End Date",
       render: (item: IPropertyOwnerShipGetApi) =>
-        new Date(item.end_date || "").toLocaleString(),
+        dayjs(item.end_date).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "actions" as keyof IPropertyOwnerShipGetApi, header: "Actions" },
   ];

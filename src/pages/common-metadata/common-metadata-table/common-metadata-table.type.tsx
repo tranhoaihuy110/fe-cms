@@ -1,4 +1,5 @@
 import { ICommonMetadataGetApi } from "../../../models";
+import { dayjs } from "../../../utils/dayjs";
 export interface ICommonMetaDataTableProps {
   children?: React.ReactNode;
 }
@@ -33,7 +34,7 @@ export const columns = [
       key: "created_at" as keyof ICommonMetadataGetApi,
       header: "Created At",
       render: (item: ICommonMetadataGetApi) =>
-        new Date(item.created_at || "").toLocaleString(),
+        dayjs(item.created_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     {
       key: "actions" as keyof ICommonMetadataGetApi,
