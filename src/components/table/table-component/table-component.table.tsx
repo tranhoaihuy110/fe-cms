@@ -55,8 +55,8 @@ export const TableComponent = <T,>({
                   key={rowIndex}
                   className={`h-full ${
                     rowIndex % 2 === 0
-                      ? "bg-gray-300 dark:bg-gray-800"
-                      : "bg-gray-400 dark:bg-gray-900"
+                      ? "bg-gray-100 dark:bg-gray-800"
+                      : "bg-gray-200 dark:bg-gray-900"
                   }`}
                 >
                   <td className="px-1 py-2 text-center overflow-hidden text-ellipsis text-gray-700 dark:text-gray-300">
@@ -84,8 +84,8 @@ export const TableComponent = <T,>({
                 key={index}
                 className={`${
                   index % 2 === 0
-                    ? "bg-gray-300 dark:bg-gray-800"
-                    : "bg-gray-400 dark:bg-gray-900"
+                    ? "bg-gray-100 dark:bg-gray-800"
+                    : "bg-gray-200 dark:bg-gray-900"
                 }`}
               >
                 {nonFixedColumns.map((column, colIndex) => (
@@ -120,8 +120,8 @@ export const TableComponent = <T,>({
                   key={index}
                   className={`h-full ${
                     index % 2 === 0
-                      ? "bg-gray-300 dark:bg-gray-800"
-                      : "bg-gray-400 dark:bg-gray-900"
+                      ? "bg-gray-100 dark:bg-gray-800"
+                      : "bg-gray-200 dark:bg-gray-900"
                   }`}
                 >
                   <td className="px-2 py-2 text-center">
