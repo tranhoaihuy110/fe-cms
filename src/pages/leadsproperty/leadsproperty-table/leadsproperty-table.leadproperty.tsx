@@ -393,10 +393,12 @@ export const LeadPropertyTable: React.FC<ILeadPropertyTableProps> = (props) => {
     {
       key: "lead_property_id" as keyof ILeadsPropertyGetApi,
       header: "Lead Property ID",
+      isFixed: true,
     },
     {
       key: "lead_id" as keyof ILeadsPropertyGetApi,
       header: "Lead ID",
+      isFixed: true,
     },
     {
       key: "lead_property_type" as keyof ILeadsPropertyGetApi,
@@ -616,6 +618,7 @@ export const LeadPropertyTable: React.FC<ILeadPropertyTableProps> = (props) => {
     {
       key: "actions" as keyof ILeadsPropertyGetApi,
       header: "Actions",
+      isFixed: true,
     },
   ];
 
