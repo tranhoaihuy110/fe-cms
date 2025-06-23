@@ -9,4 +9,7 @@ export interface IPartnerFormModalProps {
   partner: IMetaDataApi | null;
   children?: React.ReactNode; 
 }
-
+export interface ExtendedMetaDataApi extends IMetaDataApi {
+  parent_name: string;
+  parent_names: string[];
+}

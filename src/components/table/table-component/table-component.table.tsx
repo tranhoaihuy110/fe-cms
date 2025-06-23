@@ -25,7 +25,6 @@ export const TableComponent = <T,>({
     return <ArrowUpDown size={14} className="inline ml-1 text-gray-400" />;
   };
 
-
   const fixedColumns = columns.filter(
     (col) => col.isFixed && col.key !== "actions"
   );
@@ -39,7 +38,7 @@ export const TableComponent = <T,>({
       {fixedColumns.map((col, index) => (
         <div
           key={index}
-          className="w-[100px] bg-white dark:bg-gray-900 shadow-left border-l border-gray-100 dark:border-white/[0.05]" // Tăng chiều rộng lên 100px
+          className="w-[100px] bg-white dark:bg-gray-900 shadow-left border-l border-gray-100 dark:border-white/[0.05]"
           style={{ zIndex: 20 - index }}
         >
           <table className="h-full">
@@ -52,7 +51,14 @@ export const TableComponent = <T,>({
             </thead>
             <tbody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
               {data.map((item, rowIndex) => (
-                <tr key={rowIndex} className="h-full">
+                <tr
+                  key={rowIndex}
+                  className={`h-full ${
+                    rowIndex % 2 === 0
+                      ? "bg-gray-300 dark:bg-gray-800"
+                      : "bg-gray-400 dark:bg-gray-900"
+                  }`}
+                >
                   <td className="px-1 py-2 text-center overflow-hidden text-ellipsis text-gray-700 dark:text-gray-300">
                     {col.render
                       ? col.render(item)
@@ -74,7 +80,14 @@ export const TableComponent = <T,>({
           />
           <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
             {data.map((item, index) => (
-              <TableRow key={index}>
+              <TableRow
+                key={index}
+                className={`${
+                  index % 2 === 0
+                    ? "bg-gray-300 dark:bg-gray-800"
+                    : "bg-gray-400 dark:bg-gray-900"
+                }`}
+              >
                 {nonFixedColumns.map((column, colIndex) => (
                   <TableCell
                     key={colIndex}
@@ -103,7 +116,14 @@ export const TableComponent = <T,>({
             </thead>
             <tbody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
               {data.map((item, index) => (
-                <tr key={index} className="h-full">
+                <tr
+                  key={index}
+                  className={`h-full ${
+                    index % 2 === 0
+                      ? "bg-gray-300 dark:bg-gray-800"
+                      : "bg-gray-400 dark:bg-gray-900"
+                  }`}
+                >
                   <td className="px-2 py-2 text-center">
                     <ActionButtons
                       item={item}
