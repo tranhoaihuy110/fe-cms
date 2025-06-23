@@ -6,7 +6,7 @@ import { IPartnerFormModalProps } from "./index";
 import { toast } from "react-toastify";
 import debounce from "lodash/debounce";
 import { IFormField } from "../../../../components";
-
+import { SuggestionsField } from "../../../../components/table";
 interface ExtendedMetaDataApi extends IMetaDataApi {
   parent_name: string;
   parent_names: string[];
@@ -333,56 +333,55 @@ export const PartnerFormModal: React.FC<IPartnerFormModalProps> = ({
     {
       name: "parent_name",
       label: "Parent Name",
-      type: "text",
-      placeholder: "Search service name",
+      type: "custom",
       disabled: mode === "detail",
-      value: formData.parent_name,
-      onChange: (e) => {
-        handleInputChange(e, "parent_name");
-        searchServices(e.target.value);
-      },
-      suggestions:
-        showSuggestions && suggestions.length > 0
-          ? suggestions.slice(0, 15).map((service) => ({
-              value: service.id,
-              label:
-                service.data_title || service.name || `Service ${service.id}`,
-              onSelect: () => {
-                const selectedId = String(service.id).trim();
-                const parentIds =
-                  formData.data_parent_id
-                    ?.split(",")
-                    .map((id) => id.trim())
-                    .filter((id) => id) || [];
-                if (parentIds.includes(selectedId)) {
-                  toast.warn(`Parent ID ${selectedId} is already added.`);
-                  return {};
-                }
-                const updatedParentIds = [...parentIds, selectedId];
-                const updatedParentNames = [
-                  ...(formData.parent_names || []),
-                  service.data_title || service.name || `Service ${selectedId}`,
-                ];
-                setFormData((prev) => ({
-                  ...prev,
-                  data_parent_id: updatedParentIds.join(","),
-                  parent_name: "",
-                  parent_names: updatedParentNames,
-                }));
-                setShowSuggestions(false);
-                console.log("Selected parent - Before update:", {
-                  ...formData,
-                });
-                console.log("Selected parent - After update:", {
-                  data_parent_id: updatedParentIds.join(","),
-                  parent_name: "",
-                  parent_names: updatedParentNames,
-                });
-                return { data_parent_id: updatedParentIds.join(",") };
-              },
-            }))
-          : [],
-      suggestionRef: parentRef,
+      renderValue: () => (
+        <SuggestionsField
+          name="parent_name"
+          label="Parent Name"
+          placeholder="Search service name"
+          value={formData.parent_name}
+          onChange={(value) =>
+            setFormData((prev) => ({ ...prev, parent_name: value }))
+          }
+          disabled={mode === "detail"}
+          searchApi={searchMetaDataApi}
+          searchParams={(searchValue: string) => ({
+            size: 15,
+            data_type: "service",
+            service_name: searchValue,
+          })}
+          getLabel={(item: IMetaDataApi) =>
+            item.data_title || item.name || `Service ${item.id}`
+          }
+          getValue={(item: IMetaDataApi) => String(item.id)}
+          onSelectSuggestion={(selectedItem: IMetaDataApi) => {
+            const selectedId = String(selectedItem.id).trim();
+            const parentIds =
+              formData.data_parent_id
+                ?.split(",")
+                .map((id) => id.trim())
+                .filter((id) => id) || [];
+            if (parentIds.includes(selectedId)) {
+              toast.warn(`Parent ID ${selectedId} is already added.`);
+              return;
+            }
+            const updatedParentIds = [...parentIds, selectedId];
+            const updatedParentNames = [
+              ...(formData.parent_names || []),
+              selectedItem.data_title ||
+                selectedItem.name ||
+                `Service ${selectedId}`,
+            ];
+            setFormData((prev) => ({
+              ...prev,
+              data_parent_id: updatedParentIds.join(","),
+              parent_name: "",
+              parent_names: updatedParentNames,
+            }));
+          }}
+        />
+      ),
     } as const,
     {
       name: "data_parent_id",

@@ -25,7 +25,7 @@ export const TableComponent = <T,>({
     return <ArrowUpDown size={14} className="inline ml-1 text-gray-400" />;
   };
 
-  // Lọc các cột fixed (trừ Actions) và không fixed
+
   const fixedColumns = columns.filter(
     (col) => col.isFixed && col.key !== "actions"
   );
@@ -66,7 +66,7 @@ export const TableComponent = <T,>({
       ))}
 
       <div className="flex-1 overflow-x-auto">
-        <Table className="min-w-[100%]">
+        <Table className="h-full">
           <TableHeader
             columns={nonFixedColumns}
             onSort={handleSort}
@@ -92,7 +92,7 @@ export const TableComponent = <T,>({
       </div>
 
       {actionsColumn && (
-        <div className="w-[80px] bg-white dark:bg-gray-900 shadow-left border-l border-gray-100 dark:border-white/[0.05]">
+        <div className="w-[60px] bg-white dark:bg-gray-900 shadow-left border-l border-gray-100 dark:border-white/[0.05]">
           <table className="h-full">
             <thead className="border-b border-gray-100 dark:border-white/[0.05]">
               <tr>

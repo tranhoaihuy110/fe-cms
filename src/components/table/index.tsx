@@ -5,3 +5,4 @@ export * from "./pagination-section";
 export * from "./table-component";
 export * from "./table-header";
 export * from "./table-row-component";
+export * from './suggestion'

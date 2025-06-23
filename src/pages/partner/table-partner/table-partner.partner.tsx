@@ -279,7 +279,7 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
   const handleClearSearchServiceName = () => handleClearFilter("service_name");
 
   const columns = [
-    { key: "id" as keyof IMetaDataApi, header: "Partner ID" },
+    { key: "id" as keyof IMetaDataApi, header: "Partner ID", isFixed: true },
     { key: "name" as keyof IMetaDataApi, header: "Partner Name" },
     { key: "service_name" as keyof IMetaDataApi, header: "Service Name" },
     { key: "category_name" as keyof IMetaDataApi, header: "Category Name" },
@@ -287,7 +287,7 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
       key: "create_at" as keyof IMetaDataApi,
       header: "Date Create",
       render: (item: IMetaDataApi) =>
-        dayjs(item.create_at ).format("HH:mm:ss DD-MM-YYYY"),
+        dayjs(item.create_at).format("HH:mm:ss DD-MM-YYYY"),
     },
     { key: "actions" as keyof IMetaDataApi, header: "Actions" },
   ];
