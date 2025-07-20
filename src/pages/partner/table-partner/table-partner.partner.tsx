@@ -72,6 +72,7 @@ export const PartnerTable: React.FC<IPartnerTableProps> = (props) => {
   });
 
   const mapFromForm = (data: IMetaDataApi): Partial<IMetaDataApi> => ({
+    id: data.id,
     name: data.name,
     category_id: data.category_id,
     category_name: data.category_name,
