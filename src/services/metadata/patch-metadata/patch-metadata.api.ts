@@ -7,7 +7,7 @@ export const patchMetaDataApi = (value?: Record<string, any>) => {
   }
   return new Promise<Record<string, any>>((resolve, reject) => {
     MS_API.patch(
-      `/api/v1/common_metadata_partner/list/${id}`,
+      `/api/v1/common_metadata_partner/update/${id}`,
       payload
     )
       .then((res) => resolve(res.data))
